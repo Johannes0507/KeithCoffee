@@ -1,0 +1,175 @@
+{% extends 'product_Base.html' %}
+
+{% block title %}Shop{% endblock %}
+
+
+
+
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
+
+
+
+{% block page_name %} {{ product.name }} {% endblock %}
+
+
+{% block content %}
+
+<!-- 移除掉產品上源線 -->
+{% block underline %}
+{% endblock %}
+
+
+
+<div class="main">
+    <div class="h-100 p-5 bg-body-tertiary border rounded-3" style="width: 930px; margin: 5px;">
+            <!-- 產品圖片 -->
+            <img src="{{ MEDIA_URL }}{{ product.image }}" alt="" style="width: 400px;">
+        
+        <div class="productDetails" style="float: right; padding-right: 10px; width: 400px;" >
+            <div style="padding: 5px 20px 20px 20px;">
+                <div class="proLabel">
+                    
+                    <figure>
+                        <blockquote class="blockquote">
+                            <!-- 產品名稱 -->
+                            <span class="opacity-75" style="font-size: 23px; letter-spacing: 2px;">{{ product.name }}</span>
+                        </blockquote>
+                        <figcaption class="blockquote-footer" style="">
+                            <!-- 產品貨號 -->
+                            <cite title="Source Title" style="margin-left: 5px;">
+                            {{ product.code }}
+                            </cite>
+                        </figcaption>
+                    </figure>                
+                    
+                </div>
+
+                <hr style="opacity: .2;" />
+                <div style="padding: 0.5em;">
+                    <!-- 產品價格 -->
+                    <span class="opacity-75" style="color: #E7412C; font-size: 28px; letter-spacing: 3px;" id="product-price">NT {{ product.price }}</span>
+                </div>
+                <hr style="opacity: .2; clear: both;" />
+
+                <div class="opacity-75" style="width: 100%;">
+                    {% with variant=product.productvariant_set.first %}
+                    <p style="margin-left: 2px; padding: 10px; width: 30%; float: left;">庫存剩餘: {{ variant.stock }}</p>                
+                    
+                </div>
+
+                <hr style="opacity: .2; clear: both;" />
+                <div style="padding: 10px;">
+                    <span style="padding-right: 20px;">SIZE : </span>
+                    <!-- 克數選擇 -->
+                    {% for variant in product.productvariant_set.all %}
+                    <button class="btn btn-outline-secondary size-button" data-size="{{ variant.size }}" type="button" style="margin-right: 15px; height: 40px; font-size: .875em; font-style: italic;">
+                    {{ variant.size }}
+                    </button>
+                    {% endfor %}
+                </div>        
+
+                <div style="display: flex; align-items: center; padding: 15px 10px 10px 10px;">
+                    <span style="margin-right: 23px; width: 50px;">QTY: </span>
+                    <input style="width: 20%; margin-right: 20px; padding: 5px; border: 1px solid #ccc; border-radius: 5px;" type="number" value="1" min="1" max="{{ variant.stock }}" id="quantity-input">
+                    <button class="btn btn-outline-secondary add-to-cart" type="button" style="padding: 1em; width: 70%; background-color: #212529; margin-left: 20px;" disabled>
+                        <strong style="color: #DEE2E6; font-size: 16px;">加入購物車</strong>
+                    </button>
+                </div>
+                    {% endwith %}
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-6">
+        <div class="h-100 p-5 bg-body-tertiary rounded-3" style="width: 930px; margin: 20px 5px 5px 5px;">
+            <figure>
+                <blockquote class="blockquote">
+                    <h1 class="class="display-5">簡介</h1>
+                </blockquote>
+                <figcaption class="blockquote-footer" style="">
+                    <cite title="Source Title" style="margin-left: 5px;">
+                    <!-- 產品名稱 -->
+                    Product Introduction
+                    </cite>
+                </figcaption>
+            </figure>
+            <p class="white-space:pre-wrap" style="line-height: 200%; letter-spacing: 2px;">
+                <!-- 產品簡介 -->
+                {{ product.product_inst }}
+            </p>
+
+        </div>
+    </div>
+    <div class="col-md-6">
+        <div class="h-100 p-5 bg-body-tertiary border rounded-3" style="width: 930px; margin: 20px 5px 5px 5px;">
+            <figure>
+                <blockquote class="blockquote">
+                    <h1 class="class="display-5">產品介紹</h1>
+                </blockquote>
+                <figcaption class="blockquote-footer" style="">
+                    <cite title="Source Title" style="margin-left: 5px;">
+                    Product Presentation
+                    </cite>
+                </figcaption>
+            </figure>
+            <!-- 產品描述 -->
+            <p class="white-space:pre-wrap" style="line-height: 200%; letter-spacing: 2px;"> 
+                {{ product.product_desc }}
+            </p>
+
+        </div>
+    </div>
+</div>
+
+<!-- ionicon -->
+<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
+<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
+
+<!-- 選擇size之後家購物車的js邏輯 -->
+<script>
+  const sizeButtons = document.querySelectorAll('.size-button');
+  const addToCartButton = document.getElementById('add-to-cart');
+
+  // 初始狀態下禁用 "加入購物車" 按鈕
+  addToCartButton.disabled = true;
+
+  sizeButtons.forEach(button => {
+    button.addEventListener('click', () => {
+      const selectedSize = button.getAttribute('data-size');
+      if (selectedSize) {
+        // 啟用 "加入購物車" 按鈕
+        addToCartButton.disabled = false;
+
+        // 添加選中的樣式
+        button.classList.add('selected-size');
+      } else {
+        // 如果沒有選擇尺寸，禁用 "加入購物車" 按鈕
+        addToCartButton.disabled = true;
+
+        // 移除選中的樣式
+        button.classList.remove('selected-size');
+      }
+    });
+  });
+</script>
+
+<!-- chatGPT 數量選擇與價錢加乘 -->
+<script>
+  const priceElement = document.getElementById('product-price');
+  const quantityInput = document.getElementById('quantity-input');
+
+  quantityInput.addEventListener('input', function () {
+    const quantity = parseInt(this.value);
+    const productPrice = parseInt("{{ product.price }}"); 
+
+    if (!isNaN(quantity) && !isNaN(productPrice)) {
+      const totalPrice = quantity * productPrice;
+      priceElement.textContent = `NT ${totalPrice}`;
+    }
+  });
+</script>
+
+
+{% endblock %}
