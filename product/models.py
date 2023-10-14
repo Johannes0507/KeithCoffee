@@ -5,13 +5,17 @@ from django.dispatch import receiver
 
 # 產品類別資料庫
 class Category(models.Model):
-    name = models.CharField('商品種類' ,max_length=10)
+    name = models.CharField(verbose_name='商品種類英文簡稱', max_length=10)
+    category_name = models.CharField('商品中文名', null=True, blank=True, max_length=30)
+    
     def __str__(self):
-        return self.name
+        return self.category_name
 
 
-from django.urls import reverse
 # 產品資料庫
+from decimal import Decimal
+from django.urls import reverse
+
 class Product(models.Model):
     name = models.CharField('商品名稱', max_length=100)
     product_inst = models.CharField('簡介', max_length=30, help_text='請輸入產品簡介，限定30個字。')
@@ -19,7 +23,7 @@ class Product(models.Model):
     image = models.ImageField(upload_to='product_image/')
     price = models.DecimalField('價格', max_digits=10, decimal_places=0)
     code = models.CharField('編號', max_length=10, blank=True, null=True,help_text='可自訂，也可根據類別自動生成編碼')
-    category = models.ForeignKey(Category, on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, verbose_name='商品種類',on_delete=models.SET_NULL, null=True)
     
     date_of_create = models.DateField('創建日期', auto_now_add=True)
     date_of_update = models.DateField('修改日期',auto_now=True)
@@ -46,6 +50,11 @@ class Product(models.Model):
     
     def get_absolute_url(self):
         return reverse('product-detail', args=[str(self.id)])
+    
+    # 定義折扣價格
+    @property
+    def on_sale(self):
+        return round((self.price * Decimal('0.9')), 0)
     
     
 # 保存產品編碼信號設定

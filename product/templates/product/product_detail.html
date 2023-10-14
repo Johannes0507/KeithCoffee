@@ -1,6 +1,6 @@
 {% extends 'product_Base.html' %}
 
-{% block title %}Shop{% endblock %}
+{% block title %}{{ product.name }}{% endblock %}
 
 
 
@@ -19,7 +19,6 @@
 <!-- 移除掉產品上源線 -->
 {% block underline %}
 {% endblock %}
-
 
 
 <div class="main">
@@ -49,7 +48,7 @@
                 <hr style="opacity: .2;" />
                 <div style="padding: 0.5em;">
                     <!-- 產品價格 -->
-                    <span class="opacity-75" style="color: #E7412C; font-size: 28px; letter-spacing: 3px;" id="product-price">NT {{ product.price }}</span>
+                    <span class="opacity-75" style="color: #E7412C; font-size: 28px; letter-spacing: 3px;" id="product-price">NT {{ product.on_sale }}</span>
                 </div>
                 <hr style="opacity: .2; clear: both;" />
 
@@ -155,14 +154,15 @@
   });
 </script>
 
-<!-- chatGPT 數量選擇與價錢加乘 -->
+
+<!-- chatGPT 數量選擇與價錢動態加乘 -->
 <script>
   const priceElement = document.getElementById('product-price');
   const quantityInput = document.getElementById('quantity-input');
 
   quantityInput.addEventListener('input', function () {
     const quantity = parseInt(this.value);
-    const productPrice = parseInt("{{ product.price }}"); 
+    const productPrice = parseInt("{{ product.on_sale }}"); 
 
     if (!isNaN(quantity) && !isNaN(productPrice)) {
       const totalPrice = quantity * productPrice;

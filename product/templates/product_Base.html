@@ -39,13 +39,12 @@
 					</a>
 
 					<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-					 	<li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+					 	<li><a href="{% url 'index' %}" class="nav-link px-2 text-secondary">Home</a></li>
 					 	<li class="nav-item dropdown">
 				            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"  style="color: white;">商品</a>
 				            <ul class="dropdown-menu">
 				             	<li><a class="dropdown-item" href="{% url 'all-product' %}">所有商品</a></li>
-				     			
-				             	<li><a class="dropdown-item" href="{% url 'product-category' 'FLM' %}">花&月 咖啡豆</a></li>
+								<li><a class="dropdown-item" href="{% url 'product-category' 'FLM' %}">花&月 咖啡豆</a></li>
 				             	<li><a class="dropdown-item" href="{% url 'product-category' 'CSA' %}">中南美洲 咖啡豆</a></li>
 				             	<li><a class="dropdown-item" href="{% url 'product-category' 'EDI' %}">特別版 咖啡豆</a></li>
 				             	<li><a class="dropdown-item" href="{% url 'product-category' 'AFR' %}">非洲 咖啡豆</a></li>
@@ -79,14 +78,23 @@
 	<!-- 頁面名稱 -->
 	<header style="height: 60px; background-color: #363335;">
 		<div style="padding: 28px;">
-			<h1 style="font-family: Noto Sans; font-size: 23px; line-height: 0.4; letter-spacing: 2.1px; text-align: center; color: #dbdbdb; font-weight: bold;">
+			<h1 style="font-family: Noto Sans; font-size: 20px; line-height: 0.4; letter-spacing: 2.1px; text-align: center; color: #dbdbdb; font-weight: bold;">
 			{% block page_name %}{% endblock %}
 			</h1>
 		</div>
 	</header>
 
 	<div class="flex-shrink-0 p-3" style="width: 25%; float: left;">
-		<div style="margin: 90px 30px 30px 30px;">
+				<div style="height: 20px; padding-top: 30px; margin-left: 30px;">
+					<!-- 頁面搜尋選項 -->
+					<form class="row g-3" action="" method="GET">
+					 	<div class="col-auto" style="width: 100%;">
+					    	<input type="search" class="form-control" name="q" placeholder="搜尋商品名稱...">
+						    <button style="margin-top: 10px;" type="submit" class="btn btn-primary mb-3">搜尋</button>
+					 	</div>
+					</form>
+				</div>
+		<div style="margin: 110px 30px 30px 30px;">
 			<div class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
 				<svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
 				<span class="fs-5 fw-semibold">商品分類</span>
@@ -98,7 +106,7 @@
 					</a>
 				</li>
 				<li class="mb-1">
-					<a href="#" class="btn d-inline-flex align-items-center rounded border-0 collapsed" data-bs-target="#dashboard-collapse" aria-expanded="false">
+					<a href="{% url 'new-product' %}" class="btn d-inline-flex align-items-center rounded border-0 collapsed" data-bs-target="#dashboard-collapse" aria-expanded="false">
 					  最新商品
 					</a>
 				</li>
@@ -150,8 +158,16 @@
 			<!-- 上源線 -->
 			{% block underline %}
 				<li class="border-top" style="width: 95%; list-style-type: none; margin-top: 0px; margin-left: 15px;"></li>
-				<div style="height: 30px;">
-					<!-- 頁面搜尋選項 -->
+				<div style="height: 40px; margin-left: 10px;">
+					<!-- 商品顯示方式 -->
+					<form id="sortForm" action="" method="GET">
+					    <select id="sortSelect" class="form-select" name="sort_option">
+				        	<option value="" disabled selected>顯示方式</option>
+				            <option value="new">依最新項目排序</option>
+				            <option value="ud">價格高 > 低</option>
+				            <option value="du">價格低 > 高</option>
+					    </select>
+					</form>
 				</div>
 				<li class="border-top" style="width: 95%; list-style-type: none; margin-bottom: 20px; margin-left: 15px;"></li>
 			{% endblock %}	
@@ -160,6 +176,8 @@
 
 
 {% endblock %}
+
+
 
 
 		</div>
@@ -225,11 +243,12 @@
 </html>
 
 
+<!-- ChatGPT表單提交 -->
+<script>
+    const sortSelect = document.getElementById("sortSelect");
 
-
-
-
-
-
-
+    sortSelect.addEventListener("change", function () {
+        document.getElementById("sortForm").submit();  // 當選擇的值不一樣時，提交表單。
+    });
+</script>
 

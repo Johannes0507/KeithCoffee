@@ -3,7 +3,7 @@ from .models import Product, ProductVariant, Category
 
 
 
-
+# 擴增在Product 列表裡面也可以新增產品類別(ProductVariant)
 class ProductVariantIiline(admin.TabularInline):
     model = ProductVariant
 
@@ -18,5 +18,6 @@ class ProductVariantAdmin(admin.ModelAdmin):
     list_display = ('product', 'size', 'stock')    
     
 
-
-admin.site.register(Category)
+@admin.register(Category)
+class CategoryAdmin(admin.ModelAdmin):
+    list_display = ('category_name', 'name' )

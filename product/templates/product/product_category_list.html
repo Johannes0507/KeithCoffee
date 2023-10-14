@@ -1,14 +1,20 @@
 {% extends 'product_Base.html' %}
 
-{% block title %}所有商品{% endblock %}
+{% block title %}{{ category_name }}{% endblock %}
 
 
 
 
+{% block page_name %} 
 
-{% block page_name %}所有商品{% endblock %}
+{{ category_n }}
+
+ {% endblock %}
+
+
 
 {% block content %}
+
 
 {% for product in product_list %}
     <div class="col" style="width: 220px; margin: 10px; display: flex; flex-direction: column; justify-content: space-between;">
