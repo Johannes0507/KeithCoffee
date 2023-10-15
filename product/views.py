@@ -3,58 +3,78 @@ from django.views import generic
     
 
 # 所有產品顯示頁面
-from decimal import Decimal
 
 class ProductsView(generic.ListView):
     model = Product
     paginate_by = 12
     
+    
+
     def get_queryset(self):
-        q = self.request.GET.get('q', '')
+        queryset = super().get_queryset()
+        searchp = self.request.GET.get('searchp', '')
         sort_option = self.request.GET.get('sort_option', '')
         queryset = Product.objects.filter(status__exact='o')
+        page = self.request.GET.get('page')
         
-        if q:
-            # 如果搜尋參數存在，過濾查詢集合
-            queryset = queryset.filter(name__icontains=q)
+        if searchp and sort_option == 'new' and page:
+            queryset = queryset.filter(name__icontains=searchp).filter().order_by('-date_of_create')
+        elif searchp and sort_option == 'ud' and page:
+            queryset = queryset.filter(name__icontains=searchp).order_by('-price')   
+        elif searchp and sort_option == 'du' and page:
+            queryset = queryset.filter(name__icontains=searchp).order_by('price')  
+        
+        elif searchp and page:
+            queryset = queryset.filter(name__icontains=searchp)
+        elif sort_option == 'new' and page:
+            queryset = queryset.order_by('-date_of_create')
+        elif sort_option == 'ud' and page:
+            queryset = queryset.order_by('-price')
+        elif sort_option == 'du' and page:
+            queryset = queryset.order_by('price')        
     
-        if sort_option == 'new':
-            # 根據排序參數排序
+        if searchp and sort_option == 'new':
+            queryset = queryset.filter(name__icontains=searchp).order_by('-date_of_create')  
+        elif searchp and sort_option == 'ud':
+            queryset = queryset.filter(name__icontains=searchp).order_by('-price')   
+        elif searchp and sort_option == 'du':
+            queryset = queryset.filter(name__icontains=searchp).order_by('price')  
+
+        elif searchp:
+            queryset = queryset.filter(name__icontains=searchp)
+        elif sort_option == 'new':
             queryset = queryset.order_by('-date_of_create')
         elif sort_option == 'ud':
             queryset = queryset.order_by('-price')
         elif sort_option == 'du':
             queryset = queryset.order_by('price')
+        
     
         return queryset
-
-    # 定義on sale價格
 
         
     
 # 產品各種類別顯示頁面
 class ProductCategoryView(generic.ListView):
     model = Product
-    paginate_by = 12
+    paginator_by = 12
     template_name = 'product/product_category_list.html'
     
     # 用來處理資料集
     def get_queryset(self):
         category_n = self.kwargs.get('category') # 取得category參數
-        
-        # 取得category裡面的name資料，不能用Product尋找，因為Product只找到字段。
-        category = Category.objects.get(name=category_n) 
+        category = Category.objects.get(name=category_n) # 取得category裡面的name資料，不能用Product尋找，因為Product只找到字段。
         
         if category:
            queryset = Product.objects.filter(category=category)     
         
         # 獲取url參數
-        q = self.request.GET.get('q', '')
+        searchp = self.request.GET.get('searchp', '')
         sort_option = self.request.GET.get('sort_option', '')            
         
-        if q:
+        if searchp:
             # 如果搜尋參數存在，過濾查詢集合。
-            queryset = queryset.filter(name__icontains=q)
+            queryset = queryset.filter(name__icontains=searchp)
     
         if sort_option == 'new':
             # 根據排序參數排序
@@ -81,13 +101,13 @@ class NewProductsView(generic.ListView):
     
     # 無法在最新產品頁面內用切片搜尋完的產品資料再去做條件搜尋。
     def get_queryset(self):
-        q = self.request.GET.get('q', '')
+        searchp = self.request.GET.get('searchp', '')
         sort_option = self.request.GET.get('sort_option', '')   
         queryset = Product.objects.filter(status__exact='o')
         # queryset = Product.objects.filter(status__exact='o')[:12]
-        if q:
+        if searchp:
             # 如果搜尋參數存在，過濾查詢集合。
-            queryset = queryset.filter(name__icontains=q)
+            queryset = queryset.filter(name__icontains=searchp)
     
         if sort_option == 'new':
             # 根據排序參數排序
@@ -106,7 +126,6 @@ class NewProductsView(generic.ListView):
 # 產品detail顯示頁面
 class ProductDetailView(generic.DetailView):
     model = Product
-    
     def get_queryset(self):
         
         return Product.objects.filter(status__exact='o')

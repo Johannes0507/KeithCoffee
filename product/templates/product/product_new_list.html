@@ -13,30 +13,32 @@
     <div class="col" style="width: 220px; margin: 10px; display: flex; flex-direction: column; justify-content: space-between;">
         <!-- 產品 -->
         <div class="col" style="width: 200px; ">
-            <div class="card shadow-sm">
-                <div>
-                    <img src="{{ MEDIA_URL }}{{ product.image }}" alt="Image" class="img-fluid" style="border-radius: 0.35em 0.35em 0 0;">
+            <a href="{{ product.get_absolute_url }}" style="text-decoration: none;">
+                <div class="card shadow-sm">
+                    <div>
+                        <img src="{{ MEDIA_URL }}{{ product.image }}" alt="Image" class="img-fluid" style="border-radius: 0.35em 0.35em 0 0;">
+                    </div>
+                    <div class="card-body">
+                        <div style="width: 100%; padding-bottom: 10px;">
+                            <p class="card-text" style="text-align: center; font-weight: bold;">
+                            	<!-- 產品名稱 -->
+                            	<small class="text-body-secondary" style="font-size: 16px;">{{ product.name }}</small>
+                			</p>
+                        </div>
+                        <div class="justify-content-between align-items-center" style="padding: 10px 10px 10px 10px;">
+                    		<!-- 價格 -->
+                        	<span class="price card-text">
+                        		<span style="text-decoration: line-through; margin-right: 10px; color: #999; font-size: 12px;">
+                        			<del>NT{{ product.price }}</del> 
+                        		</span>
+                        		<span style="color: #853244;">
+                        			<ins>NT{{ product.on_sale }}</ins>
+                        		</span>
+                        	</span>				                	
+                        </div>
+            		</div>
                 </div>
-                <div class="card-body">
-                    <div style="width: 100%; padding-bottom: 10px;">
-                        <p class="card-text" style="text-align: center; font-weight: bold;">
-                        	<!-- 產品名稱 -->
-                        	<small class="text-body-secondary" style="font-size: 16px;">{{ product.name }}</small>
-            			</p>
-                    </div>
-                    <div class="justify-content-between align-items-center" style="padding: 10px 10px 10px 10px;">
-                		<!-- 價格 -->
-                    	<span class="price card-text">
-                    		<span style="text-decoration: line-through; margin-right: 10px; color: #999; font-size: 12px;">
-                    			<del>NT{{ product.price }}</del> 
-                    		</span>
-                    		<span style="color: #853244;">
-                    			<ins>NT{{ product.on_sale }}</ins>
-                    		</span>
-                    	</span>				                	
-                    </div>
-        		</div>
-            </div>
+            </a>
         </div>
     </div>
 {% endfor %}

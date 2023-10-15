@@ -85,15 +85,19 @@
 	</header>
 
 	<div class="flex-shrink-0 p-3" style="width: 25%; float: left;">
+			{% block search_product %}
 				<div style="height: 20px; padding-top: 30px; margin-left: 30px;">
 					<!-- 頁面搜尋選項 -->
-					<form class="row g-3" action="" method="GET">
+					<form class="row g-3" action="{{ request.path }}?{{ request.GET.urlencode }}" method="GET" id="search_p">
 					 	<div class="col-auto" style="width: 100%;">
-					    	<input type="search" class="form-control" name="q" placeholder="搜尋商品名稱...">
+					 		<input type="hidden" name="sort_option" id="input_s">
+					 		<input type="hidden" name="page">
+					    	<input type="search" class="form-control" name="searchp" placeholder="搜尋商品名稱...">
 						    <button style="margin-top: 10px;" type="submit" class="btn btn-primary mb-3">搜尋</button>
 					 	</div>
 					</form>
 				</div>
+			{% endblock %}
 		<div style="margin: 110px 30px 30px 30px;">
 			<div class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
 				<svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
@@ -160,14 +164,16 @@
 				<li class="border-top" style="width: 95%; list-style-type: none; margin-top: 0px; margin-left: 15px;"></li>
 				<div style="height: 40px; margin-left: 10px;">
 					<!-- 商品顯示方式 -->
-					<form id="sortForm" action="" method="GET">
+					<form id="sortForm" action="{{ request.path }}?{{ request.GET.urlencode }}" method="GET">
 					    <select id="sortSelect" class="form-select" name="sort_option">
 				        	<option value="" disabled selected>顯示方式</option>
 				            <option value="new">依最新項目排序</option>
 				            <option value="ud">價格高 > 低</option>
 				            <option value="du">價格低 > 高</option>
 					    </select>
-					</form>
+					    <input type="hidden" name="searchp" id="input_p">
+					    <input type="hidden" name="page">
+					</form> 
 				</div>
 				<li class="border-top" style="width: 95%; list-style-type: none; margin-bottom: 20px; margin-left: 15px;"></li>
 			{% endblock %}	
@@ -177,7 +183,31 @@
 
 {% endblock %}
 
+<div style="clear: both;"></div>
 
+{% block pagination %}
+
+	{% if is_paginated %}
+		<ul class="pagination">
+			<li class="page-item">
+				{% if page_obj.has_previous %}
+				<a class="page-link" href="{{ request.path }}?page={{ page_obj.previous_page_number }}" aria-label="Previous">
+					<span aria-hidden="true">&laquo;</span>
+				</a>
+				{% endif %}
+			</li>
+			<li class="page-item"><a class="page-link" href="#">1</a></li>
+			<li class="page-item">
+				{% if page_obj.has_next %}
+				<a class="page-link" href="{{ request.page }}?page={{ page_obj.next_page_number }}" aria-label="Next">
+					<span aria-hidden="true">&raquo;</span>
+				</a>
+				{% endif %}
+			</li>
+		</ul>
+	{% endif %}		
+
+{% endblock %}
 
 
 		</div>
@@ -250,5 +280,25 @@
     sortSelect.addEventListener("change", function () {
         document.getElementById("sortForm").submit();  // 當選擇的值不一樣時，提交表單。
     });
+
+	// 取得表單和輸入字段
+	const form1 = document.getElementById("searchp");
+	const form2 = document.getElementById("sortForm");
+	const input1 = document.getElementById("sortForm");
+	const select2 = document.getElementById("sortSelect");
+
+	// 監聽輸入欄位的變更事件
+	input1.addEventListener("input", function () {
+	     // 當第一個輸入欄位變更時，更新第二個輸入欄位的值
+	     select2.value = input1.value;
+	});
+
+	select2.addEventListener("input", function () {
+	     // 當第二個輸入欄位變更時，更新第一個輸入欄位的值
+	     input1.value = select2.value;
+});
 </script>
+
+
+
 
