@@ -28,6 +28,16 @@ DEBUG = True
 ALLOWED_HOSTS = []
 
 
+# 設定登入跟登出後跳轉到主頁
+LOGOUT_REDIRECT_URL = '/'
+LOGIN_REDIRECT_URL = '/'
+
+SESSION_COOKIE_AGE = 86400
+
+# 購物車的session
+CART_SESSION_ID = 'cart'
+
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -38,6 +48,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'product',
+    'cart',
     'blog',
     'Home',
 ]
@@ -66,6 +77,7 @@ TEMPLATES = [
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
                 'django.template.context_processors.media',
+                'cart.context_processors.cart', # 使Cart裡面的方法在全局都可以使用
             ],
         },
     },

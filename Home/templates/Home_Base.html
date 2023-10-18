@@ -17,7 +17,6 @@
     <link href="{% static 'css/features.css' %}" rel="stylesheet" >
 
 
-
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@docsearch/css@3">
 
     {% block css %}
@@ -38,7 +37,7 @@
 					</a>
 
 					<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
-					 	<li><a href="#" class="nav-link px-2 text-secondary">Home</a></li>
+					 	<li><a href="{% url 'index' %}" class="nav-link px-2 text-secondary">Home</a></li>
 					 	<li class="nav-item dropdown">
 				            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"  style="color: white;">商品</a>
 				            <ul class="dropdown-menu">
@@ -63,9 +62,24 @@
 					</form>
 
 					<div class="text-end">
-					 	<button type="button" class="btn btn-outline-light me-2">登入</button>
+					 	{% if request.user.is_authenticated %}
+						 	<button type="button" class="btn btn-outline-light me-2">
+						 		<a href="{% url 'logout' %}" style="text-decoration: none; color: #F8F9FA;">登出</a>	
+						 	</button>
+						{% else %}
+						 	<button type="button" class="btn btn-outline-light me-2">
+						 		<a href="{% url 'login' %}" style="text-decoration: none; color: #F8F9FA;">登入</a>
+						 	</button>							
+					 	{% endif %}
 					 	<button type="button" class="btn btn-warning">購物車</button>
 					</div>
+
+					
+	                <div class="menu-right flex items-center space-x-4" style="margin-left: 10px;">
+	                    <!-- 購物車顯示圖 -->
+	                    {% include 'partials/menu_cart.html' %}
+	                </div>
+
 				</div>
 			</div>
 		</header>
@@ -131,6 +145,8 @@
 	        </li>
 	  	</ul>
 	</div>
+	<!-- 購物車的JS檔案 -->
+	<script src="https://unpkg.com/htmx.org@1.7.0"></script> 
 </body>
 </html>
 

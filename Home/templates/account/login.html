@@ -1,0 +1,38 @@
+{% extends 'Home_Base.html' %}
+
+{% load static %}
+<link rel="stylesheet" href="{% static 'css/signup.css' %}">
+
+
+{% block content %}
+<div style="display: flex; justify-content: center; align-content: center;">
+<div class="p-5 text-center bg-body-tertiary rounded-3" style="margin: 30px; width: 40%;">
+	<div class="w-100 m-auto">
+
+		<form action="" method="POST">
+		    {% csrf_token %}
+		    <h1 class="h3 mb-3 fw-normal">請登入會員</h1>
+
+		    {% for field in form %}
+		        <div class="form-floating" style="margin-top: 10px;">
+		            <input name="{{ field.name }}" type="{{ field.field.widget.input_type }}" class="form-control" id="floatingInput">
+		            <label for="floatingInput">{{ field.label }}</label>
+		            {% for error in field.errors %}
+		                <p class="text-danger" style="font-weight: bold; margin-top: 5px; text-align: left;">{{ error|escape }}</p>
+		            {% endfor %}
+		        </div>
+		    {% endfor %}
+
+		    <div class="text-danger" style="width: 100%; height: 16px; margin-top: 5px;">
+		        {% for error in form.non_field_errors %}
+		            <p style="float: left; font-weight: bold;">{{ error|escape }}</p>
+		        {% endfor %}
+		    </div>
+		    
+		    <button class="btn btn-primary w-100 py-2" type="submit">登入</button>
+		</form>
+
+	</div>
+</div>
+</div>
+{% endblock %}

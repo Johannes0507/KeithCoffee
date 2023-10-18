@@ -10,11 +10,13 @@
     <!-- 動畫效果的js檔 -->
     <script src="{% static 'js/bootstrap.bundle.min.js.map' %}"></script>
     <script src="{% static 'js/bootstrap.bundle.min.js' %}"></script>
+
     <!-- 顏色排版的CSS檔 -->
     <link href="{% static 'css/bootstrap.min.css.map' %}" rel="stylesheet">
     <link href="{% static 'css/bootstrap.css' %}" rel="stylesheet">
     <!-- 專業簡介CSS檔 -->
     <link href="{% static 'css/features.css' %}" rel="stylesheet" >
+
     <!-- sidebar -->
 	<link href="{% static 'css/sidebars.css' %}" rel="stylesheet">
 	<script src="{% static 'js/sidebars.js' %}"></script>
@@ -67,6 +69,13 @@
 					 	<button type="button" class="btn btn-outline-light me-2">登入</button>
 					 	<button type="button" class="btn btn-warning">購物車</button>
 					</div>
+
+
+	                <div class="menu-right flex items-center space-x-4" style="margin-left: 10px;">
+	                    <!-- 購物車顯示圖 -->
+	                    {% include 'partials/menu_cart.html' %}
+	                </div>
+
 				</div>
 			</div>
 		</header>
@@ -269,6 +278,7 @@
 	        </li>
 	  	</ul>
 	</div>
+	<script src="https://unpkg.com/htmx.org@1.7.0"></script>
 </body>
 </html>
 

@@ -34,6 +34,11 @@ urlpatterns += [
     path('products/', include('product.urls'), name='product'),
     ]
 
+# 購物車
+urlpatterns += [
+    path('cart/', include('cart.urls'), name='cart'),
+    ]
+
 # # Blog路徑
 # urlpatterns += [
 #     path('blog/', include('blog.urls'), name='blog'),
