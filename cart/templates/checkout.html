@@ -1,0 +1,110 @@
+{% extends 'Home_Base.html' %}
+
+{% block title %}
+確認訂單
+{% endblock %}
+
+
+
+{% block content %}
+
+<header style="height: 60px; background-color: #363335;">
+	<div style="padding: 28px;">
+		<h1 style="font-family: Noto Sans; font-size: 20px; line-height: 0.4; letter-spacing: 2.1px; text-align: center; color: #dbdbdb; font-weight: bold;">
+		{% block page_name %}確認訂單{% endblock %}
+		</h1>
+	</div>
+</header>
+
+<div class="h-100 p-5 bg-body-tertiary rounded-5" style="width: 92%; margin: 4%;">
+	<div class="untree_co-section before-footer-section">
+
+		<div class="row g-5">
+		    <div class="col-md-5 col-lg-4 order-md-last">
+		        <h4 class="d-flex justify-content-between align-items-center mb-3">
+		            <span class="text-primary">你的購物車</span>
+		            <span class="badge bg-primary rounded-pill">3</span>
+		        </h4>
+		        <ul class="list-group mb-3">
+		            <li class="list-group-item d-flex justify-content-between lh-sm">
+		                <div>
+		                    <h6 class="my-0">商品名</h6>
+		                    <small class="text-body-secondary">簡述</small>
+		                </div>
+		                <span class="text-body-secondary">$12</span>
+		            </li>
+		            <li class="list-group-item d-flex justify-content-between">
+		                <span>Total (NT)</span>
+		                <strong>{{ cart.get_total_cost }} NT</strong>
+		            </li>
+		        </ul>
+		        <h4 class="mb-3">付款方式</h4>
+		        <div class="my-3">
+		            <div class="form-check">
+		                <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
+		                <label class="form-check-label" for="paypal">PayPal</label>
+		            </div>
+		        </div>
+		    </div>
+
+		    <div class="col-md-7 col-lg-8">
+		        <h4 class="mb-3">訂單確認</h4>
+		        <form class="needs-validation" novalidate>
+		            <div class="row g-3">
+		                <div class="col-sm-6">
+		                    <label for="firstName" class="form-label">姓</label>
+		                    <input type="text" class="form-control" id="firstName" placeholder="" value="{{ request.user.first_name }}" required>
+		                    <div class="invalid-feedback">
+		                        請填入有效的姓氏
+		                    </div>
+		                </div>
+
+		                <div class="col-sm-6">
+		                    <label for="lastName" class="form-label">名</label>
+		                    <input type="text" class="form-control" id="lastName" placeholder="" value="{{ request.user.last_name }}" required>
+		                    <div class="invalid-feedback">
+		                        請填入有效的名字
+		                    </div>
+		                </div>
+
+		                <div class="col-12">
+		                    <label for="username" class="form-label">訂購者名稱</label>
+		                    <div class="input-group has-validation">
+		                        <input type="text" class="form-control" id="username" value="{{ request.user.username }}" required>
+		                        <div class="invalid-feedback">
+		                            此欄位為必填
+		                        </div>
+		                    </div>
+		                </div>
+
+		                <div class="col-12">
+		                    <label for="email" class="form-label">Email <span class="text-body-secondary"> (選填)</span></label>
+		                    <input type="email" class="form-control" id="email" value="{{ request.user.email }}">
+		                    <div class="invalid-feedback">
+		                        請輸入有效Email
+		                    </div>
+		                </div>
+
+		                <div class="col-12">
+		                    <label for="address" class="form-label">送貨地址</label>
+		                    <input type="text" class="form-control" id="address" required>
+		                    <div class="invalid-feedback">
+		                        請輸入有效送貨地址
+		                    </div>
+		                </div>
+
+		                <div class="col-12">
+		                    <label for="address2" class="form-label">其他地址<span class="text-body-secondary"> (選填)</span></label>
+		                    <input type="text" class="form-control" id="address2">
+		                </div>
+		                <hr class="my-4">
+		                <button class="w-100 btn btn-primary btn-lg" type="submit">繼續結帳</button>
+		            </div>
+		        </form>
+		    </div>
+		</div>
+
+	</div>
+</div>		
+
+{% endblock %}

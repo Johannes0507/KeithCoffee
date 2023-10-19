@@ -88,3 +88,6 @@ class ProductVariant(models.Model):
     def __str__(self):
         return self.product.name
 
+    @property
+    def pound(self):
+        return round((self.price * Decimal('0.9') * 2), 0)

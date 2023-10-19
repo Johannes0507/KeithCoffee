@@ -1,0 +1,91 @@
+{% extends 'Home_Base.html' %}
+
+{% block title %}
+購物車
+{% endblock %}
+
+
+
+{% block content %}
+
+<header style="height: 60px; background-color: #363335;">
+	<div style="padding: 28px;">
+		<h1 style="font-family: Noto Sans; font-size: 20px; line-height: 0.4; letter-spacing: 2.1px; text-align: center; color: #dbdbdb; font-weight: bold;">
+		{% block page_name %}購物車{% endblock %}
+		</h1>
+	</div>
+</header>
+
+<div class="h-100 p-5 rounded border" style="width: 92%; margin: 4%;">
+	<div class="untree_co-section before-footer-section">
+		<div class="container">
+			<div class="row mb-5">
+				<form class="col-md-13" method="post">
+					<div class="site-blocks-table">
+						<table class="table table-hover ">
+							<thead>
+								<tr>
+									<th class="product-thumbnail"></th>
+									<th class="product-name">產品名</th>
+									<th class="product-price">價格</th>
+									<th class="product-quantity">數量</th>
+									<th class="product-total">總價</th>
+									<th class="product-remove">移除</th>
+								</tr>
+							</thead>
+							<tbody>
+								{% for item in cart %}
+									{% include 'partials/cart_item.html' %}	
+								{% endfor %}
+							</tbody>
+						</table>
+					</div>
+				</form>
+			</div>
+
+			<div class="row">
+				<div class="col-md-10 pl-5" style="text-align: right; width: 99%;">
+					<div class="row justify-content-end">
+						<div class="col-md-7">
+							<div class="row">
+								<div class="col-md-12 text-right border-bottom mb-5">
+								<h3 class="text-light-emphasis h4 text-uppercase">結帳</h3>
+								</div>
+							</div>
+							<div class="row mb-3">
+								<div class="col-md-6">
+									<span class="text-light-emphasis">小計</span>
+								</div>
+								<div class="col-md-6 text-right">
+									<strong class="text-light-emphasis">{{ cart.get_total_quantity }}</strong>
+								</div>
+							</div>
+							<div class="row mb-5">
+								<div class="col-md-6">
+									<span class="text-light-emphasis">總金額</span>
+								</div>
+								<div class="col-md-6 text-right">
+									<strong class="text-light-emphasis">{{ cart.get_total_cost }} NT</strong>
+								</div>
+							</div>
+
+							<div class="row">
+								<div class="col-md-12">
+									<button class="btn btn-black btn-lg py-3 btn-block border">
+										<a href="{% url 'checkout' %}">繼續結帳</a>
+									</button>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+
+		</div>
+	</div>
+</div>
+{% endblock %}
+
+{% load static %}
+<script src="{% static 'js/tiny-slider.js' %}"></script>
+<script src="{% static 'js/custom.js' %}"></script>

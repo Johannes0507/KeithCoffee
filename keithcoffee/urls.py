@@ -26,7 +26,7 @@ urlpatterns = [
 # 主頁路徑
 urlpatterns += [
     path('Home/', include('Home.urls')),
-    path('', RedirectView.as_view(url='Home/')),
+    path('', RedirectView.as_view(url='Home/')), # 當網址空白時 重定向到主頁
     ]
 
 # 產品路徑
@@ -34,7 +34,7 @@ urlpatterns += [
     path('products/', include('product.urls'), name='product'),
     ]
 
-# 購物車
+# 購物車路徑
 urlpatterns += [
     path('cart/', include('cart.urls'), name='cart'),
     ]

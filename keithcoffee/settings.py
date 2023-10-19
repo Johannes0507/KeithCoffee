@@ -32,6 +32,10 @@ ALLOWED_HOSTS = []
 LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/'
 
+# 設定登入默認URL
+LOGIN_URL = 'login'
+
+
 SESSION_COOKIE_AGE = 86400
 
 # 購物車的session

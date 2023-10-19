@@ -1,14 +1,12 @@
 # -*- coding: utf-8 -*-
-"""
-Created on Tue Oct 17 16:52:32 2023
-
-@author: KeithLee
-"""
 
 from django.urls import path
-from .views import add_to_cart
+from . import views
 
-# 加入購物車
+
 urlpatterns = [
-    path('add_to_cart/<int:productvariant_id>/', add_to_cart, name='add_to_cart'),
+    path('', views.cart, name='cart'), # 空格導向購物車頁面
+    path('checkout/', views.checkout, name='checkout'), # 訂單確認
+    path('add_to_cart/<int:productvariant_id>/', views.add_to_cart, name='add_to_cart'), # 加入購物車的圖標
+    path('hx_menu_cart/', views.hx_menu_cart, name='hx_menu_cart'),
     ]

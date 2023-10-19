@@ -6,7 +6,7 @@ Created on Mon Oct 16 21:19:17 2023
 """
 
 from django.conf import settings
-from product.models import ProductVariant
+from product.models import ProductVariant, Product
 
 class Cart(object):
     def __init__(self, request):
@@ -22,11 +22,20 @@ class Cart(object):
     
     # 將添加進購物車的商品存入cart的session值product中
     def __iter__(self):
-        # 取得商品識別碼（通常是產品的主鍵）
-        for p in self.cart.keys():
-         # 透過識別碼從資料庫中取得對應的 ProductVariant 對象            
-            self.cart[str(p)]['product'] = ProductVariant.objects.get(pk=p)
-            
+        for productvariant_id, item in self.cart.items():
+            product_variant = ProductVariant.objects.filter(pk=productvariant_id)
+            for variant in product_variant:
+                if variant:
+                    item['product'] = variant.product
+                    if '1' in variant.size:
+                        item['product'].price = item['product'].price * 2
+        
+                    item['total_price'] = item['product'].price * item['quantity']
+                    item['image'] = item['product'].image
+                    item['size'] = variant.size
+
+            yield item
+                    
     # 加總購物車所有產品的數量
     def __len__(self):
         # 使用生成器表達式計算購物車中所有商品數量的總和
@@ -54,7 +63,28 @@ class Cart(object):
         self.save()
 
     # 刪除產品的方法
-    def remove(self, product_id):
-        if product_id in self.cart:
-            del self.cart[product_id]
+    def remove(self, productvariant_id):
+        if productvariant_id in self.cart:
+            del self.cart[productvariant_id]
             self.save()
+            
+            
+    def get_total_cost(self):
+        for p in self.cart.keys():
+            self.cart[str(p)]['product'] = ProductVariant.objects.get(pk=p) 
+            
+        for item in self.cart.values():
+            if '1' in item['product'].size:
+                variant_price = item['product'].product.price * 2
+            else:
+                variant_price = item['product'].product.price        
+            all_price = sum(float(variant_price) * item['quantity']) 
+        return all_price
+    
+    def get_total_quantity(self):
+        return sum(item['quantity'] for item in self.cart.values())
+    
+
+    def get_item(self, productvariant_id):
+        # 從購物車（一個字典）中檢索相應的值 得以獲取特定產品的數量
+        return self.cart[str(productvariant_id)]
