@@ -15,7 +15,7 @@ class ProductAdmin(admin.ModelAdmin):
     
 @admin.register(ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):
-    list_display = ('product', 'size', 'stock')    
+    list_display = ('id', 'product', 'size', 'stock')    
     
 
 @admin.register(Category)

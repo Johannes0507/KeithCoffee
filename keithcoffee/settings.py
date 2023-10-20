@@ -25,6 +25,12 @@ SECRET_KEY = 'django-insecure-k5=v-pw0yl2w$zoe_q1duhv)6+d#kzgg3@)kq3f(9*%0(s@!_7
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
+# Django-debug-toolbar 配置
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,  # 只在 DEBUG 模式下啟用
+    # 其他配置選項
+}
+
 ALLOWED_HOSTS = []
 
 
@@ -51,10 +57,16 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'debug_toolbar', # 因為想查看session debug狀態所以安裝的
     'product',
     'cart',
     'blog',
     'Home',
+]
+
+# debug 互動式工具配置
+INTERNAL_IPS = [
+    '127.0.0.1',
 ]
 
 MIDDLEWARE = [
@@ -65,6 +77,7 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+    'debug_toolbar.middleware.DebugToolbarMiddleware', # 安裝debug-toolbar設置
 ]
 
 ROOT_URLCONF = 'keithcoffee.urls'
@@ -163,5 +176,5 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-
+DEBUG = True
 

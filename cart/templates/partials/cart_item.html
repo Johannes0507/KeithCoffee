@@ -1,4 +1,4 @@
-<tr>
+<tr id="cart-item-{{ item.id }}">
 	<td class="product-thumbnail">
 		<img src="{{ MEDIA_URL }}{{ item.product.image }}" alt="Image" class="img-fluid" style="height: 120pxl; width: 120px;">
 	</td>
@@ -10,19 +10,23 @@
 		<div class="input-group mb-3 d-flex align-items-center quantity-container">
 			<div class="">
 				<a 
+					href="#" 
 					class="p-3 bg-gray-100" 
 					style="text-decoration: none; color: whitesmoke;"
-					href="#"
-					 
+					hx-get="{% url 'update_cart' item.id 'decrement' %}" 
+					hx-target="#cart-item-{{ item.id }}"
+					hx-swap="outerHTML"
 				>
 				-
 				</a>
 				<span>{{ item.quantity }}</span>
 				<a 
-				class="p-3 bg-gray-100"
-				style="text-decoration: none; color: whitesmoke;"
-				href="#"
-
+					href="#" 
+					class="p-3 bg-gray-100" 
+					style="text-decoration: none; color: whitesmoke;"
+					hx-get="{% url 'update_cart' item.id 'increment' %}" 
+					hx-target="#cart-item-{{ item.id }}"
+					hx-swap="outerHTML"
 				>
 				+
 				</a>

@@ -28,7 +28,7 @@ def update_cart(request, productvariant_id, action):
     if action == 'increment':
         cart.add(productvariant_id, 1, True)
     # 否則
-    else:
+    elif action == 'decrement':        
         cart.add(productvariant_id, -1, True)
         
     productvariant = ProductVariant.objects.get(pk=productvariant_id)
@@ -38,7 +38,7 @@ def update_cart(request, productvariant_id, action):
     if '1' in productvariant.size:
         variant_price = productvariant.product.price * 2
     else:
-        variant_price = productvariant.price
+        variant_price = productvariant.product.price
     
     # 設定回傳的值
     item = {
@@ -62,4 +62,4 @@ def update_cart(request, productvariant_id, action):
 @login_required 
 def checkout(request):
     return render(request, 'checkout.html')
-    
+

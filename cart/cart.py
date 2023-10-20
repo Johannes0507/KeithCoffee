@@ -33,6 +33,8 @@ class Cart(object):
                     item['total_price'] = item['product'].price * item['quantity']
                     item['image'] = item['product'].image
                     item['size'] = variant.size
+                    item['id'] = variant.id
+
 
             yield item
                     
@@ -58,7 +60,7 @@ class Cart(object):
             self.cart[productvariant_id]['quantity'] += int(quantity)
             
             if self.cart[productvariant_id]['quantity'] == 0:
-                self.remove[productvariant_id]
+                self.remove(productvariant_id)
                 
         self.save()
 
@@ -69,22 +71,28 @@ class Cart(object):
             self.save()
             
             
-    def get_total_cost(self):
+    def get_total_cost(self):    
         for p in self.cart.keys():
             self.cart[str(p)]['product'] = ProductVariant.objects.get(pk=p) 
             
+        all_price = 0    
         for item in self.cart.values():
             if '1' in item['product'].size:
                 variant_price = item['product'].product.price * 2
             else:
                 variant_price = item['product'].product.price        
-            all_price = sum(float(variant_price) * item['quantity']) 
+            all_price += int(variant_price * item['quantity']) 
+            
         return all_price
     
     def get_total_quantity(self):
         return sum(item['quantity'] for item in self.cart.values())
     
-
+    # 查找購物車裡面特定商品的數量
     def get_item(self, productvariant_id):
+        return self.cart.get(productvariant_id, {}).get('quantity', 0)
         # 從購物車（一個字典）中檢索相應的值 得以獲取特定產品的數量
-        return self.cart[str(productvariant_id)]
+        # if productvariant_id in self.cart:
+        #     return self.cart[str(productvariant_id)]
+        # else:
+        #     return None
