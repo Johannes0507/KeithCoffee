@@ -22,3 +22,9 @@ urlpatterns += [
     path('login/', auth_views.LoginView.as_view(template_name='account/login.html'), name='login'), # 登入
     path('logout/', auth_views.LogoutView.as_view(), name='logout'), # 登出
     ]
+
+
+# 推薦頁面
+urlpatterns += [
+    path('recommend/', views.coffee_stores, name='recommend'),
+    ]

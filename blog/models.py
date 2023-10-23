@@ -30,7 +30,7 @@ class Post(models.Model):
     summary = models.CharField(verbose_name='簡介', max_length=300)
     post_content = models.TextField(verbose_name='內容')
     post_author = models.ForeignKey(Author, on_delete=models.CASCADE)
-    image = models.ImageField(verbose_name='文章照片', upload_to='post_image/')
+    image = models.ImageField(verbose_name='文章照片', upload_to='post_image/', blank=True, null=True)
     tags = models.ManyToManyField(Tag, verbose_name='文章標籤')
         
     post_create_date = models.DateField(verbose_name='文章創建日期', auto_now_add=True)
@@ -41,7 +41,7 @@ class Post(models.Model):
     
     
 class Comment(models.Model):
-    post = models.ForeignKey(Post, verbose_name='文章', on_delete=models.CASCADE)
+    post = models.ForeignKey(Post, verbose_name='評論文章', on_delete=models.CASCADE)
     comment_author = models.ForeignKey(Author, verbose_name='評論者名稱', on_delete=models.CASCADE)
     comment_content = models.TextField(verbose_name='評論', max_length=500)
 

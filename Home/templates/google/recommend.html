@@ -1,0 +1,90 @@
+{% extends 'Home_Base.html' %}
+
+{% block content %}
+
+
+
+<header style="height: 60px; background-color: #363335;">
+	<div style="padding: 28px;">
+		<h1 style="font-family: Noto Sans; font-size: 20px; line-height: 0.4; letter-spacing: 2.1px; text-align: center; color: #dbdbdb; font-weight: bold;">
+		{% block page_name %}推薦店家{% endblock %}
+		</h1>
+	</div>
+</header>
+
+
+<main style="padding: 50px 150px 50px 150px; " >
+
+	<div class="navbar navbar-expand-lg rounded" style="width: 100%; margin-bottom: 20px; margin-left: 15px;">
+
+	    <form style="width: 100%;">
+	    	{% csrf_token %}
+	        <div class="row" style="width: 100%;">
+				<div class="col-md-4 mb-3">
+					<input type="text" class="form-control"  placeholder="請輸入縣市區域..." name='region' required>
+				</div>
+
+	            <div class="col-md-4">
+	                <div class="form-group">
+	                    <select id="sortSelect2" class="form-select" name="select_trip">
+	                        <option value="" disabled selected>行程類型</option>
+							<option value="fg">朋友聚會</option>			                        
+	                        <option value="ft">休閒</option>	                       
+	                        <option value="dt">約會</option>
+							<option value="st">讀書</option>					
+	                    </select>
+	                </div>
+	            </div>
+	            <div class="col-md-4">
+	                <div class="form-group">
+	                    <select id="sortSelect3" class="form-select" name="select_coffee">
+	                        <option value="" disabled selected>咖啡專項</option>
+	                        <option value="ex">義式咖啡</option>	                        	                        
+	                        <option value="poc">手沖咖啡</option>
+	                        <option value="idc">冰滴咖啡</option>
+							<option value="mp">摩卡壺</option>	 	                        	                       	                                             
+	                    </select>
+	                </div>
+	            </div>	    
+	             <button type="submit" class="btn btn-outline-secondary" style="width: 98%; margin-left: 11px;">搜尋</button>        	            
+	        </div>	       
+	    </form>
+
+	</div>
+
+
+
+	{% for store in store_list %}
+	<div class="store">
+		<div class="col-md-8" style="width: 100%;">
+			<div class="row g-0 overflow-hidden flex-md-row mb-4 shadow-sm h-md-250 position-relative">
+				<div class="col p-4 d-flex flex-column position-static">
+					<figure>
+						<blockquote class="blockquote">
+							<!-- 連結 -->
+							<a class="text-secondary-emphasis fw-bold" href="{{ store.link }}" style="text-decoration: none;" target="_blank">
+								<!-- 店名 -->
+								<div style="overflow: hidden; white-space: nowrap; text-overflow: ellipsis; width: 600px;">
+									<p class="h2" style="letter-spacing: 3px;">{{ store.name }}</p>
+								</div>
+							</a>
+						</blockquote>
+						<figcaption class="blockquote-footer"  style="letter-spacing: 1px;">
+						COFFEE SHOP <cite title="Source Title">NAME 點集可導向Google Map</cite>
+						</figcaption>
+					</figure>					
+					<p class="h4" style="letter-spacing: 3px;"><small class="text-body-secondary h4">地址 </small>{{ store.address }}</p>
+					<p class="h4" style="letter-spacing: 3px;"><small class="text-body-secondary h4">電話 </small>{{ store.phone }}</p>
+					<p class="h4" style="letter-spacing: 3px;"><small class="text-body-secondary h4">評論 </small>{{ store.rating }} 星</p>
+				</div>
+				<div class="col-auto d-none d-lg-block">
+					<img src="data:image/jpeg;base64,{{ store.photo }}" width="300" height="257.79">
+				</div>
+			</div>
+		</div>
+	</div>
+	{% endfor %}
+
+</main>
+
+{% endblock %}

@@ -178,3 +178,7 @@ MEDIA_URL = '/media/'
 
 DEBUG = True
 
+# GOOGLE API KEY 設定
+GOOGLE_API_KEY = 'AIzaSyDuGRRdxyt8MTpuVIvramFP-Wt_b-jnwbQ'
+BASE_COUNTRY = 'TAIWAN'
+
