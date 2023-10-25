@@ -14,36 +14,34 @@ Keith Coffee
 	     	<button type="button" data-bs-target="#myCarousel" data-bs-slide-to="2" aria-label="Slide 3"></button>
 	    </div>
 	    <div class="carousel-inner">
+	    	<!-- 滑動圖片區 -->
 	     	<div class="carousel-item active" style="height: 512px;">
-	        	<svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false" >
-	        	<rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
+	     		<img src="{{ MEDIA_URL }}cafe.png" width="100%" height="100%">
 	        	<div class="container">
 		         	<div class="carousel-caption text-start">
-			            <h1>Example headline.</h1>
-			            <p class="opacity-75">Some representative placeholder content for the first slide of the carousel.</p>
-			            <p><a class="btn btn-lg btn-primary" href="#">Sign up today</a></p>
+			            <h1>舒適的環境</h1>
+			            <p class="opacity-75">Comfortable environment.</p>
 		         	</div>
 	        	</div>
 	        </div>
+	    	<!-- 滑動圖片區 -->	        
 	    	<div class="carousel-item" style="height: 512px;">
-		        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-		        <rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
+	    		<img src="{{ MEDIA_URL }}coffee_orgin.png">
 		        <div class="container">
 		         	<div class="carousel-caption">
-		            	<h1>Another example headline.</h1>
-		            	<p>Some representative placeholder content for the second slide of the carousel.</p>
-		            	<p><a class="btn btn-lg btn-primary" href="#">Learn more</a></p>
+		            	<h1>純正的產地</h1>
+		            	<p>From the purest place of origin</p>		            	
 		         	</div>
 		        </div>
 	     	</div>
+			<!-- 滑動圖片區 -->	     	
 	     	<div class="carousel-item" style="height: 512px;">
-		        <svg class="bd-placeholder-img" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg" aria-hidden="true" preserveAspectRatio="xMidYMid slice" focusable="false">
-		        <rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
+				<img src="{{ MEDIA_URL }}coffee_wall.png">
 		        <div class="container">
 		         	<div class="carousel-caption text-end">
-		            	<h1>One more for good measure.</h1>
-		            	<p>Some representative placeholder content for the third slide of this carousel.</p>
-		            	<p><a class="btn btn-lg btn-primary" href="#">Browse gallery</a></p>
+		            	<h1>最棒的咖啡豆</h1>
+		            	<p>Selling the best coffee beans</p>
+		            	<p><a class="btn btn-lg btn-dark" href="#">所有產品</a></p>
 		         	</div>
 		        </div>
 		    </div>
@@ -59,43 +57,36 @@ Keith Coffee
   	</div>
 
   	<!-- 專業簡介 -->
-	<div class="container px-4 py-5" id="hanging-icons">
-		<h2 class="pb-2 border-bottom">我們的保證</h2>
+	<div class="container px-3 py-5" id="hanging-icons" style="height: 370px;">
+		<h2 class="pb-3 border-bottom" style="letter-spacing: 1px;">我們的保證</h2>
 		<div class="row g-4 py-5 row-cols-1 row-cols-lg-3">
 			<div class="col d-flex align-items-start">
-				<div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-					<svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"/></svg>
+				<div class="icon-square text-body-emphasis d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-2">
+					<img src="{{ MEDIA_URL }}direct_trade.png" style="width: 2em; height: 2em;">
 				</div>
 				<div>
 					<h3 class="fs-2 text-body-emphasis">直接貿易</h3>
-					<p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-					<a href="#" class="btn btn-primary">
-					Primary button
-					</a>
+					<div>
+						<p style="letter-spacing: 1px;">我們保證我們的咖啡豆是直接從原產地進口，確保小農得到公平價格，同時堅守社會和環保責任。品味我們的咖啡，您品嚐到的是真正的可持續性和品質。</p>
+					</div>
 				</div>
 			</div>
 			<div class="col d-flex align-items-start">
-				<div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-					<svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"/></svg>
+				<div class="icon-square text-body-emphasis d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-2">
+					<img src="{{ MEDIA_URL }}traveling_backpack.png" style="width: 1.8em; height: 1.8em; margin-bottom: 2px;">
 				</div>
 				<div>
 					<h3 class="fs-2 text-body-emphasis">專欄文章</h3>
-					<p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-					<a href="#" class="btn btn-primary">
-					Primary button
-					</a>
+					<p style="letter-spacing: 1px;">咖啡部落客專欄文章是由對咖啡有濃厚興趣的作者所寫，涵蓋了咖啡豆的來源、烘焙技巧、沖煮方法、咖啡文化等主題，提供讀者深入了解和品味咖啡的樂趣和知識。</p>
 				</div>
 			</div>
-			<div class="col d-flex align-items-start">
-				<div class="icon-square text-body-emphasis bg-body-secondary d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-3">
-					<svg class="bi" width="1em" height="1em"><use xlink:href="#toggles2"/></svg>
+			<div class="col d-flex align-items-start" style="width:">
+				<div class="icon-square text-body-emphasis d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-2">
+					<img src="{{ MEDIA_URL }}health.png" style="width: 2em; height: 2em;">
 				</div>
 				<div>
-					<h3 class="fs-2 text-body-emphasis">店家資訊</h3>
-					<p>Paragraph of text beneath the heading to explain the heading. We'll add onto it with another sentence and probably just keep going until we run out of words.</p>
-					<a href="#" class="btn btn-primary">
-					Primary button
-					</a>
+					<h3 class="fs-2 text-body-emphasis">衛生安全</h3>
+					<p style="letter-spacing: 1px;">咖啡安全衛生是確保咖啡生產、處理和沖泡過程的衛生標準。這包括咖啡生產、存儲、處理和飲用過程中的衛生審查和措施，以確保無害、新鮮和品質的咖啡供應。</p>
 				</div>
 			</div>								
 		</div>
