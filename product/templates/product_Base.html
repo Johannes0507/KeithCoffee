@@ -57,7 +57,7 @@
 				            </ul>
 	          			</li>
 					 	<li><a href="#" class="nav-link px-2 text-white">Blog</a></li>
-					 	<li style="margin-left: 1em;"><a href="#" class="nav-link px-2 text-white">推薦店家</a></li>
+					 	<li style="margin-left: 1em;"><a href="{% url 'recommend' %}" class="nav-link px-2 text-white">推薦店家</a></li>
 
 					</ul>
 
@@ -201,7 +201,7 @@
 {% block pagination %}
 
 	{% if is_paginated %}
-		<ul class="pagination" style="padding-left: 100px; margin-top: 30px;">
+		<ul class="pagination" style="padding-left: 70px; margin-top: 30px;">
 			<li class="page-item">
 				{% if page_obj.has_previous %}
 				<a class="page-link" href="?page={{ page_obj.previous_page_number }}&searchp={{ searchp }}&sort_option={{ sort_option }}" aria-label="Previous">
@@ -295,7 +295,7 @@
 </html>
 
 
-<!-- ChatGPT表單提交 -->
+<!-- ChatGPT 下拉式顯示方式選單 -->
 <script>
     const sortSelect = document.getElementById("sortSelect");
 

@@ -77,7 +77,6 @@ def coffee_stores(request):
     
     query = f'{region}{select_trip}{select_trip}咖啡廳'
     
-    
     # 獲取Google Maps Platform API權限
     gmaps = googlemaps.Client(key=settings.GOOGLE_API_KEY)
     data = gmaps.places(query=query, language='zh-TW')
@@ -104,29 +103,33 @@ def coffee_stores(request):
         # 商店圖片
         import requests
         import base64
-        photo_reference = detail['result']['photos'][0]['photo_reference']             
-        max_width = 300
-        max_height = 300    
-        # 請求數據
-        image = requests.get(f"https://maps.googleapis.com/maps/api/place/photo?photoreference={photo_reference}&maxwidth={max_width}&maxheight={max_height}&key={settings.GOOGLE_API_KEY}")
-        # 確認請求是否成功
-        if image.status_code == 200:
-            image_data = image.content # 獲取HTML數據
-        
-        # 將圖像資料編碼為 base64
-        base64_image = base64.b64encode(image_data).decode('utf-8')
-
+        if 'photos' in detail['result']:
+            photo_reference = detail['result']['photos'][0]['photo_reference']             
+            max_width = 300
+            max_height = 300    
+            # 請求數據
+            image = requests.get(f"https://maps.googleapis.com/maps/api/place/photo?photoreference={photo_reference}&maxwidth={max_width}&maxheight={max_height}&key={settings.GOOGLE_API_KEY}")
+            # 確認請求是否成功
+            if image.status_code == 200:
+                image_data = image.content # 獲取HTML數據
+            
+            # 將圖像資料編碼為 base64
+            base64_image = base64.b64encode(image_data).decode('utf-8')
+        else:
+            base64_image = ''
                 
         # 店家評論
         reviews = []
         reviews_data = gmaps.place(f"{place_id}", language='zh-TW')
-        for i in range(len(reviews_data['result']['reviews'])):
-            text = reviews_data['result']['reviews'][i]['text'].replace('\n', '')
-            rating = reviews_data['result']['reviews'][i]['rating']
-            reviews.append({
-                'rating': rating,
-                'text': text,
-                })
+        
+        if 'reviews' in reviews_data['result']:
+            for i in range(len(reviews_data['result']['reviews'])):
+                text = reviews_data['result']['reviews'][i]['text'].replace('\n', '')
+                rating = reviews_data['result']['reviews'][i]['rating']
+                reviews.append({
+                    'rating': rating,
+                    'text': text,
+                    })
         
         store_info = {
             'name': name,
@@ -138,12 +141,11 @@ def coffee_stores(request):
             'reviews': reviews,
             }
         
-        
+        # 判斷評論裡面有沒有好喝
         all_review = ''
         for review in reviews:
             result_review = review['text']
-            all_review += result_review
-            
+            all_review += result_review            
         if '好喝' in all_review:
             store_list.append(store_info)        
         

@@ -23,30 +23,37 @@
 		    <div class="col-md-5 col-lg-4 order-md-last">
 		        <h4 class="d-flex justify-content-between align-items-center mb-3">
 		            <span class="text-primary">你的購物車</span>
-		            <span class="badge bg-primary rounded-pill">3</span>
+		            <span class="badge bg-primary rounded-pill">{{ cart.get_total_quantity }}</span>
 		        </h4>
+		        
 		        <ul class="list-group mb-3">
+		        	{% for item in cart %}
 		            <li class="list-group-item d-flex justify-content-between lh-sm">
 		                <div>
-		                    <h6 class="my-0">商品名</h6>
-		                    <small class="text-body-secondary">簡述</small>
+		                    <h6 class="my-0">{{ item.product.name }}</h6>
+		                    <small class="text-body-secondary">{{ item.size }}</small>
 		                </div>
-		                <span class="text-body-secondary">$12</span>
+		                <h6 class="text-white-50 bg-dark" style="margin-left: 10px;"> 數量 x {{ item.quantity }}</h6>
+		                <span class="text-body-secondary">{{ item.product.price }}</span>
 		            </li>
+		            {% endfor %}
 		            <li class="list-group-item d-flex justify-content-between">
 		                <span>Total (NT)</span>
 		                <strong>{{ cart.get_total_cost }} NT</strong>
 		            </li>
 		        </ul>
+		     
 		        <h4 class="mb-3">付款方式</h4>
 		        <div class="my-3">
 		            <div class="form-check">
 		                <input id="paypal" name="paymentMethod" type="radio" class="form-check-input" required>
-		                <label class="form-check-label" for="paypal">PayPal</label>
-		            </div>
+		                <label class="form-check-label" for="paypal">PayPal</label>		    					     
+		    		</div>
+		    		<div style="margin-top: 20px;">
+		    		<a href="https://p.ecpay.com.tw/79A6452"><img src="https://payment.ecpay.com.tw/Content/themes/WebStyle20170517/images/ecgo.png" alt=""/></a>   
+		    		</div>
 		        </div>
 		    </div>
-
 		    <div class="col-md-7 col-lg-8">
 		        <h4 class="mb-3">訂單確認</h4>
 		        <form class="needs-validation" action="" method="POST" novalidate>

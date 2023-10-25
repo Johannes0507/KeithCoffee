@@ -1,38 +1,46 @@
-<tr id="cart-item-{{ item.id }}">
-	<td class="product-thumbnail">
-		<img src="{{ MEDIA_URL }}{{ item.product.image }}" alt="Image" class="img-fluid" style="height: 120pxl; width: 120px;">
-	</td>
-	<td class="product-name">
-		<h2 class="h5">{{ item.product.name }}</h2><p class="text-white-50 bg-dark">{{ item.size }}</p>
-	</td>
-	<td>{{ item.product.price }} NT</td>
-	<td>
-		<div class="input-group mb-3 d-flex align-items-center quantity-container">
-			<div class="">
-				<a 
-					href="#" 
-					class="p-3 bg-gray-100" 
-					style="text-decoration: none; color: whitesmoke;"
-					hx-get="{% url 'update_cart' item.id 'decrement' %}" 
-					hx-target="#cart-item-{{ item.id }}"
-					hx-swap="outerHTML"
-				>
-				-
-				</a>
-				<span>{{ item.quantity }}</span>
-				<a 
-					href="#" 
-					class="p-3 bg-gray-100" 
-					style="text-decoration: none; color: whitesmoke;"
-					hx-get="{% url 'update_cart' item.id 'increment' %}" 
-					hx-target="#cart-item-{{ item.id }}"
-					hx-swap="outerHTML"
-				>
-				+
-				</a>
+{% if item %}
+	<tr id="cart-item-{{ item.id }}">
+		<td class="product-thumbnail">
+			<img src="{{ MEDIA_URL }}{{ item.product.image }}" alt="Image" class="img-fluid" style="height: 120pxl; width: 120px;">
+		</td>
+		<td class="product-name">
+			<h2 class="h5">{{ item.product.name }}</h2><p class="text-white-50 bg-dark">{{ item.size }}</p>
+		</td>
+		<td>{{ item.product.price }} NT</td>
+		<td>
+			<div class="input-group mb-3 d-flex align-items-center quantity-container">
+				<div class="">
+					<a 
+						href="#" 
+						class="p-3 bg-gray-100" 
+						style="text-decoration: none; color: whitesmoke;"
+						hx-get="{% url 'update_cart' item.id 'decrement' %}" 
+						hx-target="#cart-item-{{ item.id }}"
+						hx-swap="outerHTML"
+					>
+					-
+					</a>
+					<span>{{ item.quantity }}</span>
+					<a 
+						href="#" 
+						class="p-3 bg-gray-100" 
+						style="text-decoration: none; color: whitesmoke;"
+						hx-get="{% url 'update_cart' item.id 'increment' %}" 
+						hx-target="#cart-item-{{ item.id }}"
+						hx-swap="outerHTML"
+					>
+					+
+					</a>
+				</div>
 			</div>
-		</div>
-	</td>
-	<td>{{ item.total_price }} NT</td>
-	<td><a href="#" class="btn btn-black btn-sm">X</a></td>
-</tr>
+		</td>
+		<td>{{ item.total_price }} NT</td>
+		<td>
+			<form method="POST" action="{% url 'remove_cart' %}">
+				{% csrf_token %}
+				<input type="hidden" name="remove_cart" value="{{ item.id }}">
+				<button class="btn btn-light" type="submit" >移除</button>
+			</form>
+		</td>
+	</tr>
+{% endif %}

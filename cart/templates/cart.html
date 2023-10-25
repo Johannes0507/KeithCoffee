@@ -57,7 +57,16 @@
 									<span class="text-light-emphasis">小計</span>
 								</div>
 								<div class="col-md-6 text-right">
-									<strong class="text-light-emphasis">{{ cart.get_total_quantity }}</strong>
+									<!-- 購物車商品總數 -->
+									<strong 
+										class="text-light-emphasis"
+										hx-get="{% url 'hx_cart_total_quantity' %}" 
+				                    	hx-trigger="update-menu-cart from:body"
+				                    	hx-swap="innerHTML"										
+									>
+									{% include 'partials/cart_total_quantity.html' %}
+									</strong>
+
 								</div>
 							</div>
 							<div class="row mb-5">
@@ -65,7 +74,15 @@
 									<span class="text-light-emphasis">總金額</span>
 								</div>
 								<div class="col-md-6 text-right">
-									<strong class="text-light-emphasis">{{ cart.get_total_cost }} NT</strong>
+									<!-- 購物車總金額顯示 -->
+									<strong 
+										class="text-light-emphasis"
+										hx-get="{% url 'hx_cart_total' %}" 
+				                    	hx-trigger="update-menu-cart from:body"
+				                    	hx-swap="innerHTML"
+										>
+									{% include 'partials/cart_total.html' %} 
+									</strong>
 								</div>
 							</div>
 

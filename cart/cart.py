@@ -35,7 +35,6 @@ class Cart(object):
                     item['size'] = variant.size
                     item['id'] = variant.id
 
-
             yield item
                     
     # 加總購物車所有產品的數量
@@ -51,14 +50,13 @@ class Cart(object):
     def add(self, productvariant_id, quantity=1, update_quantity=False):
         productvariant_id = str(productvariant_id)
 
-        # 如果購物車沒有產品 就添加一進去
+        # 如果購物車沒有此產品 就添加一個進去
         if productvariant_id not in self.cart:
             self.cart[productvariant_id] = {'id': productvariant_id, 'quantity': 1}
 
         # 根據產品數量對產品做更新
         if update_quantity:
-            self.cart[productvariant_id]['quantity'] += int(quantity)
-            
+            self.cart[productvariant_id]['quantity'] += int(quantity)            
             if self.cart[productvariant_id]['quantity'] == 0:
                 self.remove(productvariant_id)
                 
@@ -88,11 +86,8 @@ class Cart(object):
     def get_total_quantity(self):
         return sum(item['quantity'] for item in self.cart.values())
     
+    
     # 查找購物車裡面特定商品的數量
     def get_item(self, productvariant_id):
-        return self.cart.get(productvariant_id, {}).get('quantity', 0)
-        # 從購物車（一個字典）中檢索相應的值 得以獲取特定產品的數量
-        # if productvariant_id in self.cart:
-        #     return self.cart[str(productvariant_id)]
-        # else:
-        #     return None
+        return self.cart.get(str(productvariant_id), {}).get('quantity')
+

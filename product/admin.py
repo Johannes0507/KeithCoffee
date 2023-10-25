@@ -9,15 +9,20 @@ class ProductVariantIiline(admin.TabularInline):
 
 @admin.register(Product)
 class ProductAdmin(admin.ModelAdmin):
-    list_display = ('name', 'price', 'category', 'code', 'status','date_of_create', 'date_of_update')
+    list_display = ['name', 'price', 'category', 'code', 'status','date_of_create', 'date_of_update']
     inlines = [ProductVariantIiline]
+    list_per_page = 25
+    search_fields = ['name', 'status', 'date_of_create', 'date_of_update']
     
     
 @admin.register(ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):
-    list_display = ('id', 'product', 'size', 'stock')    
+    list_display = ['id', 'product', 'size', 'stock']
+    list_per_page = 25
+    search_fields = ['size', 'stock']
     
 
 @admin.register(Category)
 class CategoryAdmin(admin.ModelAdmin):
-    list_display = ('category_name', 'name' )
+    list_display = ['category_name', 'name']
+    list_per_page = 25
