@@ -50,8 +50,7 @@ def update_cart(request, productvariant_id, action):
         # 對size不一樣產品做價格的調整
         if '1' in productvariant.size:
             product.price = product.price * 2
-            
-        
+                    
         # 設定回傳的值
         item = {
             'id': productvariant_id,
@@ -79,11 +78,61 @@ def remove_cart(request):
         
     return redirect('cart')
 
+# 生成訂單&確認訂單
+from .models import Order, OrderItem
+from django.contrib.sessions.models import Session # 取cart裡面的資訊
 
-# 確認訂單
 @login_required 
 def checkout(request):
+    if request.method == 'POST':
+        user = request.user
+        first_name = request.POST.get('first_name', '')
+        last_name = request.POST.get('last_name', '')
+        username = request.POST.get('username', '')
+        shipping_address = request.POST.get('shipping_address', '')
+        another_address = request.POST.get('another_address', '')
+        total_amount = request.POST.get('total_amount', '')
+        email = request.POST.get('email', '')
+        
+        order_done = Order(
+            user=user, 
+            first_name=first_name,
+            last_name=last_name,
+            username=username,
+            shipping_address=shipping_address, 
+            another_address=another_address,
+            total_amount=total_amount,
+            email=email,    
+            )
+        order_done.save()
+        
+        # 獲取cart裡面資訊
+        # cart_data = request.session
+        session_key = request.session.session_key # 獲取登入者的會話權限
+        try:
+            session = Session.objects.get(session_key=session_key) # 用權限進入會話
+            cart_data = session.get_decoded() # 取得session資料
+        except Session.DoesNotExist:
+            cart_data = {}
+            
+
+        
+        if cart_data:
+            for productvariant_id, item in cart_data.items():
+                product = ProductVariant.objects.get(pk=int(productvariant_id))
+                quantity = item['quantity']
+                price = item['total_price']
+                
+                order_item_done = OrderItem(
+                    order=order_done, # 這裡存取上面已經建立好的訂單內容
+                    product=product, 
+                    quantity=quantity,
+                    price=price,
+                    )
+                order_item_done.save()                
+        
     return render(request, 'checkout.html')
+
 
 
 # 綠界串接測試
@@ -91,6 +140,9 @@ from .ecpay_testing import main
 from django.views.decorators.csrf import csrf_exempt
 from django.http import HttpResponse
 
-@csrf_exempt
+@csrf_exempt # 讓第三方可以審略csrf進到裡面
 def ecpay_view(request):    
-    return HttpResponse(main())
+    
+    return HttpResponse(main(request))
+
+

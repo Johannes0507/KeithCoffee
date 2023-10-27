@@ -41,7 +41,7 @@ Keith Coffee
 		         	<div class="carousel-caption text-end">
 		            	<h1>最棒的咖啡豆</h1>
 		            	<p>Selling the best coffee beans</p>
-		            	<p><a class="btn btn-lg btn-dark" href="#">所有產品</a></p>
+		            	<p><a class="btn btn-lg btn-dark" href="{% url 'all-product' %}">所有產品</a></p>
 		         	</div>
 		        </div>
 		    </div>
@@ -55,6 +55,28 @@ Keith Coffee
 	     	<span class="visually-hidden">Next</span>
 	    </button>
   	</div>
+
+
+
+	<!-- 商品瀏覽 -->
+	<div class="album bg-dark-subtle" style="padding: 10px;">
+		<div class="container">					
+			<div style="display: flex;">
+				<div style="flex: 3;">
+					<div class="row" style="height: 400px; padding-right: 30px; padding-top: 220px;">
+						<div class="col p-4 d-flex flex-column position-static">
+							<h3 class="fw-bolder text-body-emphasis text-xxl-end">對於咖啡的固執</h3>
+							<div class="mb-1 text-body-secondary fst-italic text-xxl-end">Stubbornness for coffee</div>
+							<p class="card-text mb-auto text-body-secondary text-xxl-end">在咖啡探索家，我們有著一個不同尋常的執著 - 對於咖啡的固執。我們相信，咖啡不僅僅是一種飲料，它是一種藝術，一個故事，一種冒險。我們深知，咖啡的品質來自於無盡的追求，對每個細節的極高要求，以及對熱情的不斷投入。</p>
+						</div>
+					</div>
+				</div>
+				<div style="flex: 1;">
+					<img class="shadow" src="{{ MEDIA_URL }}coffee_and_woman.png" width="600" height="400">
+				</div>
+			</div>						
+		</div>
+	</div>
 
   	<!-- 專業簡介 -->
 	<div class="container px-3 py-5" id="hanging-icons" style="height: 370px;">
@@ -82,7 +104,7 @@ Keith Coffee
 			</div>
 			<div class="col d-flex align-items-start" style="width:">
 				<div class="icon-square text-body-emphasis d-inline-flex align-items-center justify-content-center fs-4 flex-shrink-0 me-2">
-					<img src="{{ MEDIA_URL }}health.png" style="width: 2em; height: 2em;">
+					<img src="{{ MEDIA_URL }}health.png" style="width: 1.6em; height: 1.6em;">
 				</div>
 				<div>
 					<h3 class="fs-2 text-body-emphasis">衛生安全</h3>
@@ -93,81 +115,45 @@ Keith Coffee
 	</div>
 
 	<!-- 商品瀏覽 -->
-	<div class="album py-5 bg-body-tertiary">
-		<div class="container">
-			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
-
-				
-
-				<div class="col">
-					<div class="card shadow-sm">
-						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-						<div class="card-body">
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-								</div>
-								<small class="text-body-secondary">9 mins</small>
-							</div>
+	<div class="album bg-dark-subtle" style="padding: 10px;">
+		<div class="container">					
+			<div style="display: flex;">
+				<div style="flex: 1;">
+					<img class="shadow" src="{{ MEDIA_URL }}pick_cofffee_man.png" width="600" height="400">
+				</div>				
+				<div style="flex: 3;">
+					<div class="row" style="height: 400px; padding-left: 30px; padding-top: 240px;">
+						<div class="col p-4 d-flex flex-column position-static">
+							<h3 class="fw-bolder text-body-emphasis">專業咖啡知識</h3>
+							<div class="mb-1 text-body-secondary fst-italic">Stubbornness for coffee</div>
+							<p class="card-text mb-auto text-body-secondary">我們的團隊是由咖啡專家和烘焙大師組成的，他們對咖啡的各種品種、產地、風味和烘焙程度有著深入的了解。每一杯咖啡都是我們知識的結晶，一個故事的開端。</p>
 						</div>
 					</div>
-				</div>
-				<div class="col">
-					<div class="card shadow-sm">
-						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-						<div class="card-body">
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-								</div>
-								<small class="text-body-secondary">9 mins</small>
-							</div>
-						</div>
-					</div>
-				</div>
-				<div class="col">
-					<div class="card shadow-sm">
-						<svg class="bd-placeholder-img card-img-top" width="100%" height="225" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder: Thumbnail" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="#55595c"/><text x="50%" y="50%" fill="#eceeef" dy=".3em">Thumbnail</text></svg>
-						<div class="card-body">
-							<p class="card-text">This is a wider card with supporting text below as a natural lead-in to additional content. This content is a little bit longer.</p>
-							<div class="d-flex justify-content-between align-items-center">
-								<div class="btn-group">
-									<button type="button" class="btn btn-sm btn-outline-secondary">View</button>
-									<button type="button" class="btn btn-sm btn-outline-secondary">Edit</button>
-								</div>
-								<small class="text-body-secondary">9 mins</small>
-							</div>
-						</div>
-					</div>
-				</div>
-
-			</div>
+				</div>				
+			</div>						
 		</div>
 	</div>
 
+
 	<!-- Blog顯示 -->
-	<div class="container px-4 py-5" id="hanging-icons">
+	<div class="container px-3 py-5" id="hanging-icons">
 		<div class="row">
 			<div class="col-lg-4" style="text-align: center;">
-				<svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
-				<h2 class="fw-normal">Heading</h2>
-				<p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+				<img class="rounded-circle" src="{{ MEDIA_URL }}Lin.png" style="width: 140px; margin-bottom: 10px;" />
+				<h2 class="fw-normal">林</h2>
+				<p>林，她的咖啡風味探索就像一個豐富多彩的咖啡杯評比。 每一杯成為她的烹製藝術之作。</p>
 				<p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
 			</div>
 			<div class="col-lg-4" style="text-align: center;">
-				<svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
-				<h2 class="fw-normal">Heading</h2>
-				<p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+				<img class="rounded-circle" src="{{ MEDIA_URL }}Rajan.png" style="width: 140px; margin-bottom: 10px;" />
+				<h2 class="fw-normal">Rajan</h2>
+				<p>拉詹（Rajan）是一位咖啡城市故事講述者，他以獨特的咖啡觀點捕捉這座城市的精彩。 </p>
 				<p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
 			</div>
 			<div class="col-lg-4" style="text-align: center;">
-				<svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Placeholder" preserveAspectRatio="xMidYMid slice" focusable="false"><title>Placeholder</title><rect width="100%" height="100%" fill="var(--bs-secondary-color)"/></svg>
-				<h2 class="fw-normal">Heading</h2>
-				<p>Some representative placeholder content for the three columns of text below the carousel. This is the first column.</p>
+				<img class="rounded-circle" src="{{ MEDIA_URL }}Mei.png" style="width: 140px; margin-bottom: 10px;" />
+				<h2 class="fw-normal">梅</h2>
+				<p>梅，用她的烹飪技藝讓世界為之著迷。梅氏的咖啡作品融合了藝術與品味，每一杯都經過精心調配，風味多變。</p>
 				<p><a class="btn btn-secondary" href="#">View details &raquo;</a></p>
 			</div>
 		</div>

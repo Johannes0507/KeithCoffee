@@ -45,8 +45,12 @@ def edit_myaccount(request):
     return render(request, 'account/edit_myaccount.html')
 
 
+def AboutUs(request):
+    return render(request, 'aboutus.html')
 
-# 推薦店家搜尋視圖
+
+
+# 店家搜尋視圖
 import googlemaps
 import json
 from django.conf import settings

@@ -36,8 +36,9 @@
 		<header class="p-3 text-bg-dark">
 		    <div class="container">
 				<div class="d-flex flex-wrap align-items-center justify-content-center justify-content-lg-start">
-					<a href="/" class="d-flex align-items-center mb-2 mb-lg-0 text-white text-decoration-none">
-					 	<svg class="bi me-2" width="40" height="32" role="img" aria-label="Bootstrap"><use xlink:href="#bootstrap"/></svg>
+					<a href="/" class="d-flex align-items-center mb-1 mb-lg-0 text-white text-decoration-none" style="margin-right: 10px;">
+						<!-- logo區 -->
+					 	<img src="{{ MEDIA_URL }}logo.png" width="40">
 					</a>
 
 					<ul class="nav col-12 col-lg-auto me-lg-auto mb-2 justify-content-center mb-md-0">
@@ -45,7 +46,6 @@
 					 	<li class="nav-item dropdown">
 				            <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false"  style="color: white;">商品</a>
 				            <ul class="dropdown-menu">
-				             	<li><a class="dropdown-item" href="{% url 'all-product' %}">所有商品</a></li>
 								<li><a class="dropdown-item" href="{% url 'product-category' 'FLM' %}">花&月 咖啡豆</a></li>
 				             	<li><a class="dropdown-item" href="{% url 'product-category' 'CSA' %}">中南美洲 咖啡豆</a></li>
 				             	<li><a class="dropdown-item" href="{% url 'product-category' 'EDI' %}">特別版 咖啡豆</a></li>
@@ -56,34 +56,55 @@
 				             	<li><a class="dropdown-item" href="{% url 'product-category' 'CGB' %}">禮盒</a></li>				             					             					        
 				            </ul>
 	          			</li>
-					 	<li><a href="#" class="nav-link px-2 text-white">Blog</a></li>
-					 	<li style="margin-left: 1em;"><a href="{% url 'recommend' %}" class="nav-link px-2 text-white">推薦店家</a></li>
+					 	<li><a href="{% url 'all-product' %}" class="nav-link px-2 text-white">所有商品</a></li>
+					 	<li style="margin-left: 1em;"><a href="{% url 'recommend' %}" class="nav-link px-2 text-white">店家搜尋</a></li>
 
 					</ul>
+
+
+	                <div class="menu-right flex items-center space-x-4" style="margin-right: 240px;">
+	                    <!-- 購物車顯示圖 -->	
+	                    <!-- 這是 HX 的屬性，用於設定當<div>元素被觸發時，應該向哪個URL 發送 HTTP GET 請求。 -->
+	                    <div	                 
+	                    	hx-get="{% url 'hx_menu_cart' %}"
+	                    	hx-trigger="update-menu-cart from:body"
+	                    	hx-swap="innerHTML"
+	                    >
+	                    {% include 'partials/menu_cart.html' %}
+	                	</div>
+	                </div>
+
+
 
 					<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
 					 	<input type="search" class="form-control form-control-dark text-bg-dark" placeholder="搜尋..." aria-label="Search">
 					</form>
 
 					<!-- 登入、登出、購物車按鈕 -->
-					<div class="text-end">
-					 	{% if request.user.is_authenticated %}
+					<div class="text-end" style="display: flex;">
+					 	{% if request.user.is_authenticated %}					 		
 						 	<button type="button" class="btn btn-outline-light me-2">
 						 		<a href="{% url 'logout' %}" style="text-decoration: none; color: #F8F9FA;">登出</a>	
-						 	</button>
+						 	</button>		
+							<a href="{% url 'myaccount' %}" style="margin-left: 10px; margin-top: 5px; color: white;">
+								<svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" fill="currentColor" class="bi bi-person-circle" viewBox="0 0 16 16">
+								 	<path d="M11 6a3 3 0 1 1-6 0 3 3 0 0 1 6 0z"/>
+								 	<path fill-rule="evenodd" d="M0 8a8 8 0 1 1 16 0A8 8 0 0 1 0 8zm8-7a7 7 0 0 0-5.468 11.37C3.242 11.226 4.805 10 8 10s4.757 1.225 5.468 2.37A7 7 0 0 0 8 1z"/>
+								</svg>			 	 						 		
+							</a>
 						{% else %}
 						 	<button type="button" class="btn btn-outline-light me-2">
-						 		<a href="{% url 'login' %}" style="text-decoration: none; color: #F8F9FA;">登入</a>
-						 	</button>							
+						 		<a href="{% url 'myaccount' %}" style="text-decoration: none; color: #F8F9FA;">
+									登入
+						 		</a>
+						 	</button>
+						 	<button type="button" class="btn btn-light" >
+						 		<a href="{% url 'signup' %}" style="text-decoration: none; color: black;">
+						 		註冊</a>
+						 	</button>							 								
 					 	{% endif %}
-					 	<button type="button" class="btn btn-warning">購物車</button>
 					</div>
 
-
-	                <div class="menu-right flex items-center space-x-4" style="margin-left: 10px;">
-	                    <!-- 購物車顯示圖 -->
-	                    {% include 'partials/menu_cart.html' %}
-	                </div>
 
 				</div>
 			</div>
@@ -244,11 +265,9 @@
 		<div class="container" style=" content: ''; clear: both; display: table;">
 			<div class="py-3 my-4" >
 				<ul class="nav justify-content-center border-bottom pb-3 mb-3">
-					<li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Home</a></li>
-					<li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Features</a></li>
-					<li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">Pricing</a></li>
-					<li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">FAQs</a></li>
-					<li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">About</a></li>
+					<li class="nav-item"><a href="{% url 'index' %}" class="nav-link px-2 text-body-secondary">主頁</a></li>
+					<li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">所有商品</a></li>
+					<li class="nav-item"><a href="{% url 'abountus' %}" class="nav-link px-2 text-body-secondary">About Us</a></li>
 				</ul>
 				<p class="text-center text-body-secondary">&copy; 2023 Company, Inc</p>
 			</div>

@@ -90,4 +90,7 @@ class Cart(object):
     # 查找購物車裡面特定商品的數量
     def get_item(self, productvariant_id):
         return self.cart.get(str(productvariant_id), {}).get('quantity')
+    
 
+
+        
