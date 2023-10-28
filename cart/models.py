@@ -27,9 +27,19 @@ class Order(models.Model):
         choices=ORDER_STATUS,
         default='B',
         )
+    
+    class Meta:
+        ordering = ['-order_create']
+        
+    def __str__(self):
+        return self.user.get_full_name()
 
 class OrderItem(models.Model):
     order = models.ForeignKey(Order, on_delete=models.CASCADE)
     product = models.ForeignKey(ProductVariant, verbose_name='產品', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField('數量')
     price = models.IntegerField('總金額')
+    
+    class Meta:
+        ordering = ['-id']
+    

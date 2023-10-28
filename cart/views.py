@@ -94,7 +94,7 @@ def checkout(request):
         total_amount = request.POST.get('total_amount', '')
         email = request.POST.get('email', '')
         
-        order_done = Order(
+        order_done = Order.objects.create(
             user=user, 
             first_name=first_name,
             last_name=last_name,
@@ -104,33 +104,27 @@ def checkout(request):
             total_amount=total_amount,
             email=email,    
             )
-        order_done.save()
         
-        # 獲取cart裡面資訊
-        # cart_data = request.session
-        session_key = request.session.session_key # 獲取登入者的會話權限
-        try:
-            session = Session.objects.get(session_key=session_key) # 用權限進入會話
-            cart_data = session.get_decoded() # 取得session資料
-        except Session.DoesNotExist:
-            cart_data = {}
-            
-
-        
-        if cart_data:
-            for productvariant_id, item in cart_data.items():
-                product = ProductVariant.objects.get(pk=int(productvariant_id))
+        # 獲取cart裡面資訊                
+        cart = Cart(request)
+                
+        if cart:
+            for item in cart:
+                productvariant_id = item['id']
+                productvariant = ProductVariant.objects.get(pk=productvariant_id)
                 quantity = item['quantity']
                 price = item['total_price']
                 
                 order_item_done = OrderItem(
                     order=order_done, # 這裡存取上面已經建立好的訂單內容
-                    product=product, 
+                    product=productvariant, 
                     quantity=quantity,
                     price=price,
                     )
                 order_item_done.save()                
-        
+        else:
+            cart = {}
+            
     return render(request, 'checkout.html')
 
 
