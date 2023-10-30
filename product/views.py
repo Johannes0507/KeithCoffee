@@ -4,7 +4,6 @@ from django.views import generic
     
 
 # 所有產品顯示頁面
-
 class ProductsView(generic.ListView):
     model = Product
     paginate_by = 12
@@ -13,9 +12,8 @@ class ProductsView(generic.ListView):
         searchp = self.request.GET.get('searchp', '')
         sort_option = self.request.GET.get('sort_option', '')
         
-    
         if searchp:
-            queryset = Product.objects.filter(name__icontains=searchp)
+            queryset = Product.objects.filter(name__icontains=searchp, status__exact='o')
         else:
             queryset = Product.objects.filter(status__exact='o')
     
@@ -44,9 +42,10 @@ class ProductCategoryView(generic.ListView):
     # 用來處理資料集
     def get_queryset(self):
         category_n = self.kwargs.get('category') # 取得category參數
-        category = Category.objects.get(name=category_n) # 取得category裡面的name資料，不能用Product尋找，因為Product只找到字段。
+        # 取得category裡面的name資料，不能用Product尋找，因為Product只找到字段。
+        category = Category.objects.get(name=category_n)
         if category:
-           queryset = Product.objects.filter(category=category)     
+           queryset = Product.objects.filter(category=category, status__exact='o')     
         
         searchp = self.request.GET.get('searchp', '')
         sort_option = self.request.GET.get('sort_option', '')            
@@ -62,7 +61,6 @@ class ProductCategoryView(generic.ListView):
             queryset = queryset.order_by('price')
         
         return queryset
-    
     
     # 用來傳遞資訊到HTML
     def get_context_data(self, **kwargs):
@@ -107,10 +105,8 @@ class NewProductsView(generic.ListView):
         return context
 
 
-    
 # 產品detail顯示頁面
 class ProductDetailView(generic.DetailView):
     model = Product
     def get_queryset(self):
-        
         return Product.objects.filter(status__exact='o')

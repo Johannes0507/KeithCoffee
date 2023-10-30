@@ -1,9 +1,7 @@
 from django.contrib import admin
 from .models import Product, ProductVariant, Category
 
-
-
-# 擴增在Product 列表裡面也可以新增產品類別(ProductVariant)
+# 擴增在Product 列表裡面也可以更改產品類別(ProductVariant)
 class ProductVariantIiline(admin.TabularInline):
     model = ProductVariant
 
@@ -17,7 +15,7 @@ class ProductAdmin(admin.ModelAdmin):
     
 @admin.register(ProductVariant)
 class ProductVariantAdmin(admin.ModelAdmin):
-    list_display = ['id', 'product', 'size', 'stock']
+    list_display = ['id', 'product', 'size']
     list_per_page = 25
     search_fields = ['size', 'stock']
     

@@ -1,6 +1,4 @@
 from django.db import models
-from django.db.models.signals import pre_save
-from django.dispatch import receiver
 
 
 # 產品類別資料庫
@@ -27,14 +25,14 @@ class Product(models.Model):
     
     date_of_create = models.DateField('創建日期', auto_now_add=True)
     date_of_update = models.DateField('修改日期',auto_now=True)
-
+    
     SHELVS_STATUS = (
         ('o', '上架'),
         ('u', '下架'),
         )    
     
     status = models.CharField(
-        verbose_name='產品狀態',
+        verbose_name='上架狀態',
         max_length=1,
         choices=SHELVS_STATUS,
         blank=True,
@@ -58,11 +56,19 @@ class Product(models.Model):
     
     
 # 保存產品編碼信號設定
-from django.db import models
+from django.db import models # 用於定義資料模型
+# 導入Django的post_save信號，用於在模型實例保存後發送信號
 from django.db.models.signals import post_save
+# 導入receiver裝飾器，它用於將信號處理函數與信號關聯 
 from django.dispatch import receiver
 
-# 信號處理函數，用於生成和保存code
+"""
+信號處理函數，用於生成和保存code
+sender：發送信號的模型。
+instance：接收信號的模型的實例。
+created：一個布林值，指示是否正在創建新的實例。
+**kwargs：是用於接收其他可能的關鍵字參數的字典。
+"""
 @receiver(post_save, sender=Product)
 def generate_product_code(sender, instance, created, **kwargs):
     if created and not instance.code:  # 只在對象創建時運行，確保code字段為空
@@ -74,9 +80,9 @@ def generate_product_code(sender, instance, created, **kwargs):
     
 # 產品子類別資料庫
 class ProductVariant(models.Model):
-    product = models.ForeignKey(Product, verbose_name='產品' , on_delete=models.CASCADE) # 產品外健 設置為產品刪除時會一起刪除產品子類
+    product = models.ForeignKey(Product, verbose_name='產品' , on_delete=models.CASCADE)
     size = models.CharField('產品變量', max_length=20, null=True, blank=True) # 產品尺寸
-    stock = models.PositiveIntegerField('庫存', default=0) # 產品庫存
+
     date_of_create = models.DateField(auto_now_add=True) # 新增時間
     date_of_update = models.DateField(auto_now=True) # 更新時間
     

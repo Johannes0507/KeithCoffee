@@ -34,14 +34,6 @@ DEBUG_TOOLBAR_CONFIG = {
 ALLOWED_HOSTS = []
 
 
-# 設定登入跟登出後跳轉到主頁
-LOGOUT_REDIRECT_URL = '/'
-LOGIN_REDIRECT_URL = '/'
-
-# 設定登入默認URL
-LOGIN_URL = 'login'
-
-
 SESSION_COOKIE_AGE = 86400
 
 # 購物車的session
@@ -166,8 +158,14 @@ STATICFILES_DIRS = [
 DEBUG = True
 
 
-# 設置login完之後導向主頁
+# 設定登入跟登出後跳轉到主頁
+LOGOUT_REDIRECT_URL = '/'
 LOGIN_REDIRECT_URL = '/'
+
+# 設定登入默認URL
+LOGIN_URL = 'login'
+
+
 # 設置測試發送信箱連結會到Prompt
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 

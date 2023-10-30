@@ -9,7 +9,6 @@ from django.urls import path
 from django.views.generic import RedirectView
 from . import views
 
-
 urlpatterns = [
     path('', RedirectView.as_view(url='all-product/')), # 讓空格重新導向
     path('all-product/', views.ProductsView.as_view(), name='all-product'), # 所有產品頁面
