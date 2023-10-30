@@ -11,20 +11,30 @@ from datetime import datetime
 
 
 from .cart import Cart
-from django.conf import settings
-from django.http import request
+from product.models import ProductVariant
 
-def main(cart):
-
+def main(request):
+    
+    cart = Cart(request)
+    product_names = []
+    
+    for item in cart:
+        productvariant_id = item['id']
+        productvariant = ProductVariant.objects.get(pk=productvariant_id)
+        product_name = productvariant.product.name + ' - ' + productvariant.size
+        product_names.append(product_name)
+    
+    product_names = '#'.join(product_names)
+    
     
     order_params = {
         'MerchantTradeNo': datetime.now().strftime("NO%Y%m%d%H%M%S"),
         'StoreID': '',
         'MerchantTradeDate': datetime.now().strftime("%Y/%m/%d %H:%M:%S"),
         'PaymentType': 'aio',
-        'TotalAmount': 1000, # 商品總金額
+        'TotalAmount': cart.get_total_cost(), # 商品總金額
         'TradeDesc': '訂單測試', # 商品描述
-        'ItemName': "商品名", # 商品名用#當分行
+        'ItemName': product_names, # 商品名用#當分行
         'ReturnURL': 'https://www.ecpay.com.tw/return_url.php', # 顧客填寫完付款資料後的跳轉頁面，結帳後，先導到 OrderResultURL，從綠界頁面跳回的頁面。
         'ChoosePayment': 'ALL', # 顧客付費方式
         'ClientBackURL': 'https://www.ecpay.com.tw/client_back_url.php', # 如果沒有顧客參數會跳轉到的地方

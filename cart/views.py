@@ -45,8 +45,6 @@ def update_cart(request, productvariant_id, action):
     
     quantity = cart.get_item(productvariant_id) # 使用get_item來獲取產品數量
     if quantity:
-        quantity = quantity['quantity']
-        
         # 對size不一樣產品做價格的調整
         if '1' in productvariant.size:
             product.price = product.price * 2
@@ -78,7 +76,8 @@ def remove_cart(request):
         
     return redirect('cart')
 
-# 生成訂單&確認訂單
+
+# 建立訂單&訂單確認
 from .models import Order, OrderItem
 from django.contrib.sessions.models import Session # 取cart裡面的資訊
 
@@ -105,7 +104,7 @@ def checkout(request):
             email=email,    
             )
         
-        # 獲取cart裡面資訊                
+        # 獲取cart裡面資料
         cart = Cart(request)
                 
         if cart:
@@ -127,6 +126,23 @@ def checkout(request):
             
     return render(request, 'checkout.html')
 
+
+# 拿來測試金流印參數
+def testpage(request):
+    cart = Cart(request)
+    product_names = []
+    
+    for item in cart:
+        productvariant_id = item['id']
+        productvariant = ProductVariant.objects.get(pk=productvariant_id)
+        product_name = productvariant.product.name + '-' + productvariant.size
+        product_names.append(product_name)
+        
+    context = {
+        'product_names': product_names,
+        }
+    
+    return render(request, 'test.html', context)
 
 
 # 綠界串接測試

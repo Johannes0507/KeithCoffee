@@ -168,6 +168,9 @@ STATICFILES_DIRS = [
 
 # 設置login完之後導向主頁
 LOGIN_REDIRECT_URL = '/'
+# 設置測試發送信箱連結
+EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
 
 # 設定信箱傳送到cmd
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
@@ -181,4 +184,5 @@ DEBUG = True
 # GOOGLE API KEY 設定
 GOOGLE_API_KEY = 'AIzaSyDuGRRdxyt8MTpuVIvramFP-Wt_b-jnwbQ'
 BASE_COUNTRY = 'TAIWAN'
+
 

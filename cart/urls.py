@@ -13,6 +13,7 @@ urlpatterns = [
     path('hx_cart_total/', views.hx_cart_total, name='hx_cart_total'), # ajax 購物車的價格總數
     path('hx_cart_total_quantity/', views.hx_cart_total_quantity, name='hx_cart_total_quantity'), # ajax 購物車的商品數量總數
     path('remove_cart/', views.remove_cart, name='remove_cart'), # 移除購物車商品
+    path('test/', views.testpage, name='testpage'),
     ]
 
 

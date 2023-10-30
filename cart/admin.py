@@ -6,7 +6,7 @@ from .models import Order, OrderItem
 
 @admin.register(Order)
 class OrderAdmin(admin.ModelAdmin):
-    list_display = ['id', 'user', 'shipping_address', 'email', 'order_create']
+    list_display = ['id', 'user', 'shipping_address', 'email', 'status', 'order_create']
 
 @admin.register(OrderItem)
 class OrderItem(admin.ModelAdmin):

@@ -91,6 +91,8 @@ class Cart(object):
     def get_item(self, productvariant_id):
         return self.cart.get(str(productvariant_id), {}).get('quantity')
     
+    
 
+            
 
         

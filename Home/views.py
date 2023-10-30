@@ -48,6 +48,12 @@ def edit_myaccount(request):
 def AboutUs(request):
     return render(request, 'aboutus.html')
 
+# 設置重製密碼發出的信件內容
+from django.contrib.auth.views import PasswordResetView
+
+class PasswordResetView(PasswordResetView):
+    email_template_name = 'account/password_reset_email.html'
+
 
 
 # 店家搜尋視圖
