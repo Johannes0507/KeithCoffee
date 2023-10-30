@@ -11,7 +11,7 @@
 
 ## 網站頁面
 1. 主頁
-![主頁](./readme_image/home_page.png)
+![主頁](./readme_image/home_page1.png)
 2. 商品頁面
 3. 購物車頁面
 4. 訂單頁面
