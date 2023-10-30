@@ -50,7 +50,7 @@
 
 ## 後端介紹
 接下來會以產品為出發點去做其他功能的延伸。
-#### product models.py
+### product models.py
 * Product (產品)
     除了基本的名稱、價格、描述、圖片、上架狀態以外，還有商品種類與編號， 
     編號構想是想透過編號上面種類的名稱，更能準確的讓員工或者消費者快速的找到產品。
@@ -74,11 +74,11 @@
     ![category](./readme_image/product/category_model.png)
     設計讓產品分類呈現給使用者。除了更好搜尋之外，也讓網站更多元性。
 
-#### product admin.py
+### product admin.py
 後台admin管理頁面增添了一個ProdictVariant模型的選項進ProductAdmin裡面，增加再填寫產品資料時的便利性。
 ![product-admin](./readme_image/product/product_admin.png) 
 
-#### product views.py
+### product views.py
 * ProductsView (所有產品視圖)
 使用ListView類別，並且設定model為product，簡化調用資料庫的流程。
     > get_queryset 處理再網頁上面呈現的相關查詢集，讓使用者可以在輸入關鍵字或者選擇查詢選項時可以返回相對應的數值。
@@ -103,7 +103,7 @@
     ![product-detail-url](./readme_image//product/product_detail_url.png)
 ![product-detail](./readme_image//product/product_detail_view.png)
 
-#### product urls.py
+### product urls.py
 這裡應用RedirectView函式讓導向product/頁面時跳轉的是所有產品頁面。其餘都是按照相對應的名稱去做設置。
 ![product-urls](./readme_image//product/product_urls.png)
 
