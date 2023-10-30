@@ -13,7 +13,7 @@ from django.contrib.auth import views as auth_views
 urlpatterns = [
     path('', views.index, name='index'),
     path('recommend/', views.coffee_stores, name='recommend'), # 推薦頁面
-    path('aboutus/', views.AboutUs, name='abountus'),
+    path('aboutus/', views.AboutUs, name='abountus'), # 關於我們
     ]
 
 
@@ -34,15 +34,15 @@ urlpatterns += [
     
     path('password_reset/done/',
          PasswordResetDoneView.as_view(template_name='account/password_reset_done.html'), 
-         name='password_reset_done'), 
+         name='password_reset_done'), # 填寫完顯示已發送信件字體
     
     path('reset/<uidb64>/<token>/',
          PasswordResetConfirmView.as_view(template_name='account/password_reset_confirm.html', success_url=reverse_lazy('password_reset_complete')), 
-         name='password_reset_confirm'),
+         name='password_reset_confirm'), # 從後台得到連結後重設密碼的頁面
     
     path('reset/done/', 
          PasswordResetCompleteView.as_view(template_name='account/password_reset_complete.html'), 
-         name='password_reset_complete'),
+         name='password_reset_complete'), # 完成密碼重置並顯示再次登入連結
     ]
 
 

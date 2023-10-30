@@ -9,7 +9,7 @@
 <header style="height: 60px; background-color: #363335;">
 	<div style="padding: 28px;">
 		<h1 style="font-family: Noto Sans; font-size: 20px; line-height: 0.4; letter-spacing: 2.1px; text-align: center; color: #dbdbdb; font-weight: bold;">
-		{% block page_name %}我的帳號{% endblock %}
+		我的帳號
 		</h1>
 	</div>
 </header>
@@ -22,6 +22,9 @@
 	<a class="btn btn-outline-secondary" href="{% url 'edit_myaccount' %}" style="width: 100px; height: 40px; margin-left: 30px;">
 		<p class="fw-semibold">更改資料</p>
 	</a>
+	<a class="btn btn-outline-danger" href="{% url 'password_reset' %}" style="width: 100px; height: 40px; margin-left: 30px;">
+		<p class="fw-semibold">變更密碼</p>
+	</a>	
 	<div style="width: 100%; clear: both;"></div>
 	<div class="col-lg-6" >
 		<div class="card-body">

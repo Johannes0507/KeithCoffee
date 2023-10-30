@@ -10,127 +10,114 @@
 <link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
 
 
-
+<!-- 產品名稱顯示 -->
 {% block page_name %} {{ product.name }} {% endblock %}
 
 
 {% block content %}
 
-<!-- 移除掉產品上源線 -->
-{% block underline %}
-{% endblock %}
+    <!-- 移除掉產品上源線 -->
+    {% block underline %}
+    {% endblock %}
 
+    <div class="main">
+        <div class="h-100 p-5 bg-body-tertiary border rounded-3" style="width: 930px; margin: 5px;">
+                <!-- 產品圖片 -->
+                <img src="{{ MEDIA_URL }}{{ product.image }}" alt="" style="width: 400px;">
+            
+            <div class="productDetails" style="float: right; padding-right: 10px; width: 400px;" >
+                <div style="padding: 0px 20px 20px 20px;">
+                    <div class="proLabel">                    
+                        <figure>
+                            <blockquote class="blockquote">
+                                <!-- 產品名稱 -->
+                                <span class="opacity-75" style="font-size: 23px; letter-spacing: 2px;">{{ product.name }}</span>
+                            </blockquote>
+                            <figcaption class="blockquote-footer" style="">
+                                <!-- 產品貨號 -->
+                                <cite title="Source Title" style="margin-left: 5px;">
+                                {{ product.code }}
+                                </cite>
+                            </figcaption>
+                        </figure>                                    
+                    </div>
 
-{% block search_product %}
-{% endblock %}
+                    <hr style="opacity: .2;" />
+                    <div style="padding: 0.5em;">
+                        <!-- 產品價格 -->
+                        <span class="opacity-75" style="color: #E7412C; font-size: 28px; letter-spacing: 3px;" id="product-price">NT{{ product.on_sale }}</span>
+                    </div>
+                    <hr style="opacity: .2;" />
 
-<div class="main">
-    <div class="h-100 p-5 bg-body-tertiary border rounded-3" style="width: 930px; margin: 5px;">
-            <!-- 產品圖片 -->
-            <img src="{{ MEDIA_URL }}{{ product.image }}" alt="" style="width: 400px;">
-        
-        <div class="productDetails" style="float: right; padding-right: 10px; width: 400px;" >
-            <div style="padding: 0px 20px 20px 20px;">
-                <div class="proLabel">                    
-                    <figure>
-                        <blockquote class="blockquote">
-                            <!-- 產品名稱 -->
-                            <span class="opacity-75" style="font-size: 23px; letter-spacing: 2px;">{{ product.name }}</span>
-                        </blockquote>
-                        <figcaption class="blockquote-footer" style="">
-                            <!-- 產品貨號 -->
-                            <cite title="Source Title" style="margin-left: 5px;">
-                            {{ product.code }}
-                            </cite>
-                        </figcaption>
-                    </figure>                                    
+                    <div style="padding: 0.3em;">
+                        <span class="opacity-75" style="color: #E7412C; font-size: 16px; letter-spacing: 3px;" id="product-price">咖啡豆價格顯示已半磅為主。選擇對應的產品填加入購物車，數量請在購物車裡更改。</span>
+                    </div>
+                    <hr style="opacity: .2; clear: both;" />
+
+                    {% for variant_p in product.productvariant_set.all %}
+                        <div style="padding: 10px; display: flex; align-items: center;">
+                            <span style="padding-right: 20px;">SIZE : </span>
+                            <!-- 品項選擇 -->                   
+                            <button class="btn btn-outline-secondary size-button" data-size="{{ variant_p.size.id }}" type="button" style="margin-right: 15px; height: 40px; font-size: .575em; font-style: italic; width: 80px;">
+                            {{ variant_p.size }}
+                            </button>      
+                            <!-- 加入購物車按鈕 -->
+                            <a href="#"
+                                hx-get="{% url 'add_to_cart' variant_p.id %}"
+                                hx-target="#menu-cart-button"
+                                hx-swap="outerHTML"
+                            >
+                                <button id="add_cart" class="btn btn-outline-secondary add-to-cart" type="button" style="width:150px; height: 40px; background-color: #212529; margin-left: 10px;">
+                                    <strong style="color: #DEE2E6; font-size: 16px;">加入購物車</strong>
+                                </button>
+                            </a>                                                      
+                        </div>                              
+                    {% endfor %}
+
                 </div>
+            </div>
+        </div>
 
-                <hr style="opacity: .2;" />
-                <div style="padding: 0.5em;">
-                    <!-- 產品價格 -->
-                    <span class="opacity-75" style="color: #E7412C; font-size: 28px; letter-spacing: 3px;" id="product-price">NT{{ product.on_sale }}</span>
-                </div>
-                <hr style="opacity: .2;" />
+        <div class="col-md-6">
+            <div class="h-100 p-5 bg-body-tertiary rounded-3" style="width: 930px; margin: 20px 5px 5px 5px;">
+                <figure>
+                    <blockquote class="blockquote">
+                        <h1 class="class="display-5">簡介</h1>
+                    </blockquote>
+                    <figcaption class="blockquote-footer" style="">
+                        <cite title="Source Title" style="margin-left: 5px;">
+                        <!-- 產品名稱 -->
+                        Product Introduction
+                        </cite>
+                    </figcaption>
+                </figure>
+                <p class="white-space:pre-wrap" style="line-height: 200%; letter-spacing: 2px;">
+                    <!-- 產品簡介 -->
+                    {{ product.product_inst }}
+                </p>
 
-                <div style="padding: 0.3em;">
-                    <span class="opacity-75" style="color: #E7412C; font-size: 16px; letter-spacing: 3px;" id="product-price">咖啡豆價格顯示已半磅為主。選擇對應的產品填加入購物車，數量請在購物車裡更改。</span>
-                </div>
-                <hr style="opacity: .2; clear: both;" />
-
-                {% for variant_p in product.productvariant_set.all %}
-                    <div style="padding: 10px; display: flex; align-items: center;">
-                        <span style="padding-right: 20px;">SIZE : </span>
-                        <!-- 品項選擇 -->                   
-                        <button class="btn btn-outline-secondary size-button" data-size="{{ variant_p.size.id }}" type="button" style="margin-right: 15px; height: 40px; font-size: .575em; font-style: italic; width: 80px;">
-                        {{ variant_p.size }}
-                        </button>      
-                        <!-- 加入購物車按鈕 -->
-                        <a href="#"
-                            hx-get="{% url 'add_to_cart' variant_p.id %}"
-                            hx-target="#menu-cart-button"
-                            hx-swap="outerHTML"
-                        >
-                            <button id="add_cart" class="btn btn-outline-secondary add-to-cart" type="button" style="width:150px; height: 40px; background-color: #212529; margin-left: 10px;">
-                                <strong style="color: #DEE2E6; font-size: 16px;">加入購物車</strong>
-                            </button>
-                        </a>                                                      
-                    </div>                              
-                {% endfor %}
+            </div>
+        </div>
+        <div class="col-md-6">
+            <div class="h-100 p-5 bg-body-tertiary border rounded-3" style="width: 930px; margin: 20px 5px 5px 5px;">
+                <figure>
+                    <blockquote class="blockquote">
+                        <h1 class="class="display-5">產品介紹</h1>
+                    </blockquote>
+                    <figcaption class="blockquote-footer" style="">
+                        <cite title="Source Title" style="margin-left: 5px;">
+                        Product Presentation
+                        </cite>
+                    </figcaption>
+                </figure>
+                <!-- 產品描述 -->
+                <p class="white-space:pre-wrap" style="line-height: 200%; letter-spacing: 2px;"> 
+                    {{ product.product_desc }}
+                </p>
 
             </div>
         </div>
     </div>
-
-    <div class="col-md-6">
-        <div class="h-100 p-5 bg-body-tertiary rounded-3" style="width: 930px; margin: 20px 5px 5px 5px;">
-            <figure>
-                <blockquote class="blockquote">
-                    <h1 class="class="display-5">簡介</h1>
-                </blockquote>
-                <figcaption class="blockquote-footer" style="">
-                    <cite title="Source Title" style="margin-left: 5px;">
-                    <!-- 產品名稱 -->
-                    Product Introduction
-                    </cite>
-                </figcaption>
-            </figure>
-            <p class="white-space:pre-wrap" style="line-height: 200%; letter-spacing: 2px;">
-                <!-- 產品簡介 -->
-                {{ product.product_inst }}
-            </p>
-
-        </div>
-    </div>
-    <div class="col-md-6">
-        <div class="h-100 p-5 bg-body-tertiary border rounded-3" style="width: 930px; margin: 20px 5px 5px 5px;">
-            <figure>
-                <blockquote class="blockquote">
-                    <h1 class="class="display-5">產品介紹</h1>
-                </blockquote>
-                <figcaption class="blockquote-footer" style="">
-                    <cite title="Source Title" style="margin-left: 5px;">
-                    Product Presentation
-                    </cite>
-                </figcaption>
-            </figure>
-            <!-- 產品描述 -->
-            <p class="white-space:pre-wrap" style="line-height: 200%; letter-spacing: 2px;"> 
-                {{ product.product_desc }}
-            </p>
-
-        </div>
-    </div>
-</div>
-
-<!-- ionicon -->
-<script type="module" src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.esm.js"></script>
-<script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
-
-
-
-
-<!-- chatGPT 數量選擇與價錢動態加乘 -->
 
 
 {% endblock %}

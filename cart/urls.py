@@ -12,8 +12,7 @@ urlpatterns = [
     path('hx_menu_cart/', views.hx_menu_cart, name='hx_menu_cart'), # ajax 讓購物車數字可以根據商品加減變動
     path('hx_cart_total/', views.hx_cart_total, name='hx_cart_total'), # ajax 購物車的價格總數
     path('hx_cart_total_quantity/', views.hx_cart_total_quantity, name='hx_cart_total_quantity'), # ajax 購物車的商品數量總數
-    path('remove_cart/', views.remove_cart, name='remove_cart'), # 移除購物車商品
-    path('test/', views.testpage, name='testpage'),
+    path('test/', views.testpage, name='testpage'), # 測試參數
     ]
 
 

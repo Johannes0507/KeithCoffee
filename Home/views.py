@@ -25,8 +25,7 @@ def signup(request):
 
     return render(request, 'account/signup.html', {'form': form})
 
-
-# 帳號視圖
+# 帳號資訊視圖
 @login_required
 def myaccount(request):
     return render(request, 'account/myaccount.html')
@@ -44,7 +43,7 @@ def edit_myaccount(request):
         return redirect('myaccount')
     return render(request, 'account/edit_myaccount.html')
 
-
+# 關於我們
 def AboutUs(request):
     return render(request, 'aboutus.html')
 

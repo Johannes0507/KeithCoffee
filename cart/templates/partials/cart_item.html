@@ -35,12 +35,6 @@
 			</div>
 		</td>
 		<td>{{ item.total_price }} NT</td>
-		<td>
-			<form method="POST" action="{% url 'remove_cart' %}">
-				{% csrf_token %}
-				<input type="hidden" name="remove_cart" value="{{ item.id }}">
-				<button class="btn btn-light" type="submit" >移除</button>
-			</form>
-		</td>
+
 	</tr>
 {% endif %}

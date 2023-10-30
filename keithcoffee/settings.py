@@ -60,7 +60,6 @@ INSTALLED_APPS = [
     'debug_toolbar', # 因為想查看session debug狀態所以安裝的
     'product',
     'cart',
-    'blog',
     'Home',
 ]
 
@@ -164,11 +163,12 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
 
+DEBUG = True
 
 
 # 設置login完之後導向主頁
 LOGIN_REDIRECT_URL = '/'
-# 設置測試發送信箱連結
+# 設置測試發送信箱連結會到Prompt
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
@@ -179,7 +179,6 @@ EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 MEDIA_URL = '/media/'
 
-DEBUG = True
 
 # GOOGLE API KEY 設定
 GOOGLE_API_KEY = 'AIzaSyDuGRRdxyt8MTpuVIvramFP-Wt_b-jnwbQ'

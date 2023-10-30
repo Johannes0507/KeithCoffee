@@ -113,160 +113,153 @@
 
 <!-- sidebar & content -->
 <main style=" clear: both; display: table; width: 100%;">
-{% block sidebar %}
-	<!-- 頁面名稱 -->
-	<header style="height: 60px; background-color: #363335;">
-		<div style="padding: 28px;">
-			<h1 style="font-family: Noto Sans; font-size: 20px; line-height: 0.4; letter-spacing: 2.1px; text-align: center; color: #dbdbdb; font-weight: bold;">
-			{% block page_name %}{% endblock %}
-			</h1>
-		</div>
-	</header>
-
-	<div class="flex-shrink-0 p-3" style="width: 25%; float: left;">
-			{% block search_product %}
-				<div style="height: 20px; padding-top: 30px; margin-left: 30px;">
-					<!-- sidebar搜尋選項-->
-					<form class="row g-3" action="" method="GET" id="search_p">
-					 	<div class="col-auto" style="width: 100%;">
-					    	<input type="search" class="form-control" name="searchp" placeholder="搜尋商品名稱...">
-						    <button style="margin-top: 10px;" type="submit" class="btn btn-primary mb-3">搜尋</button>
-					 	</div>
-					</form>
-				</div>
-			{% endblock %}
-		<div style="margin: 110px 30px 30px 30px;">
-			<div class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
-				<svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
-				<span class="fs-5 fw-semibold">商品分類</span>
+	{% block sidebar %}
+		<!-- 頁面名稱 -->
+		<header style="height: 60px; background-color: #363335;">
+			<div style="padding: 28px;">
+				<h1 style="font-family: Noto Sans; font-size: 20px; line-height: 0.4; letter-spacing: 2.1px; text-align: center; color: #dbdbdb; font-weight: bold;">
+				{% block page_name %}{% endblock %}
+				</h1>
 			</div>
-			<ul class="list-unstyled ps-0">
-				<li class="mb-1">
-					<a href="{% url 'all-product' %}" class="btn d-inline-flex align-items-center rounded border-0 collapsed" data-bs-target="#dashboard-collapse" aria-expanded="false">
-					  所有商品
-					</a>
-				</li>
-				<li class="mb-1">
-					<a href="{% url 'new-product' %}" class="btn d-inline-flex align-items-center rounded border-0 collapsed" data-bs-target="#dashboard-collapse" aria-expanded="false">
-					  最新商品
-					</a>
-				</li>
-				<li class="mb-1">
-					<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
-					咖啡豆
-					</button>
-					<div class="collapse" id="dashboard-collapse">
-						<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-							<li><a href="{% url 'product-category' 'FLM' %}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">花&月</a></li>
-							<li><a href="{% url 'product-category' 'CSA' %}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">中南美洲</a></li>
-							<li><a href="{% url 'product-category' 'AFR' %}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">非洲</a></li>
-						</ul>
+		</header>
+
+		<div class="flex-shrink-0 p-3" style="width: 25%; float: left;">
+				{% block search_product %}
+					<div style="height: 20px; padding-top: 30px; margin-left: 30px;">
+						<!-- sidebar搜尋選項-->
+						<form class="row g-3" action="" method="GET" id="search_p">
+						 	<div class="col-auto" style="width: 100%;">
+						    	<input type="search" class="form-control" name="searchp" placeholder="搜尋商品名稱...">
+							    <button style="margin-top: 10px;" type="submit" class="btn btn-primary mb-3">搜尋</button>
+						 	</div>
+						</form>
 					</div>
-				</li>
-				<li class="mb-1">
-					<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
-					沖煮器具
-					</button>
-					<div class="collapse" id="orders-collapse">
-						<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
-							<li><a href="{% url 'product-category' 'POV' %}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">手沖濾杯</a></li>
-							<li><a href="{% url 'product-category' 'SNK' %}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">手沖壺</a></li>
-							<li><a href="{% url 'product-category' 'GRI' %}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">磨豆器</a></li>
-						</ul>
-					</div>
-				</li>
-				<li class="border-top my-3"></li>
-				<li class="mb-1">
-					<a href="{% url 'product-category' 'EDI' %}" class="btn d-inline-flex align-items-center rounded border-0 collapsed" data-bs-target="#dashboard-collapse" aria-expanded="false">
-					  特別版
-					</a>
-				</li>
-				<li class="mb-1">
-					<a href="{% url 'product-category' 'CGB' %}" class="btn d-inline-flex align-items-center rounded border-0 collapsed" data-bs-target="#dashboard-collapse" aria-expanded="false">
-					  禮盒
-					</a>
-				</li>
-			</ul>
-		</div>
-	</div>
-
-{% endblock %}
-
-
-<div class="album py-5 bg-body-tertiary" style="width: 70%;float: right;">
-	<div class="container">
-		<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" style=" align-items: center; padding-left: 15px;">
-			<!-- 上源線 -->
-			{% block underline %}
-				<li class="border-top" style="width: 95%; list-style-type: none; margin-top: 0px; margin-left: 15px;"></li>
-				<div style="height: 40px; margin-left: 10px;">
-					<!-- 商品顯示方式 -->
-					<form id="sortForm" action="?searchp={{ searchp }}&sort_option={{ sort_option }}" method="GET">
-					    <select id="sortSelect" class="form-select" name="sort_option">
-				        	<option value="" disabled selected>顯示方式</option>
-				            <option value="new">依最新項目排序</option>
-				            <option value="ud">價格高 > 低</option>
-				            <option value="du">價格低 > 高</option>
-					    </select>
-					    <input type="hidden" name="searchp" value="{{ searchp }}">
-					</form> 
+				{% endblock %}
+			<div style="margin: 110px 30px 30px 30px;">
+				<div class="d-flex align-items-center pb-3 mb-3 link-body-emphasis text-decoration-none border-bottom">
+					<svg class="bi pe-none me-2" width="30" height="24"><use xlink:href="#bootstrap"/></svg>
+					<span class="fs-5 fw-semibold">商品分類</span>
 				</div>
-				<li class="border-top" style="width: 95%; list-style-type: none; margin-bottom: 20px; margin-left: 15px;"></li>
-			{% endblock %}	
+				<ul class="list-unstyled ps-0">
+					<li class="mb-1">
+						<a href="{% url 'all-product' %}" class="btn d-inline-flex align-items-center rounded border-0 collapsed" data-bs-target="#dashboard-collapse" aria-expanded="false">
+						  所有商品
+						</a>
+					</li>
+					<li class="mb-1">
+						<a href="{% url 'new-product' %}" class="btn d-inline-flex align-items-center rounded border-0 collapsed" data-bs-target="#dashboard-collapse" aria-expanded="false">
+						  最新商品
+						</a>
+					</li>
+					<li class="mb-1">
+						<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#dashboard-collapse" aria-expanded="false">
+						咖啡豆
+						</button>
+						<div class="collapse" id="dashboard-collapse">
+							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+								<li><a href="{% url 'product-category' 'FLM' %}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">花&月</a></li>
+								<li><a href="{% url 'product-category' 'CSA' %}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">中南美洲</a></li>
+								<li><a href="{% url 'product-category' 'AFR' %}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">非洲</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="mb-1">
+						<button class="btn btn-toggle d-inline-flex align-items-center rounded border-0 collapsed" data-bs-toggle="collapse" data-bs-target="#orders-collapse" aria-expanded="false">
+						沖煮器具
+						</button>
+						<div class="collapse" id="orders-collapse">
+							<ul class="btn-toggle-nav list-unstyled fw-normal pb-1 small">
+								<li><a href="{% url 'product-category' 'POV' %}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">手沖濾杯</a></li>
+								<li><a href="{% url 'product-category' 'SNK' %}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">手沖壺</a></li>
+								<li><a href="{% url 'product-category' 'GRI' %}" class="link-body-emphasis d-inline-flex text-decoration-none rounded">磨豆器</a></li>
+							</ul>
+						</div>
+					</li>
+					<li class="border-top my-3"></li>
+					<li class="mb-1">
+						<a href="{% url 'product-category' 'EDI' %}" class="btn d-inline-flex align-items-center rounded border-0 collapsed" data-bs-target="#dashboard-collapse" aria-expanded="false">
+						  特別版
+						</a>
+					</li>
+					<li class="mb-1">
+						<a href="{% url 'product-category' 'CGB' %}" class="btn d-inline-flex align-items-center rounded border-0 collapsed" data-bs-target="#dashboard-collapse" aria-expanded="false">
+						  禮盒
+						</a>
+					</li>
+				</ul>
+			</div>
+		</div>
+	{% endblock %}
+	<div class="album py-5 bg-body-tertiary" style="width: 70%;float: right;">
+		<div class="container">
+			<div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3" style=" align-items: center; padding-left: 15px;">
+				<!-- 上源線 -->
+				{% block underline %}
+					<li class="border-top" style="width: 95%; list-style-type: none; margin-top: 0px; margin-left: 15px;"></li>
+					<div style="height: 40px; margin-left: 10px;">
+						<!-- 商品顯示方式 -->
+						<form id="sortForm" action="?searchp={{ searchp }}&sort_option={{ sort_option }}" method="GET">
+						    <select id="sortSelect" class="form-select" name="sort_option">
+					        	<option value="" disabled selected>顯示方式</option>
+					            <option value="new">依最新項目排序</option>
+					            <option value="ud">價格高 > 低</option>
+					            <option value="du">價格低 > 高</option>
+						    </select>
+						    <input type="hidden" name="searchp" value="{{ searchp }}">
+						</form> 
+					</div>
+					<li class="border-top" style="width: 95%; list-style-type: none; margin-bottom: 20px; margin-left: 15px;"></li>
+				{% endblock %}	
 
-{% block content %}
-{% endblock %}
+	{% block content %}
+	{% endblock %}
 
-<div style="clear: both;"></div>
+	<div style="clear: both;"></div>
 
-{% block pagination %}
-
-	{% if is_paginated %}
-		<ul class="pagination" style="padding-left: 70px; margin-top: 30px;">
-			<li class="page-item">
-				{% if page_obj.has_previous %}
-				<a class="page-link" href="?page={{ page_obj.previous_page_number }}&searchp={{ searchp }}&sort_option={{ sort_option }}" aria-label="Previous">
-					<span aria-hidden="true">&laquo;</span>
-				</a>
-				{% endif %}
-			</li>
-			{% for page in page_obj.paginator %}
-			<li class="page-item">
-				<a class="page-link" href="?page={{ page.number }}&searchp={{ searchp }}&sort_option={{ sort_option }}">
-				{{ page.number }}
-				</a>
-			</li>
-			{% endfor %}
-			<li class="page-item">
-				{% if page_obj.has_next %}
-				<a class="page-link" href="?page={{ page_obj.next_page_number }}&searchp={{ searchp }}&sort_option={{ sort_option }}" aria-label="Next">
-					<span aria-hidden="true">&raquo;</span>
-				</a>
-				{% endif %}
-			</li>
-		</ul>
-	{% endif %}		
-
-{% endblock %}
+		{% block pagination %}
+			{% if is_paginated %}
+				<ul class="pagination" style="padding-left: 70px; margin-top: 30px;">
+					<li class="page-item">
+						{% if page_obj.has_previous %}
+						<a class="page-link" href="?page={{ page_obj.previous_page_number }}&searchp={{ searchp }}&sort_option={{ sort_option }}" aria-label="Previous">
+							<span aria-hidden="true">&laquo;</span>
+						</a>
+						{% endif %}
+					</li>
+					{% for page in page_obj.paginator %}
+					<li class="page-item">
+						<a class="page-link" href="?page={{ page.number }}&searchp={{ searchp }}&sort_option={{ sort_option }}">
+						{{ page.number }}
+						</a>
+					</li>
+					{% endfor %}
+					<li class="page-item">
+						{% if page_obj.has_next %}
+						<a class="page-link" href="?page={{ page_obj.next_page_number }}&searchp={{ searchp }}&sort_option={{ sort_option }}" aria-label="Next">
+							<span aria-hidden="true">&raquo;</span>
+						</a>
+						{% endif %}
+					</li>
+				</ul>
+			{% endif %}		
+		{% endblock %}
 
 
+			</div>
 		</div>
 	</div>
-</div>
 </main>
-
-
 
 	<!-- footer的分隔線 -->
 	<div class="b-example-divider" style=" content: ''; clear: both; display: table;"></div>
 
-	<!-- 頁尾 -->
+	<!-- footer -->
 	<footer>
 		<div class="container" style=" content: ''; clear: both; display: table;">
 			<div class="py-3 my-4" >
 				<ul class="nav justify-content-center border-bottom pb-3 mb-3">
 					<li class="nav-item"><a href="{% url 'index' %}" class="nav-link px-2 text-body-secondary">主頁</a></li>
-					<li class="nav-item"><a href="#" class="nav-link px-2 text-body-secondary">所有商品</a></li>
+					<li class="nav-item"><a href="{% url 'all-product' %}" class="nav-link px-2 text-body-secondary">所有商品</a></li>
 					<li class="nav-item"><a href="{% url 'abountus' %}" class="nav-link px-2 text-body-secondary">About Us</a></li>
 				</ul>
 				<p class="text-center text-body-secondary">&copy; 2023 Company, Inc</p>

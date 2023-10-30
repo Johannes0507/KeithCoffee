@@ -12,15 +12,11 @@ class Cart(object):
     def __init__(self, request):
         # 將傳遞的request對象保存為類的屬性
         self.session = request.session
-        cart = self.session.get(settings.CART_SESSION_ID)
-
-        # 如果沒有cart的session就將它設為空值
-        if not cart:
-            cart =  self.session[settings.CART_SESSION_ID] = {}
+        cart = self.session.get(settings.CART_SESSION_ID, {})
         
         self.cart = cart
     
-    # 將添加進購物車的商品存入cart的session值product中
+    # 這個方法使 Cart 物件可以被迭代，以便在模板中顯示購物車的內容。
     def __iter__(self):
         for productvariant_id, item in self.cart.items():
             product_variant = ProductVariant.objects.filter(pk=productvariant_id)
@@ -44,7 +40,7 @@ class Cart(object):
     
     def save(self):
         self.session[settings.CART_SESSION_ID] = self.cart
-        self.session.modifield = True
+        self.session.modified = True
         
     # 向購物車新增或更新
     def add(self, productvariant_id, quantity=1, update_quantity=False):
@@ -57,8 +53,8 @@ class Cart(object):
         # 根據產品數量對產品做更新
         if update_quantity:
             self.cart[productvariant_id]['quantity'] += int(quantity)            
-            if self.cart[productvariant_id]['quantity'] == 0:
-                self.remove(productvariant_id)
+            if self.cart[productvariant_id]['quantity'] <= 0:
+                self.remove(productvariant_id)                
                 
         self.save()
 
@@ -66,7 +62,7 @@ class Cart(object):
     def remove(self, productvariant_id):
         if productvariant_id in self.cart:
             del self.cart[productvariant_id]
-            self.save()
+            self.save()         
             
             
     def get_total_cost(self):    
@@ -90,9 +86,3 @@ class Cart(object):
     # 查找購物車裡面特定商品的數量
     def get_item(self, productvariant_id):
         return self.cart.get(str(productvariant_id), {}).get('quantity')
-    
-    
-
-            
-
-        

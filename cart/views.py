@@ -67,16 +67,6 @@ def update_cart(request, productvariant_id, action):
     return reponse
 
 
-# 從購物車移除商品
-def remove_cart(request):
-    cart = Cart(request)
-    if request.method== 'POST':
-        productvariant_id = request.POST.get('remove_cart', '')
-        cart.remove(productvariant_id)
-        
-    return redirect('cart')
-
-
 # 建立訂單&訂單確認
 from .models import Order, OrderItem
 from django.contrib.sessions.models import Session # 取cart裡面的資訊

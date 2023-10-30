@@ -15,9 +15,7 @@ urlpatterns = [
     path('all-product/', views.ProductsView.as_view(), name='all-product'), # 所有產品頁面
     path('new-product/', views.NewProductsView.as_view(), name='new-product'), # 最新產品頁面
     path('<str:category>/', views.ProductCategoryView.as_view(), name='product-category'), # 類別產品頁面
-    ]
-
-urlpatterns += [
     path('all-product/<int:pk>/', views.ProductDetailView.as_view(), name='product-detail'), # 產品細節頁面
     ]
+
 
