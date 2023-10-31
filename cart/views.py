@@ -15,18 +15,18 @@ def add_to_cart(request, productvariant_id):
 def hx_menu_cart(request):
     return render(request, 'partials/menu_cart.html')
 
-# 更新購物車總價格
-def hx_cart_total(request):
-    return render(request, 'partials/cart_total.html')
-
 # 更新購物車商品總數
 def hx_cart_total_quantity(request):
     return render(request, 'partials/cart_total_quantity.html')
 
+# 更新購物車總價格
+def hx_cart_total(request):
+    return render(request, 'partials/cart_total.html')
+
+
 # 購物車
 def cart(request):
     return render(request, 'cart.html')
-    
 
 from decimal import Decimal
 # 用ajax追蹤購物車裡面產品數量
@@ -56,7 +56,7 @@ def update_cart(request, productvariant_id, action):
             'product': product,
             'quantity': quantity,
             'size': productvariant.size,
-            'total_price': (Decimal(quantity) * product.price),
+            'total_price': round(int(Decimal(quantity) * product.price) * 0.9), # 顯示折扣價格
             }
     else:
         item = None
@@ -69,7 +69,6 @@ def update_cart(request, productvariant_id, action):
 
 # 建立訂單&訂單確認
 from .models import Order, OrderItem
-from django.contrib.sessions.models import Session # 取cart裡面的資訊
 
 @login_required 
 def checkout(request):
@@ -115,24 +114,6 @@ def checkout(request):
             cart = {}
             
     return render(request, 'checkout.html')
-
-
-# 拿來測試金流印參數
-def testpage(request):
-    cart = Cart(request)
-    product_names = []
-    
-    for item in cart:
-        productvariant_id = item['id']
-        productvariant = ProductVariant.objects.get(pk=productvariant_id)
-        product_name = productvariant.product.name + '-' + productvariant.size
-        product_names.append(product_name)
-        
-    context = {
-        'product_names': product_names,
-        }
-    
-    return render(request, 'test.html', context)
 
 
 # 綠界串接測試

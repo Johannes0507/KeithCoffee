@@ -21,7 +21,7 @@ def main(request):
     for item in cart:
         productvariant_id = item['id']
         productvariant = ProductVariant.objects.get(pk=productvariant_id)
-        product_name = productvariant.product.name + ' - ' + productvariant.size
+        product_name = productvariant.product.name + ' - ' + productvariant.size + ' x ' + str(cart.get_item(productvariant_id)) + '價格' + str(item['total_price'])
         product_names.append(product_name)
     
     product_names = '#'.join(product_names)

@@ -40,13 +40,9 @@ urlpatterns += [
     path('cart/', include('cart.urls'), name='cart'),
     ]
 
-# # Blog路徑
-# urlpatterns += [
-#     path('blog/', include('blog.urls'), name='blog'),
-#     ]
 
 
-# django-debug-toolbar 外掛路徑設置
+# django-debug-toolbar 路徑設置
 if settings.DEBUG:
     import debug_toolbar
 

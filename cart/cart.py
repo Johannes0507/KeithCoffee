@@ -24,9 +24,9 @@ class Cart(object):
                 if variant:
                     item['product'] = variant.product
                     if '1' in variant.size:
-                        item['product'].price = item['product'].price * 2
+                        item['product'].price = item['product'].price * 2       
         
-                    item['total_price'] = item['product'].price * item['quantity']
+                    item['total_price'] = round(int(item['product'].price * item['quantity']) * 0.9)
                     item['image'] = item['product'].image
                     item['size'] = variant.size
                     item['id'] = variant.id
@@ -63,8 +63,7 @@ class Cart(object):
         if productvariant_id in self.cart:
             del self.cart[productvariant_id]
             self.save()         
-            
-            
+                            
     def get_total_cost(self):    
         for p in self.cart.keys():
             self.cart[str(p)]['product'] = ProductVariant.objects.get(pk=p) 
@@ -75,13 +74,9 @@ class Cart(object):
                 variant_price = item['product'].product.price * 2
             else:
                 variant_price = item['product'].product.price        
-            all_price += int(variant_price * item['quantity']) 
+            all_price += round(int(variant_price * item['quantity']) * 0.9) # 顯示折扣後的價格
             
         return all_price
-    
-    def get_total_quantity(self):
-        return sum(item['quantity'] for item in self.cart.values())
-    
     
     # 查找購物車裡面特定商品的數量
     def get_item(self, productvariant_id):
