@@ -58,28 +58,32 @@
 	</div>
 
 	<div style="padding-top: 50px;">
-		<p class="h2 text-body-emphasis">選購的商品</p>
+		<p class="h2 text-body-emphasis">訂單資訊</p>
 		<table class="table table-hover ">
 			<thead>
-				<tr>
-					<th class="product-thumbnail"></th>
-					<th class="product-name">產品名</th>
-					<th class="product-price">價格</th>			
-					<th class="product-quantity">數量</th>	
+				<tr class="h5">
+					<th class="order-item">編號 & 時間</th>
+					<th class="order-name">產品</th>
+					<th class="order-price">總價</th>				
 				</tr>
 			</thead>
-			<tbody>
-				{% for item in cart %}
-				<tr>
-					<td class="product-thumbnail">
-						<img src="{{ MEDIA_URL }}{{ item.product.image }}" alt="Image" class="img-fluid" style="height: 120pxl; width: 120px;">
-					</td>
-					<td class="product-name">
-						<h2 class="h5">{{ item.product.name }}</h2><p class="text-white-50 bg-dark">{{ item.size }}</p>
-					</td>
-					<td>{{ item.product.price }} NT</td>
-					<td>{{ item.quantity }}</td>
-				</tr>
+			<tbody style="letter-spacing: 0.5px;">
+				{% for order in orders_data %}
+					<tr>
+						<td class="otder-item">
+							編號 {{ order.order_id }}
+							<p class="text-white-50 bg-dark">時間：{{ order.order_create }}</p>
+						</td>	
+						<td class="product-name">
+							{% for orderitem in order.order_items %}											
+								<p class="6">
+									<img src="{{ MEDIA_URL }}{{ orderitem.product_image }}" alt="Image" class="img-fluid" style="height: 30pxl; width: 30px;" /> 
+									{{ orderitem.product_name }}</p>
+									<p class="text-white-50 bg-dark"> {{ orderitem.product_size }} x {{ orderitem.product_quantity }}  NT$ {{ orderitem.products_price }}</p>					
+							{% endfor %}
+						</td>
+						<td>NT$ {{ order.order_price }}</td>				
+					</tr>
 				{% endfor %}
 			</tbody>
 		</table>

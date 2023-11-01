@@ -151,6 +151,7 @@
 * update_cart
     這裡負責在購物車裡面讓用戶可以透過+、-來選擇產品的數量的增減。
     處理完回購物車回傳邏輯之後，有多加reponse['HX-Trigger'] = 'update-menu-cart'，來觸發html上面多個hx-trigger="update-menu-cart from:body"的事件。
+    讓所有畫面相關的參數都可以同步更新。
     ![cart_button](./readme_image/cart/update_cart.png)
 
 

@@ -2,7 +2,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from .forms import SignUpForm
-
+from cart.models import OrderItem, Order
 
 # 主頁視圖
 def index(request):
@@ -25,10 +25,40 @@ def signup(request):
 
     return render(request, 'account/signup.html', {'form': form})
 
+
 # 帳號資訊視圖
 @login_required
 def myaccount(request):
-    return render(request, 'account/myaccount.html')
+    # 處理訂單的顯示
+    user = request.user
+    orders = Order.objects.filter(user=user)
+    context = {}
+    orders_data = []
+    for order in orders:
+        order_data = {
+        'order_id': order.id,
+        'order_price': order.total_amount,
+        'order_create': order.order_create,
+        'order_items': [],
+        }
+        
+        orderitems = OrderItem.objects.filter(order=order)        
+        for item in orderitems:
+            product_data = {
+                'product_name': item.product.product.name,
+                'product_size':  item.product.size,            
+                'product_quantity': item.quantity,
+                'product_image': item.product.product.image,
+                'products_price': item.price,
+            }
+            order_data['order_items'].append(product_data)
+            
+        orders_data.append(order_data)
+
+    context['orders_data'] = orders_data        
+
+    return render(request, 'account/myaccount.html', context)
+
 
 # 更改帳號資訊
 @login_required
@@ -47,7 +77,8 @@ def edit_myaccount(request):
 def AboutUs(request):
     return render(request, 'aboutus.html')
 
-# 設置重製密碼發出的信件內容
+
+# 設置重製密碼發出的信件來自指定的html
 from django.contrib.auth.views import PasswordResetView
 
 class PasswordResetView(PasswordResetView):

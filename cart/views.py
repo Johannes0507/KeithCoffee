@@ -113,6 +113,8 @@ def checkout(request):
         else:
             cart = {}
             
+        return redirect('ecpay') # 儲存訂單後跳轉到綠界測試頁面
+    
     return render(request, 'checkout.html')
 
 

@@ -7,7 +7,7 @@ class Order(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     first_name = models.CharField(verbose_name='姓', max_length=50, null=True)
     last_name = models.CharField(verbose_name='名', max_length=50, null=True)
-    username = models.CharField(verbose_name='訂單名', max_length=50, null=True)
+    username = models.CharField(verbose_name='訂單者名稱', max_length=50, null=True)
     shipping_address = models.CharField(verbose_name='地址', max_length=200)
     another_address = models.CharField(verbose_name='其他地址', max_length=200, blank=True, null=True)
     total_amount = models.IntegerField(verbose_name='總金額')

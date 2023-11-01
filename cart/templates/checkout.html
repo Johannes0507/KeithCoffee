@@ -4,7 +4,19 @@
 確認訂單
 {% endblock %}
 
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        const form = document.querySelector("form");
+        const addressInput = form.querySelector("#address");
 
+        form.addEventListener("submit", function (event) {
+            if (!addressInput.value) {
+                alert("請輸入有效送貨地址");
+                event.preventDefault(); // 阻止表單提交
+            }
+        });
+    });
+</script>
 
 {% block content %}
 
@@ -55,46 +67,34 @@
 		    <div class="col-md-7 col-lg-8">
 		        <h4 class="mb-3">訂單確認</h4>
 
-		        <form class="needs-validation" action="" method="POST" novalidate>
+		        <form class="needs-validation" action="" method="POST">
 		        {% csrf_token %}
 		            <div class="row g-3">
 		                <div class="col-sm-6">
 		                    <label for="firstName" class="form-label">姓</label>
-		                    <input type="text" class="form-control" id="firstName" placeholder="" value="{{ request.user.first_name }}" name="first_name" required>
-		                    <div class="invalid-feedback">
-		                        請填入有效的姓氏
-		                    </div>
+		                    <input type="text" class="form-control" placeholder="必填" value="{{ request.user.first_name }}" name="first_name" title="不可留白" required>
 		                </div>
 
 		                <div class="col-sm-6">
 		                    <label for="lastName" class="form-label">名</label>
-		                    <input type="text" class="form-control" id="lastName" placeholder="" value="{{ request.user.last_name }}" name="last_name" required>
-		                    <div class="invalid-feedback">
-		                        請填入有效的名字
-		                    </div>
+		                    <input type="text" class="form-control" placeholder="必填" value="{{ request.user.last_name }}" name="last_name" title="不可留白" required>
 		                </div>
 
 		                <div class="col-12">
 		                    <label for="username" class="form-label">訂購者名稱</label>
 		                    <div class="input-group has-validation">
-		                        <input type="text" class="form-control" id="username" value="{{ request.user.username }}" name="username" required>
-		                        <div class="invalid-feedback">
-		                            此欄位為必填
-		                        </div>
+		                        <input type="text" class="form-control" value="{{ request.user.username }}" placeholder="必填" name="username" title="此欄位為必填" required>
 		                    </div>
 		                </div>
 
 		                <div class="col-12">
-		                    <label for="email" class="form-label">Email<span class="text-body-secondary"> (選填)</span></label>
-		                    <input type="email" class="form-control" id="email" value="{{ request.user.email }}" name="email" required>
-		                    <div class="invalid-feedback">
-		                        請輸入有效Email
-		                    </div>
+		                    <label for="email" class="form-label">Email</label>
+		                    <input type="email" class="form-control" placeholder="必填" value="{{ request.user.email }}" name="email" title="此欄位為必填" required>
 		                </div>
 
 		                <div class="col-12">
 		                    <label for="address" class="form-label">送貨地址</label>
-		                    <input type="text" class="form-control" id="address" name="shipping_address" required>
+		                    <input type="text" class="form-control" placeholder="必填" name="shipping_address" required>
 		                    <div class="invalid-feedback">
 		                        請輸入有效送貨地址
 		                    </div>
@@ -102,16 +102,13 @@
 
 		                <div class="col-12">
 		                    <label for="address2" class="form-label">其他地址<span class="text-body-secondary"> (選填)</span></label>
-		                    <input type="text" class="form-control" id="address2" name="another_address">
+		                    <input type="text" class="form-control" name="another_address" placeholder="選填">
 		                </div>
 		                <hr class="my-4">		              
 		                <input type="hidden" name="total_amount" value="{{ cart.get_total_cost }}">		              
-		                <a href=""><button class="w-100 btn btn-primary btn-lg" type="submit">送出訂單</button></a>		                
+		                <button class="w-100 btn btn-primary btn-lg" type="submit">送出訂單</button>   
 		            </div>
-
 		        </form>
-
-
 		    </div>
 		</div>
 
