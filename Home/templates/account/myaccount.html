@@ -64,6 +64,7 @@
 				<tr class="h5">
 					<th class="order-item">編號 & 時間</th>
 					<th class="order-name">產品</th>
+					<th class="order-status">狀態</th>
 					<th class="order-price">總價</th>				
 				</tr>
 			</thead>
@@ -72,17 +73,27 @@
 					<tr>
 						<td class="otder-item">
 							編號 {{ order.order_id }}
-							<p class="text-white-50 bg-dark">時間：{{ order.order_create }}</p>
+							<p class="text-white-50 bg-dark">時間 {{ order.order_create }}</p>
 						</td>	
 						<td class="product-name">
 							{% for orderitem in order.order_items %}											
 								<p class="6">
-									<img src="{{ MEDIA_URL }}{{ orderitem.product_image }}" alt="Image" class="img-fluid" style="height: 30pxl; width: 30px;" /> 
-									{{ orderitem.product_name }}</p>
-									<p class="text-white-50 bg-dark"> {{ orderitem.product_size }} x {{ orderitem.product_quantity }}  NT$ {{ orderitem.products_price }}</p>					
+									<img src="{{ MEDIA_URL }}{{ orderitem.product_image }}" alt="Image" class="img-fluid" style="width: 25px;" /> 
+									{{ orderitem.product_name }}
+								</p>
+								<p class="text-white-50 bg-dark"> 
+									{{ orderitem.product_size }} x {{ orderitem.product_quantity }}  NT$ {{ orderitem.products_price }}
+								</p>					
 							{% endfor %}
-						</td>
-						<td>NT$ {{ order.order_price }}</td>				
+						</td>						
+						<td>							
+							{% if order.order_status == 'S' %}
+								<p class="text-white-50 bg-dark">已出貨</p>
+							{% else %}
+								<p class="text-white-50 bg-dark">未出貨</p>
+							{% endif %}
+						</td>			
+						<td>NT$ {{ order.order_price }}</td>	
 					</tr>
 				{% endfor %}
 			</tbody>

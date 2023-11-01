@@ -4,10 +4,14 @@ from django.contrib.auth import login
 from .forms import SignUpForm
 from cart.models import OrderItem, Order
 
+
 # 主頁視圖
-def index(request):
-    
+def index(request):    
     return render(request, 'index.html')
+
+# 關於我們
+def AboutUs(request):
+    return render(request, 'aboutus.html')
 
 
 # 註冊視圖
@@ -21,7 +25,7 @@ def signup(request):
             
             return redirect('/')  # 註冊完之後畫面跳轉到主頁
     else:
-        form = SignUpForm() # 如果表單內容不正確讓畫面跳轉到元表單
+        form = SignUpForm() # 如果表單內容不正確讓畫面跳轉到原表單
 
     return render(request, 'account/signup.html', {'form': form})
 
@@ -39,6 +43,7 @@ def myaccount(request):
         'order_id': order.id,
         'order_price': order.total_amount,
         'order_create': order.order_create,
+        'order_status': order.status,
         'order_items': [],
         }
         
@@ -49,7 +54,7 @@ def myaccount(request):
                 'product_size':  item.product.size,            
                 'product_quantity': item.quantity,
                 'product_image': item.product.product.image,
-                'products_price': item.price,
+                'products_price': item.price,                
             }
             order_data['order_items'].append(product_data)
             
@@ -73,10 +78,6 @@ def edit_myaccount(request):
         return redirect('myaccount')
     return render(request, 'account/edit_myaccount.html')
 
-# 關於我們
-def AboutUs(request):
-    return render(request, 'aboutus.html')
-
 
 # 設置重製密碼發出的信件來自指定的html
 from django.contrib.auth.views import PasswordResetView
@@ -85,12 +86,12 @@ class PasswordResetView(PasswordResetView):
     email_template_name = 'account/password_reset_email.html'
 
 
-
-# 店家搜尋視圖
+# googlemaps店家搜尋視圖
 import googlemaps
-import json
 from django.conf import settings
+from django.views.decorators.csrf import csrf_exempt
 
+@csrf_exempt
 def coffee_stores(request):
     
     region = request.GET.get('region', '')
@@ -127,11 +128,11 @@ def coffee_stores(request):
         place_id = store.get('place_id') # 搜尋店家place_id
         name = store.get('name') # 店家名
         link = f"https://www.google.com/maps/place/?q=place_id:{place_id}" # 店家連結
-        rating = store.get('rating') # 店家評分
+        main_rating = store.get('rating') # 店家評分
         
         
         detail = gmaps.place(f"{place_id}", language='zh-TW') # 進到第二層 店家資訊      
-        address = detail['result']['formatted_address'] # 店家地址 (原版是英文需翻譯)    
+        address = detail['result']['formatted_address'] # 店家地址  
         
         
         # 店家國際電話
@@ -166,10 +167,7 @@ def coffee_stores(request):
             for i in range(len(reviews_data['result']['reviews'])):
                 text = reviews_data['result']['reviews'][i]['text'].replace('\n', '')
                 rating = reviews_data['result']['reviews'][i]['rating']
-                reviews.append({
-                    'rating': rating,
-                    'text': text,
-                    })
+                reviews.append( {'rating': rating, 'text': text, } )
         
         store_info = {
             'name': name,
@@ -177,7 +175,7 @@ def coffee_stores(request):
             'link': link,
             'phone': store_phone,
             'photo': base64_image,
-            'rating': rating,
+            'rating': main_rating,
             'reviews': reviews,
             }
         
@@ -187,14 +185,8 @@ def coffee_stores(request):
             result_review = review['text']
             all_review += result_review            
         if '好喝' in all_review:
-            store_list.append(store_info)        
+            store_list.append(store_info)                   
         
-    
-    context = { 
-        'store_list': store_list,
-        }
+    context = { 'store_list': store_list }
     
     return render(request, 'google/recommend.html', context)
-
-
-    

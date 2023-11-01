@@ -57,8 +57,6 @@
 					 	<li style="margin-left: 1em;"><a href="{% url 'recommend' %}" class="nav-link px-2 text-white">店家搜尋</a></li>
 
 					</ul>
-
-
 	                <div class="menu-right flex items-center space-x-4" style="margin-right: 240px;">
 	                    <!-- 購物車顯示圖 -->	
 	                    <!-- 這是 HX 的屬性，用於設定當<div>元素被觸發時，應該向哪個URL 發送 HTTP GET 請求。 -->
@@ -67,11 +65,9 @@
 	                    	hx-trigger="update-menu-cart from:body"
 	                    	hx-swap="innerHTML"
 	                    >
-	                    {% include 'partials/menu_cart.html' %}
+	                    	{% include 'partials/menu_cart.html' %}
 	                	</div>
 	                </div>
-
-
 					<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
 					 	<input type="search" class="form-control form-control-dark text-bg-dark" placeholder="搜尋..." aria-label="Search">
 					</form>
@@ -100,16 +96,10 @@
 						 	</button>							 								
 					 	{% endif %}
 					</div>
-
-					
-
-
 				</div>
 			</div>
 		</header>
 	</div>
-
-
 
 	{% block sidebar %}
 	{% endblock %}
@@ -117,9 +107,7 @@
 	{% block content %}
 	{% endblock %}
 
-
 	<div class="b-example-divider" style=" content: ''; clear: both; display: table;"></div>
-
 	<!-- 頁尾 -->
 	<footer>
 		<div class="container" style=" content: ''; clear: both; display: table;">
@@ -133,7 +121,6 @@
 			</div>
 		</div>
 	</footer>
-
 	<!-- 頁面背景變色按鈕 -->
 	<div class="dropdown position-fixed bottom-0 end-0 mb-3 me-3 bd-mode-toggle">
 	 	<button class="btn btn-transparent py-2 dropdown-toggle d-flex align-items-center"
@@ -170,7 +157,6 @@
 	        </li>
 	  	</ul>
 	</div>
-
 	<!-- 購物車的JS檔案 -->
 	<script src="https://unpkg.com/htmx.org@1.7.0"></script> 
 </body>

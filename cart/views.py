@@ -72,50 +72,71 @@ from .models import Order, OrderItem
 
 @login_required 
 def checkout(request):
-    if request.method == 'POST':
-        user = request.user
-        first_name = request.POST.get('first_name', '')
-        last_name = request.POST.get('last_name', '')
-        username = request.POST.get('username', '')
-        shipping_address = request.POST.get('shipping_address', '')
-        another_address = request.POST.get('another_address', '')
-        total_amount = request.POST.get('total_amount', '')
-        email = request.POST.get('email', '')
-        
-        order_done = Order.objects.create(
-            user=user, 
-            first_name=first_name,
-            last_name=last_name,
-            username=username,
-            shipping_address=shipping_address, 
-            another_address=another_address,
-            total_amount=total_amount,
-            email=email,    
-            )
-        
-        # 獲取cart裡面資料
-        cart = Cart(request)
-                
-        if cart:
-            for item in cart:
-                productvariant_id = item['id']
-                productvariant = ProductVariant.objects.get(pk=productvariant_id)
-                quantity = item['quantity']
-                price = item['total_price']
-                
-                order_item_done = OrderItem(
-                    order=order_done, # 這裡存取上面已經建立好的訂單內容
-                    product=productvariant, 
-                    quantity=quantity,
-                    price=price,
-                    )
-                order_item_done.save()                
-        else:
-            cart = {}
+    if 'cart' in request.session and request.session['cart']:
+        if request.method == 'POST':
+            user = request.user
+            first_name = request.POST.get('first_name', '')
+            last_name = request.POST.get('last_name', '')
+            username = request.POST.get('username', '')
+            shipping_address = request.POST.get('shipping_address', '')
+            another_address = request.POST.get('another_address', '')
+            total_amount = request.POST.get('total_amount', '')
+            email = request.POST.get('email', '')
             
-        return redirect('ecpay') # 儲存訂單後跳轉到綠界測試頁面
+            order_done = Order.objects.create(
+                user=user, 
+                first_name=first_name,
+                last_name=last_name,
+                username=username,
+                shipping_address=shipping_address, 
+                another_address=another_address,
+                total_amount=total_amount,
+                email=email,    
+                )
+            
+            # 獲取cart裡面資料
+            cart = Cart(request)
+                    
+            if cart:
+                for item in cart:
+                    productvariant_id = item['id']
+                    productvariant = ProductVariant.objects.get(pk=productvariant_id)
+                    quantity = item['quantity']
+                    price = item['total_price']
+                    
+                    order_item_done = OrderItem(
+                        order=order_done, # 這裡存取上面已經建立好的訂單內容
+                        product=productvariant, 
+                        quantity=quantity,
+                        price=price,
+                        )
+                    order_item_done.save()                         
+            else:
+                cart = {}
+                
+            return redirect('ecpay') # 儲存訂單後跳轉到綠界測試頁面
+        
+    else:
+        return redirect('checkout_failed')
     
     return render(request, 'checkout.html')
+
+
+# 結帳成功頁面
+@login_required 
+def CheckoutDone(request):
+    
+    if 'cart' in request.session and request.session['cart']:
+        del request.session['cart']
+    else:
+        return redirect('checkout_failed')
+    
+    return render(request, 'checkout_done.html')
+
+# 結帳失敗頁面
+@login_required 
+def CheckoutFailed(request):
+    return render(request, 'checkout_failed.html')
 
 
 # 綠界串接測試

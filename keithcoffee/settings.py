@@ -22,23 +22,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # SECURITY WARNING: keep the secret key used in production secret!
 SECRET_KEY = 'django-insecure-k5=v-pw0yl2w$zoe_q1duhv)6+d#kzgg3@)kq3f(9*%0(s@!_7'
 
-# SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
-
-# Django-debug-toolbar 配置
-DEBUG_TOOLBAR_CONFIG = {
-    'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,  # 只在 DEBUG 模式下啟用
-    # 其他配置選項
-}
-
 ALLOWED_HOSTS = []
-
-
-SESSION_COOKIE_AGE = 86400
-
-# 購物車的session
-CART_SESSION_ID = 'cart'
-
 
 # Application definition
 
@@ -150,12 +134,12 @@ import os
 # Static files (CSS, JavaScript, Images)
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
+
+# 靜態紋黨路徑設定
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
 ]
-
-DEBUG = True
 
 
 # 設定登入跟登出後跳轉到主頁
@@ -170,6 +154,13 @@ LOGIN_URL = 'login'
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 
+# SESSION存活時間
+SESSION_COOKIE_AGE = 86400
+
+# 購物車的session
+CART_SESSION_ID = 'cart'
+
+
 # 設定信箱傳送到cmd
 EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
@@ -182,4 +173,13 @@ MEDIA_URL = '/media/'
 GOOGLE_API_KEY = 'AIzaSyDuGRRdxyt8MTpuVIvramFP-Wt_b-jnwbQ'
 BASE_COUNTRY = 'TAIWAN'
 
+
+# SECURITY WARNING: don't run with debug turned on in production!
+DEBUG = True
+
+# Django-debug-toolbar 配置
+DEBUG_TOOLBAR_CONFIG = {
+    'SHOW_TOOLBAR_CALLBACK': lambda request: DEBUG,  # 只在 DEBUG 模式下啟用
+    # 其他配置選項
+}
 

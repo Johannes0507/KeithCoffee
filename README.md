@@ -12,9 +12,8 @@
 ### 資料庫
     * MySQL
 ### API
-    * Goole Maps Platform
+    * Google Maps Platform
         > Places API
-        > Gecoding API
 ### debug tool
     * Django Debug Toolbar
 
@@ -34,7 +33,7 @@
     > * pip install mysqlclient (連接mysql)
     > * pip install Pillow (專案連接圖片路徑專用)
     > * pip install django-debug-toolbar (除錯工具)
-    > * pip install googlemaps (google api)
+    > * pip install googlemaps (google api用)
 6. 下載mysql 
     > * 官網連結: https://dev.mysql.com/downloads/mysql/
     > * 下載設定密碼可先設 1234567890 (本django專案設定的密碼)
@@ -48,6 +47,81 @@
 
 
 # 後端介紹
+
+## APP: Home
+* Home APP 負責主頁的顯示、使用者的帳號管理、Google Maps Plateform相關API的處理。
+
+### Home 主頁
+主頁部分主要著重在url分配給前端做頁面的連接，呈現頁面多以圖片為主。
+
+### Home 使用者的相關功能
+* 註冊
+    > 註冊表單
+    這裡負責使用者註冊的表單，使用UserCreationForm類別做基本的使用者名稱與密碼註冊，再以User model對自定義的email等欄位去做擴展。
+    ![sign_up_form](./readme_image/Home/sign_up_form.png)
+    > 註冊視圖
+    這裡處理表單的內容，讓使用者從註冊頁面輸入完註冊資料儲存到後台後跳轉到主頁。
+    ![sign_up_view](./readme_image/Home/sign_up_view.png)
+
+* 登入 & 登出
+    > 登入與登出因為沒有特別資料的儲存，所以在urls.py裡面直接使用Django內建的使用者類別LoginView&LogoutView。
+    ![login_url](./readme_image/Home/login&logout_url.png)
+    > 登入與登出後的頁面跳轉從setting.py做設置。
+    ![login&logout_setting](./readme_image/Home/login&logout_setting.png)
+
+* 更改會員資料
+    > 更改會員跟變更密碼是分開的，這裡只處理姓名與email的變更。
+    ![login&logout_setting](./readme_image/Home/edit_account.png)
+    > 網站頁面
+    ![account_page](./readme_image/Home/account_page.png)
+    ![account_page1](./readme_image/Home/account_page1.png)
+
+* 變更密碼
+    > 變更密碼使用Django的變更密碼類別，實現寄送信箱的功能，但因為在都是在本地端實作，所以有預設密碼變更信件是寄送到終端機顯示。
+    ![reset_password_url](./readme_image/Home/reset_password_url.png)
+    > 所屬變更密碼步驟分別是以下
+    1. PasswordResetView 填寫信箱表單，變更密碼連結信件將送往此信箱。這裡有設至email相關的指定使用html的信件內容。
+    ![password_reset_view1](./readme_image/Home/password_reset_view1.png)
+    * HEML信件內容
+    ![email_content](./readme_image/Home/email_content.png)
+    * 網站畫面
+    ![password_reset_view](./readme_image/Home/password_reset_view.png)
+    2. PasswordResetDoneView 填寫完信箱表單之後的頁面，上面有提示信件已送往。
+    * 網站畫面
+    ![password_reset_done_view](./readme_image/Home/password_reset_done_view.png)
+    * 終端機顯示的變更密碼連結畫面
+    ![paswword_reset_email](./readme_image/Home/password_reset_email.png)
+    3. PasswordResetConfirmView 收到信件之後，透過上面的連結所連結到的變更密碼的網址頁面。
+    ![password_reset_confirm_view](./readme_image/Home/password_reset_confirm_view.png)
+    4. PasswordResetCompleteView 變更成功之後，顯示給使用者看的成功畫面，有加註可以跳轉到登入頁面重新登入。
+    ![password_reset_complete_view](./readme_image/Home/password_reset_complete_view.png)
+
+
+### Google Maps Platform (Places API)
+初始想法本來是透過爬蟲來獲取google map上面店家相關資料，但是考慮到要爬取的頁面太多可能導致IP被封鎖，所以選擇使用串接API的方式去呈現相關的內容。
+* 網站頁面透過輸入地名與客製的行程、咖啡專項(咖啡沖煮方式)選項，來讓使用者可以更快找到符合期望的咖啡店。另外在咖啡店的篩選方面有過濾掉評論裡面缺乏"好喝"字樣的店家，節省使用者選擇咖啡店需要查看評論的時間。以下會根據程式碼分段介紹。
+    ![googlemaps_search_page](./readme_image/Home/google_maps_search.png)
+
+* 針對網頁表單送出的參數去做搜尋資訊(query)的填寫。
+    ![google_api1](./readme_image/Home/google_api1.png)
+
+* 運用在Google Maps Platfoem註冊所獲取的金鑰來做"Places API"的資料獲取，回傳的文檔類似json，第一次使用"places"獲取大約二十筆店家的店家名、平均評分、與店家的地址id。
+第二次使用"place"在第一次獲取到的"地址id"去做個別店家資料的獲取。在獲取電話資料時因為遇到有空白的情況，所以有多做一個判斷式。
+![google_api2](./readme_image/Home/google_api2.png)
+
+* 因為從Places API獲取照片資料沒辦法有圖片上的url網址，只有"photo_reference"欄位上的圖片網址參數。所以用到Place Photos功能去get店家照片的二進制圖像數據，並轉換成Base64編碼的二進數組，最後在解碼成UTF-8字符串送到前端HTML做顯示。
+![google_api3](./readme_image/Home/google_api3.png)
+
+* 在這部分Places API只提供每個店家五筆評論，但是因為還是有可能評論少於五筆，所以在讀取相關reviews數據時使用整體資料筆數來當做迴圈的次數。在以上從API獲取的參數加入進store_info之後。再判斷store_info裡面評論是否有"好喝"，如果有的話就加入到最後回傳的store_list裡面。再回傳給前端HTML模板。
+![google_api4](./readme_image/Home/google_api4.png)
+
+
+
+
+
+
+
+
 ## APP: Product
 * Product APP 主要負責產品相關的資料庫建置，與產品網站頁面資料的傳輸。
 ### product models.py
@@ -111,6 +185,7 @@
 
 ## APP: cart
 * 主要負責購物車在頁面上的相關操作與訂單儲存的功能。
+
 ### cart cart.py
 在cart.py 裡面創建一個Cart的類別，來獲取並操作自定義名稱為"cart"的session的相關操作。設計分別用不同方法來執行使用者對產品與購物車頁面相關的操作。
 * 方法 __init__ & __iter__
@@ -154,7 +229,35 @@
     讓所有畫面相關的參數都可以同步更新。
     ![cart_button](./readme_image/cart/update_cart.png)
 
+* checkout
+    這裡設計是購物車頁面之後處理訂單表單和連接金流。
+    金流串接測試部分是寫在cart APP所以希望在確認訂單後可以儲存訂單資訊，連接到測試的金流頁面。
+    > 這裡先介紹位於cart models.py裡面的Order & OrderItem model
+    * Order model
+        主要負責儲存訂單連結，除了設計一班訂單上的資訊以外，訂單人會綁定已經註冊的人身上。讓管理者可以從admin得知訂購者的資訊。
+        ![cart_order_model](./readme_image/cart/cart_order_model.png)
+        ![cart_order_admin](./readme_image/cart/cart_order_admin.png)
+    * OrderItem model
+        負責訂單資訊外的產品相關連結，讓管理者可以從admin得知產品的銷量狀態。
+        ![cart_order_mode2](./readme_image/cart/cart_order_mode2.png)
+        ![cart_orderitem_admin](./readme_image/cart/cart_orderitem_admin.png)
 
+    > 訂單有分為主鍵Order與外鍵OrderItem，先透過表單儲存Order model的相關資料，之後再透過已經儲存的Order model去儲存外鍵OrderItem model裡面的資料。
+    ![cart_checkout1](./readme_image/cart/cart_checkout1.png)
+    > OrderItem model 透過儲存Order model的資料與購物車裡面的資訊，讓資料更完整。
+    ![cart_checkout2](./readme_image/cart/cart_checkout2.png)
+
+* CheckoutDone & CheckoutFailed
+    在結結帳之後跳轉的頁面，在訂單完結帳後會刪除購物車裡面的資訊。
+    ![cart_Done&Filed](./readme_image/cart/cart_Done&Failed.png)
+
+* ecpay_view
+    綠界金流串接視圖，這裡有一個裝飾器csrf_empty關閉Django的CSRF防護，讓第三方金流可以進入到裡面執行讓消費者付款的動作。
+    ![cart_ecpay](./readme_image/cart/cart_ecpay.png)
+
+### cart urls.py
+這裡把有使用到ajax的url跟其他的url做一個區分，在視覺上比較不容易搞混。
+![cart_urls](./readme_image/cart/cart_urls.png)
 
 
 
