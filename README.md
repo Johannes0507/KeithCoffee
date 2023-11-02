@@ -1,14 +1,45 @@
 # 專案名稱 KeithCoffee
 
 ## 簡介
-網站主軸是一個咖啡店的店商網站，主要使用Django，並利用Bootstrap 5套件來打造現代化的前端。為了增添視覺和內容豐富度，我使用了ChatGPT和Midjourney兩項AI工具，ChatGPT用於生成相關文本內容，Midjourney用於創建引人注目的圖片。此外還有添加一頁Google Map資訊的店家搜尋功能，以提供更多實用性。
+網站專案主軸是一個咖啡店的店商網站，主要使用Django框架，並利用Bootstrap 5套件來打造現代化的前端。為了增添視覺和內容豐富度，我使用了ChatGPT和Midjourney兩項AI工具，ChatGPT用於生成相關文本內容，Midjourney用於創建引人注目的圖片。此外還有添加一頁Google Map資訊的店家搜尋功能，以提供更多實用性。
+
+## 目錄
+- [專案名稱 KeithCoffee](#專案名稱-keithcoffee)
+  - [簡介](#簡介)
+  - [開發堆疊](#開發堆疊)
+    - [環境](#環境)
+    - [資料庫](#資料庫)
+    - [API](#api)
+- [後端介紹](#後端介紹)
+  - [APP: Home](#app-home)
+    - [Home 主頁](#home-主頁)
+    - [Home 使用者的相關功能](#home-使用者的相關功能)
+    - [Google Maps Platform (Places API)](#google-maps-platform-places-api)
+  - [APP: Product](#app-product)
+    - [product models.py](#product-modelspy)
+    - [product admin.py](#product-adminpy)
+    - [product views.py](#product-viewspy)
+    - [product urls.py](#product-urlspy)
+  - [APP: cart](#app-cart)
+    - [cart cart.py](#cart-cartpy)
+    - [cart views.py](#cart-viewspy)
+    - [cart urls.py](#cart-urlspy)
+- [網站畫面](#網站畫面)
+  - [主頁](#主頁)
+  - [商品頁面](#商品頁面)
+  - [產品頁面](#產品頁面)
+  - [購物車頁面](#購物車頁面)
+  - [會員頁面](#會員頁面)
+  - [結帳頁面](#結帳頁面)
+  - [店家搜尋頁面](#店家搜尋頁面)
+  - [帳號頁面](#帳號頁面)
 
 ## 開發堆疊
 ### 環境
-    * Anaconda Spyder
-        > Django 後端開發。
-    * Sublime Text 3
-        > 前端html、css、ajax、js開發。
+* **Anaconda Spyder**
+    - 用於 Django 框架的後端開發。
+* **Sublime Text 3**
+    - 用於前端開發，包括 HTML、CSS、AJAX 和 JavaScript。
 ### 資料庫
     * MySQL
 ### API
@@ -298,8 +329,6 @@
 ![登入](./readme_image/login.png)
 ![註冊](./readme_image/signup.png)
 ![修改密碼](./readme_image/reset_password.png)
-* 輸入密碼之後送出的修改密碼連結
-![email](./readme_image/email.png)
 
 
 
