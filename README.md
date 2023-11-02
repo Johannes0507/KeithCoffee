@@ -3,36 +3,24 @@
 ## 簡介
 網站專案主軸是一個咖啡店的店商網站，主要使用Django框架，並利用Bootstrap 5套件來打造現代化的前端。為了增添視覺和內容豐富度，我使用了ChatGPT和Midjourney兩項AI工具，ChatGPT用於生成相關文本內容，Midjourney用於創建引人注目的圖片。此外還有添加一頁Google Map資訊的店家搜尋功能，以提供更多實用性。
 
-## 目錄
+# 目錄
 - [專案名稱 KeithCoffee](#專案名稱-keithcoffee)
-  - [簡介](#簡介)
-  - [開發堆疊](#開發堆疊)
-    - [環境](#環境)
-    - [資料庫](#資料庫)
-    - [API](#api)
-- [後端介紹](#後端介紹)
-  - [APP: Home](#app-home)
-    - [Home 主頁](#home-主頁)
-    - [Home 使用者的相關功能](#home-使用者的相關功能)
-    - [Google Maps Platform (Places API)](#google-maps-platform-places-api)
-  - [APP: Product](#app-product)
-    - [product models.py](#product-modelspy)
-    - [product admin.py](#product-adminpy)
-    - [product views.py](#product-viewspy)
-    - [product urls.py](#product-urlspy)
-  - [APP: cart](#app-cart)
-    - [cart cart.py](#cart-cartpy)
-    - [cart views.py](#cart-viewspy)
-    - [cart urls.py](#cart-urlspy)
+- [前後端介紹](#前後端介紹)
+- [APP: Home](#app-home)
+  - [Home 主頁](#home-主頁)
+  - [Home 使用者的相關功能](#home-使用者的相關功能)
+  - [Google Maps Platform (Places API)](#google-maps-platform-places-api)
+- [APP: Product](#app-product)
+  - [product models.py](#product-modelspy)
+  - [product admin.py](#product-adminpy)
+  - [product views.py](#product-viewspy)
+  - [product urls.py](#product-urlspy)
+- [APP: Cart](#app-cart)
+  - [cart cart.py](#cart-cartpy)
+  - [cart views.py](#cart-viewspy)
+  - [cart urls.py](#cart-urlspy)
 - [網站畫面](#網站畫面)
-  - [主頁](#主頁)
-  - [商品頁面](#商品頁面)
-  - [產品頁面](#產品頁面)
-  - [購物車頁面](#購物車頁面)
-  - [會員頁面](#會員頁面)
-  - [結帳頁面](#結帳頁面)
-  - [店家搜尋頁面](#店家搜尋頁面)
-  - [帳號頁面](#帳號頁面)
+
 
 ## 開發堆疊
 ### 環境
@@ -51,33 +39,35 @@
 ## 安裝與部屬
 **以下指令都於終端機完成**
 
-1. 下載虛擬環境
-    > pip install virtualenvwrapper-win
+1. 下載Python與虛擬環境。
+   - 官網安裝Python https://www.python.org/downloads/ 
+   - 安裝虛擬環境 pip install virtualenvwrapper-win
 2. 創建虛擬環境
-    > 使用mkvirtualenv命令來創建一個名為keithcoffee的新虛擬環境。
-    > mkvirtualenv keithcoffee 
+   - 使用 mkvirtualenv 命令來創建一個名為 keithcoffee 的新虛擬環境。
+   - mkvirtualenv keithcoffee
 3. 使用建構的虛擬環境
-    > workon keithcoffee
-4. 下載django
-    > pip install django
+   - workon keithcoffee
+4. 下載 Django
+   - pip install django
 5. 下載其他套件
-    > * pip install mysqlclient (連接mysql)
-    > * pip install Pillow (專案連接圖片路徑專用)
-    > * pip install django-debug-toolbar (除錯工具)
-    > * pip install googlemaps (google api用)
-6. 下載mysql 
-    > * 官網連結: https://dev.mysql.com/downloads/mysql/
-    > * 下載設定密碼可先設 1234567890 (本django專案設定的密碼)
-7. 創建mysql database
-    > * 進到終端機輸入mysql -u root -p 輸入後進到mysql
-    > * 進入後輸入 create database keithcoffee(本django專案資料庫名稱) default set utf8 collate urf8_general_ci; 創建資料庫
-8. 啟動專案
-    > * 從終端機進到下載的專案有manage.py的根目錄
-    > * 輸入 pyhton manage.py runserver 如果沒有其他error就啟動成功了！
-9. 進到網站瀏覽器網址框輸入 http://127.0.0.1:8000/ 進到頁面。
+   - pip install mysqlclient (連接 MySQL)
+   - pip install Pillow (專案連接圖片路徑專用)
+   - pip install django-debug-toolbar (除錯工具)
+   - pip install googlemaps (Google API 用)
+6. 下載 MySQL
+   - 官網連結: [https://dev.mysql.com/downloads/mysql/](https://dev.mysql.com/downloads/mysql/)
+   - 下載設定密碼可先設 1234567890 (本 Django 專案設定的密碼)
+7. 創建 MySQL 数据庫
+   - 進到終端機輸入 mysql -u root -p 輸入後進到 MySQL
+   - 進入後輸入 create database keithcoffee (本 Django 專案資料庫名稱) default set utf8 collate urf8_general_ci; 創建資料庫
+8. 資料遷移
+9. 啟動專案
+   - 從終端機進到下載的專案有 manage.py 的根目錄
+   - 輸入 pyhton manage.py runserver 如果沒有其他 error 就啟動成功了！
+10. 進到網站瀏覽器網址框輸入 http://127.0.0.1:8000/ 進到頁面。
 
 
-# 後端介紹
+# 前後端介紹
 
 ## APP: Home
 * Home APP 負責主頁的顯示、使用者的帳號管理、Google Maps Plateform相關API的處理。
@@ -104,8 +94,8 @@
     > 更改會員跟變更密碼是分開的，這裡只處理姓名與email的變更。
     ![login&logout_setting](./readme_image/Home/edit_account.png)
     > 網站頁面
-    ![account_page](./readme_image/Home/account_page.png)
-    ![account_page1](./readme_image/Home/account_page1.png)
+    ![account_page](./readme_image/Home/account1.png)
+    ![account_page1](./readme_image/Home/account2.png)
 
 * 變更密碼
     > 變更密碼使用Django的變更密碼類別，實現寄送信箱的功能，但因為在都是在本地端實作，所以有預設密碼變更信件是寄送到終端機顯示。
@@ -145,12 +135,6 @@
 
 * 在這部分Places API只提供每個店家五筆評論，但是因為還是有可能評論少於五筆，所以在讀取相關reviews數據時使用整體資料筆數來當做迴圈的次數。在以上從API獲取的參數加入進store_info之後。再判斷store_info裡面評論是否有"好喝"，如果有的話就加入到最後回傳的store_list裡面。再回傳給前端HTML模板。
 ![google_api4](./readme_image/Home/google_api4.png)
-
-
-
-
-
-
 
 
 ## APP: Product
@@ -222,9 +206,9 @@
 * 方法 __init__ & __iter__
     初始化獲取cart session後運用收到的productvariant_id去做cart裡面的迭代輸入。使html可以透過for迴圈運用相關資料。
         > 因為只有在Product資料集存在price欄位，所以對產品size咖啡克數為1 POUND(磅)的產品作判斷並加乘，在匯入到原本的price欄位裡面，讓在html相關頁面顯示價格時可以依照不同磅數去做相對應的價格顯示。其餘部分為針對不同的產品變體去做迭代資料的輸入。
-    ![cart_init&iter](./readme_image/cart/cart_iter&init.png)
+    ![cart_init&iter](./readme_image/cart/cart_init&iter.png)
     以下是HTML運用到的相關參數
-    ![cart_init&iter](./readme_image/cart/cart_html.png)
+    ![cart_init&iter](./readme_image/cart/cart_hmtl.png)
 
 * 方法 __len__ & save & add
     設定__len__讓在html可以透過{{ cart|length }}去計算顯示購物車裡面的產品總數。
@@ -314,7 +298,7 @@
 ![購物車頁面](./readme_image/cart2.png)
 
 5. 會員頁面
-![會員資料](./readme_image/account1.png)
+![會員資料](./readme_image/Home)
 ![會員資料](./readme_image/account2.png)
 
 6. 結帳頁面
