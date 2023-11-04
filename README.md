@@ -4,6 +4,7 @@
 網站專案主軸是一個咖啡店的店商網站，主要使用Django框架，並利用Bootstrap 5套件來打造現代化的前端。為了增添視覺和內容豐富度，我使用了ChatGPT和Midjourney兩項AI工具，ChatGPT用於生成相關文本內容，Midjourney用於創建引人注目的圖片。此外還有添加一頁Google Map資訊的店家搜尋功能，以提供更多實用性。
 
 # 目錄
+- [版本](#版本)
 - [專案名稱 KeithCoffee](#專案名稱-keithcoffee)
 - [前後端介紹](#前後端介紹)
 - [APP: Home](#app-home)
@@ -21,13 +22,20 @@
   - [cart urls.py](#cart-urlspy)
 - [網站畫面](#網站畫面)
 
+## 版本
+- Python 3.11.4
+- Django 4.2.6
+- django-debug-toolbar 4.2.0
+- googlemaps 4.10.0
+- mysqlclient 2.2.0
+- Pillow 10.0.1
 
-## 開發堆疊
+## 開發工具
 ### 環境
 * **Anaconda Spyder**
     - 用於 Django 框架的後端開發。
 * **Sublime Text 3**
-    - 用於前端開發，包括 HTML、CSS、AJAX 和 JavaScript。
+    - 用於前端開發，包括 HTML、CSS、AJAX。
 ### 資料庫
     * MySQL
 ### API
@@ -35,6 +43,8 @@
         > Places API
 ### debug tool
     * Django Debug Toolbar
+
+## 主要工具
 
 ## 安裝與部屬
 **以下指令都於終端機完成**

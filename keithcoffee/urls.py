@@ -20,6 +20,8 @@ from django.views.generic import RedirectView
 from django.conf.urls import include
 from . import settings
 
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
 ]
@@ -40,6 +42,11 @@ urlpatterns += [
     path('cart/', include('cart.urls'), name='cart'),
     ]
 
+
+
+urlpatterns += [
+    path('myapi/', include('myapi.urls'), name='myapi'),
+    ]
 
 
 # django-debug-toolbar 路徑設置

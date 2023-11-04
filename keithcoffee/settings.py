@@ -34,6 +34,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'debug_toolbar', # 因為想查看session debug狀態所以安裝的
+    'rest_framework',
     'product',
     'cart',
     'Home',
