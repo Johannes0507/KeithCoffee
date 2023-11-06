@@ -1,5 +1,4 @@
-from .models import Product, ProductVariant, Category
-from django.shortcuts import render
+from .models import Product, Category
 from django.views import generic
     
 

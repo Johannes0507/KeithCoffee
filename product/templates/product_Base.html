@@ -61,23 +61,8 @@
 
 					</ul>
 
-
-	                <div class="menu-right flex items-center space-x-4" style="margin-right: 240px;">
-	                    <!-- 購物車顯示圖 -->	
-	                    <!-- 這是 HX 的屬性，用於設定當<div>元素被觸發時，應該向哪個URL 發送 HTTP GET 請求。 -->
-	                    <div	                 
-	                    	hx-get="{% url 'hx_menu_cart' %}"
-	                    	hx-trigger="update-menu-cart from:body"
-	                    	hx-swap="innerHTML"
-	                    >
-	                    {% include 'partials/menu_cart.html' %}
-	                	</div>
-	                </div>
-
-
-
-					<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-					 	<input type="search" class="form-control form-control-dark text-bg-dark" placeholder="搜尋..." aria-label="Search">
+					<form action="{% url 'all-product' %}" method="GET" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+					 	<input type="search-product" class="form-control form-control-dark text-bg-dark" placeholder="搜尋商品..."  name="searchp">
 					</form>
 
 					<!-- 登入、登出、購物車按鈕 -->
@@ -103,6 +88,14 @@
 						 		註冊</a>
 						 	</button>							 								
 					 	{% endif %}
+	                    <div 
+	                    	class="ps-3"	                 
+	                    	hx-get="{% url 'hx_menu_cart' %}"
+	                    	hx-trigger="update-menu-cart from:body"
+	                    	hx-swap="innerHTML"
+	                    >
+	                    	{% include 'partials/menu_cart.html' %}
+	                	</div>					 	
 					</div>
 
 
@@ -127,7 +120,7 @@
 				{% block search_product %}
 					<div style="height: 20px; padding-top: 30px; margin-left: 30px;">
 						<!-- sidebar搜尋選項-->
-						<form class="row g-3" action="" method="GET" id="search_p">
+						<form class="row g-3" action="" method="GET">
 						 	<div class="col-auto" style="width: 100%;">
 						    	<input type="search" class="form-control" name="searchp" placeholder="搜尋商品名稱...">
 							    <button style="margin-top: 10px;" type="submit" class="btn btn-primary mb-3">搜尋</button>

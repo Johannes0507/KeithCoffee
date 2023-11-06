@@ -39,7 +39,7 @@ class Product(models.Model):
         default='o',
         help_text='架上狀態',
         )
-        
+    
     class Meta:
         ordering = ['-date_of_create']
     
@@ -49,6 +49,9 @@ class Product(models.Model):
     def get_absolute_url(self):
         return reverse('product-detail', args=[str(self.id)])
     
+    def query_set(self):
+        return self.id
+
     # 定義折扣價格
     @property
     def on_sale(self):

@@ -57,19 +57,9 @@
 					 	<li style="margin-left: 1em;"><a href="{% url 'recommend' %}" class="nav-link px-2 text-white">店家搜尋</a></li>
 
 					</ul>
-	                <div class="menu-right flex items-center space-x-4" style="margin-right: 240px;">
-	                    <!-- 購物車顯示圖 -->	
-	                    <!-- 這是 HX 的屬性，用於設定當<div>元素被觸發時，應該向哪個URL 發送 HTTP GET 請求。 -->
-	                    <div	                 
-	                    	hx-get="{% url 'hx_menu_cart' %}"
-	                    	hx-trigger="update-menu-cart from:body"
-	                    	hx-swap="innerHTML"
-	                    >
-	                    	{% include 'partials/menu_cart.html' %}
-	                	</div>
-	                </div>
-					<form class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
-					 	<input type="search" class="form-control form-control-dark text-bg-dark" placeholder="搜尋..." aria-label="Search">
+
+					<form action="{% url 'all-product' %}" method="GET" class="col-12 col-lg-auto mb-3 mb-lg-0 me-lg-3" role="search">
+					 	<input type="search-product" class="form-control form-control-dark text-bg-dark" placeholder="搜尋商品..."  name="searchp">
 					</form>
 
 					<!-- 登入、登出、購物車按鈕 -->
@@ -95,6 +85,16 @@
 						 		註冊</a>
 						 	</button>							 								
 					 	{% endif %}
+					 	   <!-- 購物車顯示圖 -->	
+	                    <!-- 這是 HX 的屬性，用於設定當<div>元素被觸發時，應該向哪個URL 發送 HTTP GET 請求。 -->
+	                    <div 
+	                    	class="ps-3"	                 
+	                    	hx-get="{% url 'hx_menu_cart' %}"
+	                    	hx-trigger="update-menu-cart from:body"
+	                    	hx-swap="innerHTML"
+	                    >
+	                    	{% include 'partials/menu_cart.html' %}
+	                	</div>
 					</div>
 				</div>
 			</div>

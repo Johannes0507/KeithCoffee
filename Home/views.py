@@ -3,11 +3,27 @@ from django.contrib.auth.decorators import login_required
 from django.contrib.auth import login
 from .forms import SignUpForm
 from cart.models import OrderItem, Order
-
+from product.models import Product
+from django.urls import reverse
+from django.http import HttpResponseRedirect
 
 # 主頁視圖
 def index(request):    
+    # if request.method == 'GET':
+    #     search_product = request.GET.get('search_product', '')
+
+    #     try:
+    #         product = Product.objects.get(name__exact=search_product)                   
+                    
+    #         return HttpResponseRedirect(reverse('product_detail', args=[product.pk]))
+        
+    #     except Product.DoesNotExist:
+    #         msg = '找不到此商品'    
+    #         context = {'msg': msg}
+    #         return render(request, 'index.html', context)
+    
     return render(request, 'index.html')
+
 
 # 關於我們
 def AboutUs(request):
