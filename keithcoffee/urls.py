@@ -42,12 +42,14 @@ urlpatterns += [
     path('cart/', include('cart.urls'), name='cart'),
     ]
 
-
-
+# API
 urlpatterns += [
-    path('myapi/', include('myapi.urls'), name='myapi'),
+    path('api/', include('myapi.urls'), name='myapi'),
     ]
 
+# 第三方工具silk
+if settings.DEBUG:
+    urlpatterns += [path('silk/', include('silk.urls', namespace='silk'))]
 
 # django-debug-toolbar 路徑設置
 if settings.DEBUG:

@@ -1,5 +1,7 @@
 {% extends 'Home_Base.html' %}
 
+{% load humanize %}
+
 {% block title %}
 確認訂單
 {% endblock %}
@@ -45,12 +47,12 @@
 		                    <small class="text-body-secondary">{{ item.size }}</small>
 		                </div>
 		                <h6 class="text-white-50 bg-dark" style="margin-left: 10px;"> 數量 x {{ item.quantity }}</h6>
-		                <span class="text-body-secondary">{{ item.product.price }}</span>
+		                <span class="text-body-secondary">{{ item.product.price|intcomma }}</span>
 		            </li>
 		            {% endfor %}
 		            <li class="list-group-item d-flex justify-content-between">
 		                <span>Total (NT)</span>
-		                <strong style="color: #853244">{{ cart.get_total_cost }} NT</strong>
+		                <strong style="color: #853244">{{ cart.get_total_cost|intcomma }} NT</strong>
 		            </li>
 		        </ul>
 		     

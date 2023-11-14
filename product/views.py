@@ -1,6 +1,5 @@
 from .models import Product, Category
 from django.views import generic
-    
 
 # 所有產品顯示頁面
 class ProductsView(generic.ListView):
@@ -29,6 +28,7 @@ class ProductsView(generic.ListView):
         context = super().get_context_data(**kwargs)
         context['searchp'] = self.request.GET.get('searchp', '')
         context['sort_option'] = self.request.GET.get('sort_option', '')
+
         return context
 
         
@@ -41,7 +41,7 @@ class ProductCategoryView(generic.ListView):
     # 用來處理資料集
     def get_queryset(self):
         category_n = self.kwargs.get('category') # 取得category參數
-        # 取得category裡面的name資料，不能用Product尋找，因為Product只找到字段。
+        # 取得category裡面的name資料，不能用Product尋找，因為Product只找的到字段。
         category = Category.objects.get(name=category_n)
         if category:
            queryset = Product.objects.filter(category=category, status__exact='o')     
@@ -108,4 +108,7 @@ class NewProductsView(generic.ListView):
 class ProductDetailView(generic.DetailView):
     model = Product
     def get_queryset(self):
+            
         return Product.objects.filter(status__exact='o')
+    
+

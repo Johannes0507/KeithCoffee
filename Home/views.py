@@ -4,6 +4,7 @@ from django.contrib.auth import login
 from .forms import SignUpForm
 from cart.models import OrderItem, Order
 
+
 # 主頁視圖
 def index(request):    
     

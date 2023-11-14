@@ -1,3 +1,5 @@
+{% load humanize %}
+
 {% if item %}
 	<tr id="cart-item-{{ item.id }}">
 		<td class="product-thumbnail">
@@ -6,7 +8,7 @@
 		<td class="product-name">
 			<h2 class="h5">{{ item.product.name }}</h2><p class="text-white-50 bg-dark">{{ item.size }}</p>
 		</td>
-		<td>{{ item.product.price }} NT</td>
+		<td>{{ item.product.price|intcomma }} NT</td>
 		<td>
 			<div class="input-group mb-3 d-flex align-items-center quantity-container">
 				<div class="">
@@ -34,7 +36,7 @@
 				</div>
 			</div>
 		</td>
-		<td style="color: #853244">{{ item.total_price }} NT</td>
+		<td class="fw-bold" style="color: #853244">{{ item.total_price|intcomma }} NT</td>
 
 	</tr>
 {% endif %}

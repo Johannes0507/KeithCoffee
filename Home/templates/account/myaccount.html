@@ -1,5 +1,7 @@
 {% extends 'Home_Base.html' %}
 
+{% load humanize %}
+
 {% block title %}
 我的帳號
 {% endblock %}
@@ -82,7 +84,7 @@
 									{{ orderitem.product_name }}
 								</p>
 								<p class="text-white-50 bg-dark"> 
-									{{ orderitem.product_size }} x {{ orderitem.product_quantity }}  NT$ {{ orderitem.products_price }}
+									{{ orderitem.product_size }} x {{ orderitem.product_quantity }}  NT$ {{ orderitem.products_price|intcomma }}
 								</p>					
 							{% endfor %}
 						</td>						
@@ -93,7 +95,7 @@
 								<p class="text-white-50 bg-dark">未出貨</p>
 							{% endif %}
 						</td>			
-						<td>NT$ {{ order.order_price }}</td>	
+						<td>NT$ {{ order.order_price|intcomma }}</td>	
 					</tr>
 				{% endfor %}
 			</tbody>

@@ -7,7 +7,7 @@ Created on Thu Nov  2 14:25:35 2023
 
 from cart.models import Order, OrderItem
 from rest_framework import serializers
-from product.models import Product
+from product.models import Product, ProductVariant, Category
 
 
 class OrderSerializer(serializers.ModelSerializer):
@@ -16,8 +16,26 @@ class OrderSerializer(serializers.ModelSerializer):
         fields = '__all__'
         
         
+class OrderItemSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = OrderItem
+        fields = '__all__'
+        
         
 class ProductSerializer(serializers.ModelSerializer):
     class Meta:
         model = Product
-        field = '__all__'
+        fields = '__all__'
+        
+
+class ProductVariantSerializer(serializers.ModelSerializer):
+    class Meta:
+        model =  ProductVariant
+        fields = '__all__'
+        
+        
+class CategorySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Category
+        fields = '__all__'
+    

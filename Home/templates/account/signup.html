@@ -15,7 +15,12 @@
 
 			    {% for field in form %}
 			        <div class="form-floating" style="margin-top: 10px;">
-			            <input name="{{ field.name }}" type="{{ field.field.widget.input_type }}" class="form-control" id="floatingInput">
+			            <input 
+			            	name="{{ field.name }}" 	            	
+			            	type="{{ field.field.widget.input_type }}" 
+			            	class="form-control" 
+			            	value="{{ field.value|default:'' }}"
+			            >
 			            <label for="floatingInput">{{ field.label }}</label>
 			            {% for error in field.errors %}
 			                <p class="text-danger" style="font-weight: bold; margin-top: 5px; text-align: left;">{{ error|escape }}</p>

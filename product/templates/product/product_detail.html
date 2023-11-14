@@ -1,14 +1,8 @@
 {% extends 'product_Base.html' %}
 
+{% load humanize %}
+
 {% block title %}{{ product.name }}{% endblock %}
-
-
-
-
-
-{% load static %}
-<link rel="stylesheet" href="{% static 'css/product_detail.css' %}">
-
 
 <!-- 產品名稱顯示 -->
 {% block page_name %} {{ product.name }} {% endblock %}
@@ -18,6 +12,9 @@
 
     <!-- 移除掉產品上源線 -->
     {% block underline %}
+    {% endblock %}
+    <!-- 產品細節搜尋欄 -->
+    {% block search_product %}
     {% endblock %}
 
     <div class="main">
@@ -45,7 +42,7 @@
                     <hr style="opacity: .2;" />
                     <div style="padding: 0.5em;">
                         <!-- 產品價格 -->
-                        <span class="opacity-75" style="color: #E7412C; font-size: 28px; letter-spacing: 3px;" id="product-price">NT{{ product.on_sale }}</span>
+                        <span class="opacity-75" style="color: #E7412C; font-size: 28px; letter-spacing: 3px;" id="product-price">NT{{ product.on_sale|intcomma }}</span>
                     </div>
                     <hr style="opacity: .2;" />
 

@@ -33,11 +33,14 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'django.contrib.humanize',  # 為了價格,而裝
     'debug_toolbar', # 因為想查看session debug狀態所以安裝的
     'rest_framework',
+    'rest_framework.authtoken', # token獲取
     'product',
     'cart',
     'Home',
+    'silk',
 ]
 
 # debug 互動式工具配置
@@ -54,6 +57,8 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'debug_toolbar.middleware.DebugToolbarMiddleware', # 安裝debug-toolbar設置
+    'silk.middleware.SilkyMiddleware', # silk第三方使用者操作查詢工具配置
+    'django.middleware.locale.LocaleMiddleware', # 處理語言切換的中間件 (用來讓價格以千單位設定逗號)
 ]
 
 ROOT_URLCONF = 'keithcoffee.urls'
@@ -136,7 +141,7 @@ import os
 # https://docs.djangoproject.com/en/4.2/howto/static-files/
 
 
-# 靜態紋黨路徑設定
+# 靜態文檔路徑設定
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static")
@@ -184,3 +189,11 @@ DEBUG_TOOLBAR_CONFIG = {
     # 其他配置選項
 }
 
+# SILk 配置
+SILKY_PYTHON_PROFILER = True
+
+REST_FRAMEWORK = {
+    'DEFAULT_PERMISSION_CLASSES': [
+       'rest_framework.permissions.AllowAny',
+    ]
+}

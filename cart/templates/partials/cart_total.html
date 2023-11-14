@@ -1,1 +1,2 @@
-{{ cart.get_total_cost }} NT
+{% load humanize %}
+{{ cart.get_total_cost|intcomma }} NT
