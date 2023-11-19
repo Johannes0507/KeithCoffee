@@ -4,7 +4,7 @@ from product.models import ProductVariant
 
 
 class Order(models.Model):
-    user = models.ForeignKey(User, on_delete=models.CASCADE)
+    user = models.ForeignKey(User, related_name='orders', on_delete=models.CASCADE)
     first_name = models.CharField(verbose_name='姓', max_length=50, null=True)
     last_name = models.CharField(verbose_name='名', max_length=50, null=True)
     username = models.CharField(verbose_name='訂單者名稱', max_length=50, null=True)
@@ -35,8 +35,8 @@ class Order(models.Model):
         return self.user.get_full_name()
 
 class OrderItem(models.Model):
-    order = models.ForeignKey(Order, on_delete=models.CASCADE)
-    product = models.ForeignKey(ProductVariant, verbose_name='產品', on_delete=models.CASCADE)
+    order = models.ForeignKey(Order, related_name='orderitems', on_delete=models.CASCADE)
+    product = models.ForeignKey(ProductVariant, related_name='orderitem', verbose_name='產品', on_delete=models.CASCADE)
     quantity = models.PositiveIntegerField('數量')
     price = models.IntegerField('總金額')
     

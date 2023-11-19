@@ -21,7 +21,12 @@ class Product(models.Model):
     image = models.ImageField(upload_to='product_image/')
     price = models.DecimalField('價格', max_digits=10, decimal_places=0)
     code = models.CharField('編號', max_length=10, blank=True, null=True,help_text='可自訂，也可根據類別自動生成編碼')
-    category = models.ForeignKey(Category, verbose_name='商品種類',on_delete=models.SET_NULL, null=True)
+    category = models.ForeignKey(Category, 
+                                 related_name='products', 
+                                 verbose_name='商品種類',
+                                 on_delete=models.SET_NULL, 
+                                 null=True
+                                 )
     
     date_of_create = models.DateField('創建日期', auto_now_add=True)
     date_of_update = models.DateField('修改日期',auto_now=True)
@@ -83,7 +88,7 @@ def generate_product_code(sender, instance, created, **kwargs):
     
 # 產品子類別資料庫
 class ProductVariant(models.Model):
-    product = models.ForeignKey(Product, verbose_name='產品' , on_delete=models.CASCADE)
+    product = models.ForeignKey(Product, related_name='variants', verbose_name='產品' , on_delete=models.CASCADE)
     size = models.CharField('產品變量', max_length=20, null=True, blank=True) # 產品尺寸
 
     date_of_create = models.DateField(auto_now_add=True) # 新增時間

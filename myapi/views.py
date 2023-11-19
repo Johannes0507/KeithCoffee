@@ -1,19 +1,24 @@
 from cart.models import Order, OrderItem
-from product.models import Product, ProductVariant
+from product.models import Product, ProductVariant, Category
+from django.contrib.auth.models import User
 
 from .serializers import (
-    ProductSerializer, ProductVariantSerializer, 
-    OrderSerializer, OrderItemSerializer)
-from rest_framework import generics
+    ProductSerializer, ProductVariantSerializer, OrderSerializer, 
+    OrderItemSerializer, UserSerializer, CategorySerializer, PasswordChangeSerializer)
 
+from rest_framework.permissions import IsAuthenticated
+from rest_framework import generics
+from rest_framework.views import APIView
+from rest_framework import status
+from rest_framework.response import Response
 
 
 # 產品 創見&顯示
-class ProductListCresteAPIView(generics.ListCreateAPIView):
+class ProductListCreateAPIView(generics.ListCreateAPIView):
     queryset = Product.objects.all().order_by('id')
     serializer_class = ProductSerializer
 
-product_list_create_view = ProductListCresteAPIView.as_view()
+product_list_create_view = ProductListCreateAPIView.as_view()
 
 # 個別產別查詢 可根據id
 class ProductDetailAPIView(generics.RetrieveAPIView):
@@ -36,6 +41,14 @@ class ProductDestroyAPIView(generics.DestroyAPIView):
 
 product_destroy_view = ProductDestroyAPIView.as_view()
 
+# 產品種類
+class ProductCategoryAPIView(generics.ListCreateAPIView):
+    queryset = Category.objects.all()
+    serializer_class = CategorySerializer
+
+product_to_category = ProductCategoryAPIView.as_view()
+
+
 
 # 產品變數 創見&顯示
 class ProductVariantListCresteAPIView(generics.ListCreateAPIView):
@@ -50,7 +63,7 @@ class ProductVariantDetailAPIView(generics.RetrieveAPIView):
     serializer_class = ProductVariantSerializer
     lookup_field = "pk"
     
-product_variant_detail_view = ProductDetailAPIView.as_view()
+product_variant_detail_view = ProductVariantDetailAPIView.as_view()
 
 # 產品變數資訊更新
 class ProductVariantUpdateAPIView(generics.UpdateAPIView):
@@ -118,7 +131,7 @@ order_item_detail_view = OrderItemDetailAPIView.as_view()
 # 訂單產品資訊更新
 class OrderItemUpdateAPIView(generics.UpdateAPIView):
     queryset = OrderItem.objects.all().order_by('id')
-    serializer_class = OrderSerializer
+    serializer_class = OrderItemSerializer
 
 order_item_update_view = OrderItemUpdateAPIView.as_view()
 
@@ -128,3 +141,57 @@ class OrderItemDestroyAPIView(generics.DestroyAPIView):
     serializer_class = OrderItemSerializer    
 
 order_item_destroy_view = OrderItemDestroyAPIView.as_view()
+
+
+
+# 用戶列表顯示
+class UserOrderListCreateAPIView(generics.ListCreateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+user_view = UserOrderListCreateAPIView.as_view()
+
+# 用戶資訊 可根據id
+class UserDetailAPIView(generics.RetrieveAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+    lookup_field = "pk"
+    
+user_detail_view = UserDetailAPIView.as_view()
+
+# 用戶資訊更新
+class UserUpdateAPIView(generics.UpdateAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer
+
+user_update_view = UserUpdateAPIView.as_view()
+
+# 用戶資訊刪除
+class UserDestroyAPIView(generics.DestroyAPIView):
+    queryset = User.objects.all()
+    serializer_class = UserSerializer    
+
+user_destroy_view = UserDestroyAPIView.as_view()
+
+
+# 用戶密碼變更
+class PasswordChangeViewAPIView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, *args, **kwargs):
+        serializer = PasswordChangeSerializer(data=request.data)
+        if serializer.is_valid():
+            # 確認舊密碼是否正確
+            old_password = serializer.validated_data['old_password']
+            if not request.user.check_password(old_password):
+                return Response({'old_password': ['錯誤密碼']}, status=status.HTTP_400_BAD_REQUEST)
+            
+            # 更新為新密碼
+            request.user.set_password(serializer.validated_data['new_password'])
+            request.user.save()
+
+            return Response({'status': ["密碼變更成功"]}, status=status.HTTP_200_OK)
+        
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+password_change_view = PasswordChangeViewAPIView.as_view()
