@@ -36,7 +36,7 @@ def main(request):
         'MerchantTradeDate': datetime.now().strftime("%Y/%m/%d %H:%M:%S"),
         'PaymentType': 'aio',
         'TotalAmount': cart.get_total_cost(), # 商品總金額
-        'TradeDesc': '訂單測試', # 商品描述
+        'TradeDesc': 'Keith訂單測試', # 商品描述
         'ItemName': product_names, # 商品名用#當分行
         'ReturnURL': 'https://www.ecpay.com.tw/return_url.php', # 顧客填寫完付款資料後的跳轉頁面，結帳後，先導到 OrderResultURL，從綠界頁面跳回的頁面。
         'ChoosePayment': 'ALL', # 顧客付費方式
@@ -44,7 +44,7 @@ def main(request):
         'ItemURL': 'https://www.ecpay.com.tw/item_url.php', # 商品資訊頁面
         'Remark': '交易備註', # 備註文字
         'ChooseSubPayment': '',
-        'OrderResultURL': '', # 結帳成功/失敗後的結果頁面，告知顧客本次的結帳結果
+        'OrderResultURL': 'https://www.google.com/', # 結帳成功/失敗後的結果頁面，告知顧客本次的結帳結果
         'NeedExtraPaidInfo': 'Y',
         'DeviceSource': '',
         'IgnorePayment': '',
